@@ -1,0 +1,398 @@
+{% extends 'base.html' %}
+{% block title %}
+    Send Email
+{% endblock %}
+
+
+{% block style %}
+    <style>
+
+        #customer_list {
+            overflow: hidden;
+
+            overflow-y: scroll;
+
+            white-space: nowrap;
+
+            height: 720px;
+
+            width: 100%;
+
+        }
+
+        div {
+        {#border: 1px red solid;#}
+        }
+    </style>
+{% endblock %}
+{% block next_url %}
+    <li><a href="/email_record/"> Quick links : Email Record</a></li>
+{% endblock %}
+{% block page_title %}
+    Send Email
+{% endblock %}
+{% block main %}
+    <div class="container-fluid">
+        <form>
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Select Letter(Ctrl->Multiple)</h3>
+                    </div>
+                    <div id="select_letter" class="panel-body">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label>Letter(<a href="/letter/">Development Letter</a>)</label>
+                            <select name="letter_list" class="form-control" multiple>
+                                {% for letter in letter_list %}
+                                    <option value="{{ letter.id }}">{{ letter.title }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        {% comment %}<div class="form-group">
+                            <label>开发信选择</label>
+
+                            {% for letter in letter_list %}
+                                <div>
+                                    <input name="letter_list2" value="{{ letter.id }}"
+                                           type="checkbox">{{ letter.title }}
+                                </div>
+                            {% endfor %}
+
+                        </div>
+            {% endcomment %}
+                    </div>
+                </div>
+                <div style="height: 615px;overflow-y: scroll" class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Select Outbox</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Outbox(<a href="/mail/">Outbox Management</a>)</label>
+                            <br>
+                            <table class="table table-striped">
+                                <thead>
+                                <th><input type="checkbox" id="select_all2"></th>
+                                <th>Outbox</th>
+                                </thead>
+                                <tbody>
+                                {% for sender in sender_list %}
+                                    <tr>
+                                        <td><input class="target_num2" name="sender_list" value="{{ sender.id }}"
+                                                   type="checkbox"></td>
+                                        <td><span> {{ sender.email }}</span></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 col-md-offset-1">
+                <div class="panel panel-default">
+
+                    <div class="panel-heading">
+                        <span class="panel-title">Send Email</span>
+                        <div id="pro_bar" style="float:right;display: none;width: 300px;z-index: 10;">
+
+                            <div class="progress" style="margin-bottom: 0;height: 26px;background-color: white">
+                                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                                     style="width: 0%;">
+                                    <span id="process_data" style="color: #ffbc34"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <div id="customer_list" class="form-group">
+                            <label style="font-size: 15px;font-weight: bold">Target Customer List(<a
+                                    href="/send_target/">Target Customer Management</a>)</label>
+                            <br>
+                            <div class="col-md-9">
+                                <span style="font-size: 15px;font-weight: bold">The result of choosing :</span>
+                                <select onchange="change_page2()" class="form-control"
+                                        style="width: 200px;display: inline-block" name="key" id="key">
+                                    <option value="-1">All</option>
+                                    {% for kw in keyword_list %}
+                                        <option value="{{ kw.id }}">{{ kw.keyword }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        <div class="col-md-3">
+                            <nav aria-label="Page navigation">
+                            <ul class="pagination" style="margin:7px 0">
+                                <li>
+                                    <a href="#" onclick="change_page(1)"
+                                       aria-label="Previous">
+                                        <span aria-hidden="true">First</span>
+                                    </a>
+                                </li>
+                                {% if results.has_previous %}
+                                    <li>
+                                        <a href="#"
+                                           onclick="change_page({{ results.previous_page_number }})"
+                                           aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+
+
+                                <li><a href="#">{{ pagenum }}</a></li>
+
+                                {% if results.has_next %}
+
+                                    <li>
+                                        <a href="#"
+                                           onclick="change_page({{ results.next_page_number }})"
+                                           aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+
+
+                                {% endif %}
+                                <li>
+                                    <a href="#"
+                                       onclick="change_page({{ results.paginator.num_pages }})"
+                                       aria-label="Next">
+                                        <span aria-hidden="true">End</span>
+                                    </a>
+                                </li>
+
+
+                            </ul>
+
+                    </nav>
+                        </div>
+
+
+                            <table class="table table-hover">
+                                <thead>
+                                <th><input type="checkbox" id="select_all"></th>
+                                <th>No</th>
+                                <th>Email</th>
+                                </thead>
+                                <tbody>
+                                {% for waitemail in waitcust_list %}
+                                    <tr>
+                                        <td><input id="wait{{ waitemail.1 }}" class="target_num" name="wait_list" value="{{ waitemail.1 }}"
+                                                   type="checkbox"></td>
+                                        <td><span>{{ forloop.counter }}</span></td>
+                                        <td><span>{{ waitemail.0 }}</span></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <button type="button" onclick="send_mails()"
+                                    class="btn btn-danger center-block">一键发送
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        function change_page2() {
+            var kid = $('#key').val();
+            window.location.href = '/send_mail/?kid=' + kid;
+        }
+
+       function change_page(page) {
+            var kid = $('#key').val();
+            window.location.href = '/send_mail/?kid=' + kid + "&pagenum=" + String(page);
+       {% comment %}     {#var current_href = location.href;#}
+            {#if (current_href.indexOf("pagenum")) {#}
+            {#    location.href = current_href.split("&pagenum=")[0] + "&pagenum=" + String(page);#}
+            {#}#}
+            {#else {#}
+            {#    location.href = current_href + "&pagenum=" + String(page);#}
+            {#}#}{% endcomment %}
+        }
+
+        $(function () {
+            var kid = "{{ kid }}";
+            var op_list = $("option");
+            for (var i = 0; i < op_list.length; i++) {
+                if (op_list.eq(i).attr("value") == kid) {
+                    op_list.eq(i).prop("selected", true)
+                }
+            }
+        })
+    </script>
+    <script>
+        function start_search_flash() {
+            $('.progress-bar').css('width', '0')
+            $('#pro_bar').css('display', 'inline-block')
+            $(".load-container").show();
+        }
+
+        function end_search_flash() {
+            $('.progress-bar').css('width', '100%');
+            setTimeout(function () {
+                $(".load-container").hide();
+                $('#pro_bar').css('display', 'none');
+            }, 2000);
+
+        }
+
+        index = 0;
+        count = 0;
+        total = 0;
+
+        function send_mails() {
+            $("#select_letter").find("select option:selected")
+
+            var letter_list = $("#select_letter").find("select option:selected")
+            var send_list = $(".target_num2:checked")
+            var wait_list = $(".target_num:checked")
+            total = wait_list.length;
+
+            if (letter_list.length == 0 || send_list.length == 0 || wait_list.length == 0) {
+                alert('Please select letter、outbox、target customer！')
+            } else {
+
+                send_str = ""
+                for (var i = 0; i < send_list.length; i++) {
+                    var cur_id = send_list.eq(i).val();
+                    send_str += cur_id + ','
+                }
+
+
+                letter_str = ""
+                for (var i = 0; i < letter_list.length; i++) {
+                    var cur_id = letter_list.eq(i).val();
+                    letter_str += cur_id + ','
+                }
+                start_search_flash();
+
+                // 设置定时器 逐条发送邮件  发送完毕后 将进度条隐藏
+                ttt = setInterval(function () {
+
+                    var wait_id = wait_list.eq(index).val();
+                    if (wait_id){
+                        $.ajax({
+                        url: '/send_mail_ajax/',
+                        type: 'post',
+                        data: {
+                            'letter_str': letter_str.slice(0, -1),
+                            'send_str': send_str.slice(0, -1),
+                            'wait_id': wait_id,
+                            'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+                        },
+                        error: function () {
+                            console.log('ajax error!!!!!')
+                            count++;
+                            var process = String(count) + "/" + String(total);
+                            var width = String(count * 100 / total) + '%';
+                            $('.progress-bar').css('width', width)
+                            $('#pro_bar').css('display', 'inline-block')
+                            $("#process_data").text(process);
+                            if (count == total) {
+                                end_search_flash();
+                                clearInterval(ttt);
+                                index = 0;
+                                count = 0;
+                                total = 0;
+                            }
+                        },
+                        success: function (ret) {
+                            count++;
+                            var process = String(count) + "/" + String(total);
+                            var width = String(count * 100 / total) + '%';
+                            $('.progress-bar').css('width', width)
+                            $('#pro_bar').css('display', 'inline-block')
+                            $("#process_data").text(process);
+                            if (count == total) {
+                                end_search_flash();
+                                clearInterval(ttt);
+                                index = 0;
+                                count = 0;
+                                total = 0;
+                            }
+                            if (ret.code == 1) {
+                                var wait_id='#wait'+String(ret.wait_id);
+                                $(wait_id).prop('checked',false);
+                            }
+                            else
+                            {
+                                console.log('error222222222222222')
+                            }
+                        }
+                    });
+                    }
+
+                    index++;
+                }, 5000)
+
+            }
+
+
+        }
+
+        function show_loading() {
+            $(".load-container").show();
+        }
+
+        $(function () {
+
+            $(".target_num").mouseenter(function () {
+                var s = $(this);
+                console.log(s);
+                console.log(s);
+                console.log(s[0].checked);
+                if(s[0].checked){
+                    s.prop('checked',false);
+                }
+                else{
+                    s.prop('checked',true);
+                }
+            })
+
+
+
+            $("#select_all").change(function () {
+                var flag = $('#select_all').prop('checked')
+                var check_list = $('.target_num')
+                if (flag) {
+                    for (var i = 0; i < check_list.length; i++) {
+                        check_list.eq(i).prop('checked', true)
+                    }
+                } else {
+                    for (var i = 0; i < check_list.length; i++) {
+                        check_list.eq(i).prop('checked', false)
+                    }
+                }
+            });
+            $("#select_all2").change(function () {
+                var flag = $('#select_all2').prop('checked')
+                var check_list = $('.target_num2')
+                if (flag) {
+                    for (var i = 0; i < check_list.length; i++) {
+                        check_list.eq(i).prop('checked', true)
+                    }
+                } else {
+                    for (var i = 0; i < check_list.length; i++) {
+                        check_list.eq(i).prop('checked', false)
+                    }
+                }
+            });
+
+        })
+    </script>
+{% endblock %}
+
+
+

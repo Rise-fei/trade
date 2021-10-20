@@ -1,0 +1,544 @@
+{% extends 'base.html' %}
+{% block title %}
+    Foreign Enterprise
+{% endblock %}
+{% block topjs %}
+{% endblock %}
+{% block style %}
+    <style>
+        table {
+            table-layout: fixed;
+        }
+
+        td {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        #search_box {
+            overflow: hidden;
+            overflow-y: scroll;
+            overflow-x: scroll;
+
+            white-space: nowrap;
+
+            height: 800px;
+            width: 100%;
+
+        }
+
+
+    </style>
+{% endblock %}
+
+{% block next_url %}
+    <li><a href="/search/results/"> Quick links : Depth Extraction</a></li>
+{% endblock %}
+
+{% block page_title %}
+    Foreign Enterprise
+{% endblock %}
+
+
+{% block main %}
+    <div class="container-fluid">
+
+        <div class="col-md-12 right_content">
+            <div class="col-md-12">
+                <div class="col-md-8">
+                    <form class="form-inline">
+                        {% csrf_token %}
+                        <div class="form-group top-nav-search">
+                            <label for="keyword">Keyword ：</label>
+                            <input type="text" id="keyword" class="form-control" placeholder="please input keyword">
+                        </div>
+
+                        <div class="form-group top-nav-search">
+                            <button flag="0" id="search_btn"
+                                    onclick="click_search_btn();" class="btn btn-default" type="button"><i
+                                    class="fa fa-search fa-lg"></i> 搜索
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <div id="pro_bar"
+                         style="display:none;width: 100%;z-index: 10;">
+                        <div class="progress" style="margin-bottom: 0;height: 36px">
+                            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                                 style="width: 0%;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-12">
+
+                <br>
+                <div id="search_box" class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <th style="width: 55px">No</th>
+                        <th>Company</th>
+                        <th>Website</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Email</th>
+                        </thead>
+                        <tbody id="search_content">
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        cont = ""
+        count = 0
+        total_query_page_nums = 0
+        query_page_num = 0
+        current_page_num1 = 0
+        current_page_num2 = 0
+        t_search1 = null
+        t_search2 = null
+        t_flash = null
+
+        function listen_query_status() {
+            t_flash = setInterval(function () {
+                if (query_page_num >= total_query_page_nums) {
+                    //查询结束，将动画效果停止
+                    end_search_flash();
+
+
+                    clearInterval(t_flash);
+                } else {
+                    var width = query_page_num * 100 / total_query_page_nums;
+                    s = String(width) + '%'
+                    console.log(s)
+                    $('.progress-bar').css('width', s)
+                }
+            }, 3000)
+        }
+
+        function start_search_flash() {
+            $('.progress-bar').css('width', '0')
+            $('#pro_bar').css('display', 'inline-block')
+            $(".load-container").show();
+        }
+
+        function end_search_flash() {
+            $('.progress-bar').css('width', '100%');
+            setTimeout(function () {
+                $(".load-container").hide();
+                $('#pro_bar').css('display', 'none');
+                $("#search_btn").html('<i class="fa fa-search fa-lg"></i>Search');
+                $("#search_btn").attr('flag', '0');
+                $("#keyword").removeAttr('disabled');
+            }, 15000);
+
+        }
+        function start_search() {
+            hide_left_slide();
+            $(".load-container").show();
+            $("#search_btn").text("Initializing query......");//添加disabled属性
+            $("#search_btn").attr('disabled', "true");//添加disabled属性
+            $("#keyword").attr("disabled", "true")
+            $.ajax({
+                url: '/search/get_yellow_page_nums/',
+                type: 'get',
+                data: {
+                    'keyword': keyword,
+                    "cont": cont,
+                },
+                error:function(){
+                  alert('The system is busy, please try again later')
+                    location.reload();
+                },
+                success: function (res) {
+                    if(res.code==0){
+                          alert('The system is busy, please try again later')
+                          location.reload();
+                    }
+                    var ret = res.data;
+                    var total_count = ret.total;
+                    var count1 = ret.count1;
+                    var count2 = ret.count2;
+                    var count3 = ret.count3;
+                    var s = String(total_count)
+                    var l = s.length - 1;
+                    var h = s[0];
+                    for (var i = 0; i < l; i++) {
+                        h += "0"
+                    }
+
+
+                    alert("It is estimated that the query result is about " + h + "+ pieces of data");
+                    start_search_flash();
+                    
+
+                    $("#search_btn").removeAttr('disabled')
+                    $("#search_btn").text("Pause");
+                    $("#search_btn").attr('flag', '1');
+
+                    count = 0
+                    total_query_page_nums = 0
+                    query_page_num = 0
+                    current_page_num1 = 0
+                    current_page_num2 = 0
+                    current_page_num3 = 1
+                    t_search1 = null
+                    t_search2 = null
+                    t_search3 = null
+                    t_flash = null
+
+                    $('#search_content').html("")
+                    $("#keyword").attr("disabled", "true")
+                    listen_query_status();
+
+
+                    num1 = parseInt(count1 / 48) + 1;
+                    num2 = parseInt(count2 / 16) + 1;
+                    num3 = parseInt(count3 / 30) + 1;
+                    //total_query_page_nums = num1 + num2 + num3 + 2
+                    total_query_page_nums = num1 + num2 + num3 + 1;
+
+
+                    setTimeout(function (){
+                        search_yellow_eu();
+                    },1000)
+                    setTimeout(function (){
+                        search_yellow_in();
+                    },5000)
+                    setTimeout(function (){
+                        search_yellow_ph();
+                    },10000)
+
+
+
+                }
+            })
+        }
+
+        function search_yellow_detail(type){
+
+        }
+
+         username = '{{ username }}';
+        userid = '{{ userid }}';
+
+        function begin_search() {
+            {#$("#search_btn").attr('disabled', "true");//添加disabled属性#}
+            // start search
+
+            console.log(username)
+            console.log(userid)
+            keyword = $('#keyword').val();
+
+
+            var pattern = new RegExp("[\u4E00-\u9FA5]+");
+            if (pattern.test(keyword)) {
+                alert('Please don’t input Chinese keyword！')
+            }
+            else
+                {
+                 $(".load-container").show();
+                    $.ajax({
+                        url: '/search/issensitive/',
+                        type: 'post',
+                        data: {
+                            'keyword': keyword,
+                            'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+                        }, success: function (ret) {
+                            if (ret.code == 1) {
+                                start_search();
+                            } else {
+                                $(".load-container").hide();
+                                alert("Current input contains sensitive words！")
+                            }
+                        }
+                    });
+
+
+
+
+
+            }
+
+            //
+        }
+
+        function stop_search() {
+            /*
+            * 点击暂停按钮
+            * 1.将正在搜索的定时器  清除
+            * 2. 将搜查动画  定格在百分之多少
+            * 3. 将 按钮中文字设置为   继续
+            * */
+
+
+            try {
+                console.log('暂停定时器1--查询印度b2b')
+                clearInterval(t_search1)
+            } catch (e) {
+                console.log(e)
+            }
+
+            try {
+                console.log('暂停定时器2--查询菲律宾')
+                clearInterval(t_search2)
+            } catch (e) {
+                console.log(e)
+            }
+
+            try {
+                console.log('暂停定时器3--查询欧洲')
+                clearInterval(t_search3)
+            } catch (e) {
+                console.log(e)
+            }
+
+
+            try {
+                console.log('暂停定时器4--动画刷新')
+                clearInterval(t_flash)
+            } catch (e) {
+                console.log(e)
+            }
+
+            $("#search_btn").text("Pausing......")
+            $("#search_btn").attr('disabled', 'true')
+            setTimeout(function () {
+                $(".load-container").hide();
+
+                //将 按钮中文字设置为   继续
+                $("#search_btn").text("Continue")
+                $("#search_btn").attr('flag', '2')
+                $("#search_btn").removeAttr('disabled')
+            }, 15000)
+
+        }
+
+        function continue_search() {
+            //点击继续，即接着查询！！重新开启定时器接着查询
+            //设置定时器  每隔3秒发一次ajax请求
+
+
+            setTimeout(function (){
+                search_yellow_eu();
+            },1000)
+            setTimeout(function (){
+                search_yellow_in();
+            },5000)
+            setTimeout(function (){
+                search_yellow_ph();
+            },10000)
+
+
+            //继续动画效果！
+            listen_query_status();
+            $(".load-container").show();
+
+            // 将搜索按钮样式改变
+            $("#search_btn").text("Pause");
+            $("#search_btn").attr('flag', '1');
+        }
+
+        function click_search_btn() {
+
+            var flag = $("#search_btn").attr("flag");
+            /**
+             * flag = '0' : 搜索
+             * flag = '1' : 暂停
+             * flag = '2' : 继续
+             * */
+            if (flag == "0") {
+                //说明是第一次从0搜索  即点击搜索
+                begin_search();
+            } else if (flag == "1") {
+                //点击暂停
+                stop_search();
+            } else if (flag == '2') {
+                //点击继续
+                continue_search()
+            }
+
+
+        }
+
+
+        function search_yellow_eu() {
+            t_search3 = setInterval(function () {
+                if (current_page_num3 <= num3) {
+                    $.ajax({
+                        url: '/search/yellow/',
+                        type: 'post',
+                        data: {
+                            'username':username,
+                            'userid':userid,
+                            'method': 'eu',
+                            'keyword': keyword,
+                            'num': current_page_num3,
+                            'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+                        },
+                        error: function () {
+                            query_page_num++;
+                        },
+                        success: function (ret) {
+                            query_page_num++;
+                            var data = ret.data
+                            if (data) {
+                                for (var j = 0; j < data.length; j++) {
+                                    setTimeout(function (j) {
+                                        var company = data[j].company;
+                                        var addr = data[j].address;
+                                        var phone = data[j].phone;
+                                        var website = data[j].website;
+                                        var email = data[j].email;
+                                        if (!email) {
+                                            email = ""
+                                        }
+                                        count++
+                                        var html = "<tr><td>" + count + "</td> <td>" + company + "</td> " +
+                                            "<td>" + website + "</td> <td>" + phone + "</td> <td>" + addr + "</td><td>" + email + "</td></tr>";
+                                        $('#search_content').prepend(html)
+                                    }, 100 * j, j)
+                                }
+                            }
+
+                        }
+                    });
+                    current_page_num3++;
+                } else {
+                    clearInterval(t_search3)
+                }
+            }, 10000)
+        }
+        function search_yellow_ph() {
+            t_search2 = setInterval(function () {
+                if (current_page_num2 <= num2) {
+                    $.ajax({
+                        url: '/search/yellow/',
+                        type: 'post',
+                        data: {
+                            'username':username,
+                            'userid':userid,
+                            'method': 'ph',
+                            'keyword': keyword,
+                            'num': current_page_num2,
+                            'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+                        },
+                        error: function () {
+                            query_page_num++;
+                        },
+                        success: function (ret) {
+                            query_page_num++;
+                            var data = ret.data
+                            if (data) {
+                                for (var j = 0; j < data.length; j++) {
+                                    setTimeout(function (j) {
+                                        var company = data[j].company;
+                                        var addr = data[j].address;
+                                        var phone = data[j].phone;
+                                        var website = data[j].website;
+                                        var email = data[j].email;
+                                        if (!email) {
+                                            email = ""
+                                        }
+                                        count++
+                                        var html = "<tr><td>" + count + "</td> <td>" + company + "</td> " +
+                                            "<td>" + website + "</td> <td>" + phone + "</td> <td>" + addr + "</td><td>" + email + "</td></tr>";
+                                        $('#search_content').prepend(html)
+                                    }, 100 * j, j)
+                                }
+                            }
+
+                        }
+                    });
+                    current_page_num2++;
+                } else {
+                    clearInterval(t_search2)
+                }
+            }, 10000)
+        }
+
+        function search_yellow_in()     {
+            /*
+            search_yellow('PH');
+            search_yellow('TH');
+            search_yellow('VN');
+            search_yellow('LA');
+            search_yellow('KH');
+            search_yellow('MM');
+            search_yellow('BN');
+            search_yellow('SG');
+            search_yellow('ID');
+            search_yellow('TL');
+            search_yellow('IN');
+            * */
+            // 印度的 b2b搜索
+            t_search1 = setInterval(function () {
+                if (current_page_num1 <= num1) {
+                    $.ajax({
+                        url: '/search/yellow/',
+                        type: 'post',
+                        data: {
+                            'username':username,
+                            'userid':userid,
+                            'method': 'in',
+                            'keyword': keyword,
+                            'num': current_page_num1,
+                            'cont': cont,
+                            'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+                        },
+                        error: function () {
+                            query_page_num++;
+                        },
+                        success: function (ret) {
+                            query_page_num++;
+                            var data = ret.data
+                            if (data) {
+                                for (var j = 0; j < data.length; j++) {
+                                    setTimeout(function (j) {
+                                        var company = data[j].company;
+                                        var addr = data[j].addr;
+                                        var phone = data[j].phone;
+                                        var website = data[j].website;
+                                        var email = data[j].email;
+                                        if (!email) {
+                                            email = ""
+                                        }
+                                        count++
+                                        var html = "<tr><td>" + count + "</td> <td>" + company + "</td> " +
+                                            "<td>" + website + "</td> <td>" + phone + "</td> <td>" + addr + "</td><td>" + email + "</td></tr>";
+                                        $('#search_content').prepend(html);
+                                        if(count>1000){
+                                            $("#search_content").find("tr").last().remove();
+                                        }
+                                    }, 100 * j, j)
+                                }
+                            }
+
+                        }
+                    })
+                    current_page_num1++;
+                } else {
+                    clearInterval(t_search1)
+                }
+            }, 10000)
+        }
+
+    </script>
+
+{% endblock %}
+
+

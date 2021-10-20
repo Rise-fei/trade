@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+{% block title %}
+    Email Record
+{% endblock %}
+{% block page_title %}
+    Email Record
+{% endblock %}
+
+{% block main %}
+    <div class="content container-fluid"><!-- Page Header -->
+        <div class="">
+            <div style="margin-top: 10px">
+                <div class="col-md-9">
+                    {% csrf_token %}
+
+                    <button class="btn btn-default" onclick="select_fail()">Select Failed</button>
+                    <button class="btn btn-default" onclick="select_success()">Select Success</button>
+                    <button class="btn btn-warning" onclick="add_target()">Add Selected To Target Customer</button>
+                    <button class=" btn btn-danger" onclick="delete_record()">Delete Selected</button>
+                    <button class=" btn btn-info" onclick="flush_curpage()">Reload Page
+                    </button>
+                </div>
+                <div class="col-md-3">
+
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination" style="margin:7px 0">
+                            <li>
+                                <a href="#" onclick="change_page(1)"
+                                   aria-label="Previous">
+                                    <span aria-hidden="true">First</span>
+                                </a>
+                            </li>
+                            {% if email_records.has_previous %}
+                                <li>
+                                    <a href="#"
+                                       onclick="change_page({{ email_records.previous_page_number }})"
+                                       aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+
+
+                            <li><a href="#">{{ pagenum }}</a></li>
+
+                            {% if email_records.has_next %}
+
+                                <li>
+                                    <a href="#"
+                                       onclick="change_page({{ email_records.next_page_number }})"
+                                       aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+
+
+                            {% endif %}
+                            <li>
+                                <a href="#"
+                                   onclick="change_page({{ email_records.paginator.num_pages }})"
+                                   aria-label="Next">
+                                    <span aria-hidden="true">End</span>
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </nav>
+                </div>
+            </div>
+            <br>
+            <div id="email_box">
+                <table class="table table-bordered">
+                    <thead>
+                    <th><input type="checkbox" id="select_all"></th>
+                    <th>Target Customer Email</th>
+                    {#                <th>目标客户公司</th>#}
+                    <th style="display: none">Target Customer Website</th>
+
+                    <th>Sender Outbox</th>
+                    <th>Send Status</th>
+                    <th>Send Title</th>
+                    <th>Send Time</th>
+                    </thead>
+                    <tbody>
+                    {% for record in email_records %}
+                        <tr>
+                            <td><input type="checkbox" company="{{ record.dest_company }}"
+                                       keyword="{{ record.keyword }}"
+                                       recordid="{{ record.id }}"
+                                       class="target_num">&nbsp;{{ forloop.counter }}</td>
+                            <td>{{ record.dest_mail }}</td>
+                            {#                        <td>{{ record.dest_company }}</td>#}
+                            <td style="display: none">{{ record.dest_webiste }}</td>
+
+                            <td>{{ record.send_email }}</td>
+                            <td class="send_message">
+                                {% if record.send_status %}
+                                    <span flag="1" style="color: green">发送成功</span>
+                                {% else %}
+                                    <span flag="2" style="color: red">发送失败</span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>{{ record.letter_title }}</td>
+                            <td>{{ record.send_time }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}
+
+
+{% block js %}
+    <script>
+           function change_page(page) {
+            window.location.href = "/email_record/?pagenum=" + String(page);
+        }
+        function flush_curpage() {
+            location.reload();
+        }
+
+        function add_target() {
+            $(".load-container").show();
+            var check_list = $('.target_num:checked');
+            total = check_list.length;
+            count = 0;
+            for (var i = 0; i < check_list.length; i++) {
+                if (check_list.eq(i).prop('checked')) {
+                    var destmail = check_list.eq(i).parent().next().text()
+                    var website = check_list.eq(i).parent().next().next().text()
+                    var keyword = check_list.eq(i).attr('keyword')
+                    var company = check_list.eq(i).attr('company')
+
+                    $.ajax({
+                        url: '/add_target2/',
+                        type: 'post',
+                        data: {
+                            'email': destmail,
+                            'website': website,
+                            'keyword': keyword,
+                            'company': company,
+                            'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
+                        },
+                        success: function (ret) {
+                            count++;
+                            if (count == total) {
+                                $(".load-container").hide();
+                                if (ret.code == 1) {
+                                    location.href = '/send_target/'
+                                } else {
+                                    alert(ret.msg)
+                                }
+                            }
+                        }
+                    })
+                }
+            }
+
+        }
+
+        function select_fail() {
+            var span_list = $(".send_message").find("span[flag=2]");
+            for (var i = 0; i < span_list.length; i++) {
+                var cur = span_list.eq(i)
+                cur.parent().parent().find(":checkbox").prop("checked", true)
+            }
+
+        }
+
+        function select_success() {
+            var span_list = $(".send_message").find("span[flag=1]");
+            for (var i = 0; i < span_list.length; i++) {
+                var cur = span_list.eq(i)
+                cur.parent().parent().find(":checkbox").prop("checked", true)
+            }
+
+        }
+
+        function delete_record() {
+            var check_list = $('.target_num');
+            var li = []
+            for (var i = 0; i < check_list.length; i++) {
+                if (check_list.eq(i).prop('checked')) {
+                    var id = check_list.eq(i).attr("recordid")
+                    li.push(id)
+                }
+            }
+            console.log(li)
+            {#alert(JSON.stringify(li))#}
+            $.ajax({
+                url: '/delete_record/',
+                type: 'post',
+                data: {
+                    'recordid': JSON.stringify(li),
+                    'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+                },
+                success: function (ret) {
+                    location.href = '/email_record/';
+                }
+            })
+        }
+
+        $(function () {
+            $("#select_all").change(function () {
+                var flag = $('#select_all').prop('checked')
+                var check_list = $('.target_num')
+                if (flag) {
+                    for (var i = 0; i < check_list.length; i++) {
+                        check_list.eq(i).prop('checked', true)
+                    }
+                } else {
+                    for (var i = 0; i < check_list.length; i++) {
+                        check_list.eq(i).prop('checked', false)
+                    }
+                }
+            });
+        })
+    </script>
+{% endblock %}
+

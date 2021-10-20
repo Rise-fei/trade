@@ -1,0 +1,776 @@
+{% extends 'base.html' %}
+{% block title %}
+    Depth Extraction
+{% endblock %}
+{% block style %}
+    <style>
+        .btn{
+            padding:6px 7px;
+        }
+        table {
+            table-layout: fixed;
+        }
+
+        td {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        #selects {
+        {#float: left;#}
+        }
+
+        #buttons button {
+            font-size: 15px;
+            height: 40px;
+        }
+
+        #email_box {
+            overflow: hidden;
+
+            overflow-y: scroll;
+            overflow-x: scroll;
+
+            white-space: nowrap;
+
+            height: 715px;
+            width: 100%;
+
+        }
+    </style>
+{% endblock %}
+
+{% block page_title %}
+    Depth Extraction
+{% endblock %}
+
+{% block next_url %}
+    <li><a href="/send_target/">Quick links : Target Customers</a></li>
+{% endblock %}
+{% block search %}
+
+{% endblock %}
+
+{% block main %}
+
+    <div class="container-fluid">
+
+        <div class="col-md-12">
+            <div class="col-md-10" id="selects">
+                <label for="select_dataset">Select DataSet：</label>
+                <select class="form-control" style="width: 200px;display: inline" id="select_dataset"
+                        onchange="flush_page()">
+                    {% if dataset == '0' %}
+                        <option selected value="0">All</option>
+                    {% else %}
+                        <option value="0">All</option>
+                    {% endif %}
+
+                    {% if dataset == '1' %}
+                        <option selected value="1">Search Engine</option>
+                    {% else %}
+                        <option value="1">Search Engine</option>
+                    {% endif %}
+
+                    {% if dataset == '2' %}
+                        <option selected value="2">Foreign Enterprise</option>
+                    {% else %}
+                        <option value="2">Foreign Enterprise</option>
+                    {% endif %}
+
+                </select>
+                &nbsp;&nbsp;
+                <label for="select_dataset">Select Keyword：</label>
+                <select class="form-control" style="width: 200px;display: inline" id="select_keyword"
+                        onchange="flush_page()" name="keyword">
+                    <option value="">-----------------------</option>
+                    {% for keyword in keywords %}
+                        {% if key == keyword.keyword %}
+                            <option selected value="{{ keyword.id }}">{{ keyword.keyword }}</option>
+                        {% else %}
+                            <option value="{{ keyword.id }}">{{ keyword.keyword }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <div class="checkbox" style="display: inline-block">
+                    <label>
+                        <input id="select_all" type="checkbox" onchange="select_all()">All/~All
+                    </label>
+                </div>
+
+                <div class="checkbox" style="display: inline-block">
+                    <label>
+                        <input id="select_none" type="checkbox" onchange="select_none()">Empty Email/Email
+                    </label>
+                </div>
+
+
+            </div>
+            <div class="col-md-2">
+                <div id="pro_bar"
+                     style="display:none;width: 100%;z-index: 10;">
+                    <div class="progress" style="margin-bottom: 0;height: 36px">
+                        <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                             style="width: 0%;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <hr>
+        <div>
+            <div id="buttons" class="col-md-12">
+                <div class="col-md-9" style="vertical-align: center">
+                    <button class="btn btn-default" id="show_all_none" onclick="show_all_none()">Show Empty</button>
+                    <button class="btn btn-default" onclick="hide_selected()">hide selected</button>
+                    <button class="btn btn-danger" onclick="remove_all_select()">Delete selected</button>
+                    <button class="btn btn-primary" onclick="javascript:location.href='/keyword_manage/'">Keyword
+                        Manage
+                    </button>
+                    <button class="btn btn-primary" onclick="export_email()">Export Email</button>
+                    <button flag="0" id="query_social" class=" btn btn-info" onclick="get_socials()">Query Social Infomation</button>
+                    <button flag="0" id="query_email" class=" btn btn-info" onclick="get_email()">Query Email</button>
+
+                </div>
+
+                <div class="col-md-3">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination" style="margin:7px 0">
+                            <li>
+                                <a href="#" onclick="change_page(1)"
+                                   aria-label="Previous">
+                                    <span aria-hidden="true">First</span>
+                                </a>
+                            </li>
+                            {% if results.has_previous %}
+                                <li>
+                                    <a href="#"
+                                       onclick="change_page({{ results.previous_page_number }})"
+                                       aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+
+
+                            <li><a href="#">{{ pagenum }}</a></li>
+
+                            {% if results.has_next %}
+
+                                <li>
+                                    <a href="#"
+                                       onclick="change_page({{ results.next_page_number }})"
+                                       aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+
+
+                            {% endif %}
+                            <li>
+                                <a href="#"
+                                   onclick="change_page({{ results.paginator.num_pages }})"
+                                   aria-label="Next">
+                                    <span aria-hidden="true">End</span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+
+                    </nav>
+                </div>
+            </div>
+
+
+        </div>
+        {% csrf_token %}
+        <div class="col-md-12">
+            <br>
+            <div id="email_box">
+                <table id="bootstrap-data-table2" class="table table-bordered"
+                       style="">
+                    <thead>
+                    <th style="width: 40px">Flag</th>
+                    <th style="width: 55px">No</th>
+                    <th>Company</th>
+                    <th>Email (Social)</th>
+                    <th>Website</th>
+                    <th>Phone (Social)</th>
+                    <th>Facebook (Social)</th>
+                    <th>Twitter (Social)</th>
+                    {#                    <th>Description</th>#}
+                    </thead>
+                    <tbody id="search_content">
+                    {% for ret in results %}
+                        <tr>
+                            <td><input class="target_num" type="checkbox" searchid="{{ ret.id }}"></td>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ ret.company }}</td>
+                            <td id="email{{ ret.id }}" class="email">{{ ret.email }}</td>
+                            <td>{{ ret.website }}</td>
+                            <td>{{ ret.phone }}</td>
+                            <td><a href="{{ ret.facebook }}">{{ ret.facebook }}</a></td>
+                            <td><a href="{{ ret.twitter }}">{{ ret.twitter }}</a></td>
+                            {#                            <td>{{ ret.description }}</td>#}
+                        </tr>
+                    {% endfor %}
+
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src='/static/js/FileSaver.js'></script>
+    <script>
+
+        function change_page(page) {
+            var current_href = location.href;
+            if (current_href.indexOf("pagenum")) {
+                location.href = current_href.split("&pagenum=")[0] + "&pagenum=" + String(page);
+            }
+        }
+
+        function flush_page() {
+            var dataset = $('#select_dataset').val();
+            var keyword = $('#select_keyword').val();
+            location.href = '/search/results/?keyword=' + keyword + "&dataset=" + dataset
+        }
+
+        function select_all() {
+            var flag = $('#select_all').prop('checked')
+            var check_list = $('.target_num')
+            if (flag) {
+                for (var i = 0; i < check_list.length; i++) {
+                    check_list.eq(i).prop('checked', true)
+                }
+            } else {
+                for (var i = 0; i < check_list.length; i++) {
+                    check_list.eq(i).prop('checked', false)
+                }
+            }
+        }
+
+        function select_none() {
+            var flag = $('#select_none').prop('checked')
+
+            var tr_list = $('#search_content').children()
+
+            if (!flag) {
+                for (var i = 0; i < tr_list.length; i++) {
+                    var email = tr_list.eq(i).children().eq(3).text()
+                    if (email) {
+                        tr_list.eq(i).children().eq(0).children().prop('checked', true)
+                    } else {
+                        tr_list.eq(i).children().eq(0).children().prop('checked', false)
+                    }
+                }
+            } else {
+                for (var i = 0; i < tr_list.length; i++) {
+                    var email = tr_list.eq(i).children().eq(3).text()
+                    if (email) {
+                        tr_list.eq(i).children().eq(0).children().prop('checked', false)
+                    } else {
+                        tr_list.eq(i).children().eq(0).children().prop('checked', true)
+                    }
+                }
+            }
+        }
+
+        function show_all_none() {
+            var tr_list = $('#search_content').children()
+
+
+            for (var i = 0; i < tr_list.length; i++) {
+                var email = tr_list.eq(i).children().eq(3).text()
+                if (email) {
+                    tr_list.eq(i).remove()
+                }
+            }
+        }
+
+        function hide_selected() {
+            var tr_list = $('#search_content').children()
+
+            for (var i = 0; i < tr_list.length; i++) {
+                var flag = tr_list.eq(i).children().eq(0).children().eq(0).prop('checked')
+                if (flag) {
+                    tr_list.eq(i).remove()
+                }
+            }
+        }
+
+        function remove_all_select() {
+
+            var ff = confirm("Are you sure you want to delete the selected search record? You can't find it after deleting it.")
+            if (ff) {
+                var tr_list = $('#search_content').children()
+                var search_id_list = []
+
+                for (var i = 0; i < tr_list.length; i++) {
+                    var flag = tr_list.eq(i).children().eq(0).children().eq(0).prop('checked')
+                    var id = tr_list.eq(i).children().eq(0).children().eq(0).attr('searchid')
+                    if (flag) {
+                        tr_list.eq(i).remove()
+                        search_id_list.push(id)
+                    }
+                }
+                console.log(search_id_list)
+                $.ajax({
+                    url: '/delete_user_searchresult/',
+                    type: 'post',
+                    data: {
+                        'search_id_list': JSON.stringify(search_id_list),
+                        'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
+                    },
+                    success: function (ret) {
+
+                    }
+
+                })
+            }
+
+
+        }
+
+        function export_email() {
+            var keyword = $("#select_keyword option:selected").text();
+            var li = $("input[class='target_num']:checked")
+            if (li.length == 0) {
+                alert('请勾选有效数据后导出！！！')
+            } else {
+                var final_email_str = "";
+                for (var i = 0; i < li.length; i++) {
+                    var email_str = li.eq(i).parent().next().next().next().text()
+                    if (email_str) {
+                        email_str = keyword + "|" + email_str;
+                        var final_str = email_str.replace(/;/g, '\n'+keyword + "|") + '\n'
+                        final_email_str += final_str;
+                    }
+                }
+                var exportContent = "\uFEFF";
+                var blob = new Blob([exportContent + final_email_str], {type: "text/plain;charset=utf-8"});
+                saveAs(blob, "email.csv");
+            }
+        }
+    </script>
+    <script>
+        is_query = 0
+        nums1 = 0
+        nums2 = 0
+        count = 0
+        count2 = 0
+        total = 0
+        total2 = 0
+
+        function start_query_socials() {
+            start_search_flash();
+            is_query = 1
+            nums2 = 0;
+            total2 = li2.length;
+            count2 = 0
+            $("#query_social").text("Pause");//
+            $("#query_social").attr('flag', '1');//
+            $("#query_social").attr("disabled", "true");
+            setTimeout(function () {
+                $("#query_social").removeAttr('disabled');
+            }, 3000)
+
+            t_search_social = setInterval(function () {
+                var website = li2.eq(nums2).parent().next().next().next().next().text()
+                var searchid = li2.eq(nums2).attr("searchid")
+                if (nums2 + 1 > total2) {
+                    clearInterval(t_search_social);
+                } else {
+                    $.ajax({
+                        //发送请求查询当前website对应的email，并保存至数据库，并动态渲染当前页面！
+                        url: '/search/get_socials/',
+                        type: 'post',
+                        data: {
+                            'website': website,
+                            'searchid': searchid,
+                            'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+                        },
+                        timeout:300000,
+                        error: function (ret) {
+                            count2++;
+                            var width = String((count2 / total2)*100) + "%";
+                            console.log(width);
+                            show_flash(width);
+                            if (count2  >= total2) {
+                                is_query = 0;
+                                end_search_flash();
+                            }
+                        },
+                        success: function (ret) {
+                            if (ret.data) {
+                                var td_id = "email" + ret.searchid
+
+                                document.getElementById(td_id).innerText = ret.email
+
+                                var td_obj = $(document.getElementById(td_id))
+
+
+                                var email = ret.data.email;
+                                var phone = ret.data.phone;
+                                var facebook = ret.data.facebook;
+                                var twitter = ret.data.twitter;
+
+                                td_obj.text(email);
+                                td_obj.next().next().text(phone);
+                                td_obj.next().next().next().text(facebook);
+                                td_obj.next().next().next().next().text(twitter);
+
+                                td_obj.prev().prev().prev().children().prop("checked",false)
+
+                            }
+                            count2++;
+                            var width = String((count2 / total2)*100) + "%";
+                            console.log(width);
+                            show_flash(width);
+
+                            if (count2 >= total2) {
+                                is_query = 0;
+                                end_search_flash();
+                            }
+
+                        }
+                    });
+                    nums2++;
+                }
+
+            }, 5000)
+
+        }
+
+        function start_query_email() {
+            start_search_flash();
+            is_query = 1
+            nums1 = 0;
+            total = li1.length;
+            count = 0
+            $("#query_email").text("Pause");//
+            $("#query_email").attr('flag', '1');//
+            $("#query_email").attr("disabled", "true");
+            setTimeout(function () {
+                $("#query_email").removeAttr('disabled');
+            }, 3000)
+
+
+            t_search_email = setInterval(function () {
+                var website = li1.eq(nums1).parent().next().next().next().next().text()
+                var searchid = li1.eq(nums1).attr("searchid")
+                if (nums1 + 1 > total) {
+                    clearInterval(t_search_email);
+                } else {
+                    $.ajax({
+                        //发送请求查询当前website对应的email，并保存至数据库，并动态渲染当前页面！
+                        url: '/search/get_email/',
+                        type: 'post',
+                        data: {
+                            'website': website,
+                            'searchid': searchid,
+                            'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+                        },
+                        timeout:300000,
+                        error: function () {
+                            count++;
+                            var width = String((count / total)*100) + "%"
+                            show_flash(width);
+                            if (count  >= total) {
+                                is_query = 0;
+                                end_search_flash();
+                            }
+                        },
+                        success: function (ret) {
+                            count++;
+                            var width = String((count / total)*100) + "%"
+                            show_flash(width);
+                            if (count  >= total) {
+                                is_query = 0;
+                                end_search_flash();
+                            }
+
+                            if (ret.email) {
+                                var td_id = "email" + ret.searchid
+                                document.getElementById(td_id).innerText = ret.email;
+                                var td_obj = $(document.getElementById(td_id));
+                                 td_obj.prev().prev().prev().children().prop("checked",false);
+                            }
+                        }
+                    });
+                    nums1++;
+                }
+
+
+            }, 5000)
+
+        }
+
+        function show_flash(width) {
+
+            $('.progress-bar').css('width', width)
+            $('#pro_bar').css('display', 'inline-block')
+        }
+
+        function start_search_flash() {
+            $('.progress-bar').css('width', '0')
+            $('#pro_bar').css('display', 'inline-block')
+            $(".load-container").show();
+        }
+
+        function end_search_flash() {
+            $('.progress-bar').css('width', '100%');
+            setTimeout(function () {
+                $("#query_social").text("Query Social");
+                $("#query_social").attr('flag', '0');
+                $("#query_email").text("Query Email");
+                $("#query_email").attr('flag', '0');
+                $(".load-container").hide();
+                $('#pro_bar').css('display', 'none');
+            }, 3000);
+
+        }
+
+        function begin_search_email() {
+            li1 = $("input[class='target_num']:checked")
+            console.log(li1.length)
+            if (li1.length == 0) {
+                alert('Please check the valid data before querying！！！')
+            } else if (is_query == 1) {
+                alert("There are unfinished query tasks, please wait！")
+            } else {
+                start_query_email();
+            }
+        }
+
+        function stop_search_email() {
+            try {
+                //如果定时器存在，那么清除它！
+                clearInterval(t_search_email);
+            } catch (e) {
+
+            }
+            $("#query_email").text("Pauseing......")
+            $("#query_email").attr('disabled', 'true')
+            setTimeout(function () {
+                $(".load-container").hide();
+
+                //将 按钮中文字设置为   继续
+                $("#query_email").text("Continue")
+                $("#query_email").attr('flag', '2')
+                $("#query_email").removeAttr('disabled')
+            }, 3000)
+
+
+        }
+
+        function continue_search_email() {
+            $(".load-container").show();
+            $("#query_email").text("Pause")
+            $("#query_email").attr('flag', '1')
+            t_search_email = setInterval(function () {
+                var website = li1.eq(nums1).parent().next().next().next().next().text()
+                var searchid = li1.eq(nums1).attr("searchid")
+
+                if (nums1 + 1 > total) {
+                    clearInterval(t_search_email);
+                } else {
+                    $.ajax({
+                        //发送请求查询当前website对应的email，并保存至数据库，并动态渲染当前页面！
+                        url: '/search/get_email/',
+                        type: 'post',
+                        data: {
+                            'website': website,
+                            'searchid': searchid,
+                            'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+                        },
+                        timeout:300000,
+                        error: function () {
+                            count++;
+                            var width = String((count / total)*100) + "%"
+                            show_flash(width);
+                            if (count  >= total) {
+                                is_query = 0;
+                                end_search_flash();
+                            }
+                        },
+                        success: function (ret) {
+                            count++;
+                            var width = String((count / total)*100) + "%"
+                            show_flash(width);
+                            if (count  >= total) {
+                                is_query = 0;
+                                end_search_flash();
+                            }
+
+                            if (ret.email) {
+                                var td_id = "email" + ret.searchid
+                                document.getElementById(td_id).innerText = ret.email;
+                                 var td_obj = $(document.getElementById(td_id));
+                                 td_obj.prev().prev().prev().children().prop("checked",false);
+                            }
+                        }
+                    });
+                    nums1++;
+                }
+
+
+            }, 5000)
+        }
+
+        function get_email() {
+            var flag = $("#query_email").attr("flag");
+            if (flag == "0") {
+                //说明是第一次从0搜索  即点击搜索
+                var f = confirm("It is recommended to use Query Social  query first. Do you want to continue?")
+                if (f){
+                    begin_search_email();
+                }
+
+            } else if (flag == "1") {
+                //点击暂停
+                stop_search_email();
+            } else if (flag == '2') {
+                //点击继续
+                continue_search_email()
+            }
+        }
+
+        function begin_search_social() {
+            // 获取邮箱、手机、Facebook、Twitter
+            var token = $('input[name="csrfmiddlewaretoken"]').val();
+            li2 = $("input[class='target_num']:checked")
+            if (li2.length == 0) {
+                alert('Please check the valid data before querying！！！')
+            } else if (is_query == 1) {
+                alert("There are unfinished query tasks, please wait！")
+            } else {
+                start_query_socials()
+            }
+        }
+
+        function stop_search_social() {
+            try {
+                //如果定时器存在，那么清除它！
+                clearInterval(t_search_social);
+            } catch (e) {
+
+            }
+            $("#query_social").text("Pauseing......")
+            $("#query_social").attr('disabled', 'true')
+            setTimeout(function () {
+                $(".load-container").hide();
+
+                //将 按钮中文字设置为   继续
+                $("#query_social").text("Continue")
+                $("#query_social").attr('flag', '2')
+                $("#query_social").removeAttr('disabled')
+            }, 3000)
+        }
+
+        function continue_search_social() {
+           $(".load-container").show();
+            $("#query_social").text("Pause")
+            $("#query_social").attr('flag', '1')
+            t_search_social = setInterval(function () {
+                var website = li2.eq(nums2).parent().next().next().next().next().text()
+                var searchid = li2.eq(nums2).attr("searchid")
+                if (nums2 + 1 > total2) {
+                    clearInterval(t_search_social);
+                } else {
+                    $.ajax({
+                        //发送请求查询当前website对应的email，并保存至数据库，并动态渲染当前页面！
+                        url: '/search/get_socials/',
+                        type: 'post',
+                        data: {
+                            'website': website,
+                            'searchid': searchid,
+                            'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+                        },
+                        timeout:300000,
+                        error: function (ret) {
+                            count2++;
+                            var width = String((count2 / total2)*100) + "%";
+                            console.log(width);
+                            show_flash(width);
+                            if (count2  >= total2) {
+                                is_query = 0;
+                                end_search_flash();
+                            }
+                        },
+                        success: function (ret) {
+                            if (ret.data) {
+                                var td_id = "email" + ret.searchid
+
+                                document.getElementById(td_id).innerText = ret.email
+
+                                var td_obj = $(document.getElementById(td_id))
+
+
+                                var email = ret.data.email;
+                                var phone = ret.data.phone;
+                                var facebook = ret.data.facebook;
+                                var twitter = ret.data.twitter;
+
+                                td_obj.text(email);
+                                td_obj.next().next().text(phone);
+                                td_obj.next().next().next().text(facebook);
+                                td_obj.next().next().next().next().text(twitter);
+
+                                td_obj.prev().prev().prev().children().prop("checked",false)
+
+                            }
+                            count2++;
+                            var width = String((count2 / total2)*100) + "%";
+                            console.log(width);
+                            show_flash(width);
+
+                            if (count2  >= total2) {
+                                is_query = 0;
+                                end_search_flash();
+                            }
+                        }
+                    });
+                    nums2++;
+                }
+
+            }, 5000)
+        }
+
+        function get_socials() {
+
+            var flag = $("#query_social").attr("flag");
+            if (flag == "0") {
+                //说明是第一次从0搜索  即点击搜索
+                begin_search_social();
+            } else if (flag == "1") {
+                //点击暂停
+                stop_search_social();
+            } else if (flag == '2') {
+                //点击继续
+                continue_search_social()
+            }
+            else {
+
+            }
+
+
+        }
+
+
+    </script>
+{% endblock %}
+
+

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<!-- saved from url=(0073)https://www.17sucai.com/preview/1749733/2019-07-04/jquery-tree/index.html -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title></title>
+    <title>恒铸智能柜管理平台</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" href="/static/tree_checkbox/style.css">
+</head>
+
+<body style="">
+
+<div class="tree">
+
+</div>
+
+<button id="demo">获取选中数据</button>
+
+<script src="/static/tree_checkbox/jquery.min.js"></script>
+{#<script src="/static/js/jquery-3.5.1.min.js"></script>#}
+<script src="/static/tree_checkbox/leg-tree.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    var data = [{
+        "name": "所有权限123",
+        "open": true,
+        "nocheck": false,
+        "cascade": true,
+        "checked": false,
+        "children": [{
+            "name": "储物柜管理",
+            "open": true,
+            "nocheck": false,
+            "checked": false,
+            "children": [{
+                "name": "储物柜列表",
+                "id": 1,
+                "nocheck": false,
+                "checked": false,
+                "open": true,
+                "children": [{
+                    "name": "详情",
+                    "id": 7,
+                    "nocheck": false,
+                    "checked": false
+                },
+                    {
+                        "name": "修改价格",
+                        "id": 43,
+                        "nocheck": false,
+                        "checked": false
+                    }
+                ]
+            },
+                {
+                    "name": "计费类型",
+                    "id": 36,
+                    "nocheck": false,
+                    "checked": false,
+                    "open": true,
+                    "children": [{
+                        "name": "删除",
+                        "id": 37,
+                        "nocheck": false,
+                        "checked": false
+                    },
+                        {
+                            "name": "提交编辑",
+                            "id": 52,
+                            "nocheck": false,
+                            "checked": false
+                        }
+                    ]
+                }
+            ]
+        },
+            {
+                "name": "广告业务",
+                "open": true,
+                "nocheck": false,
+                "checked": false,
+                "children": [{
+                    "name": "广告列表",
+                    "id": 22,
+                    "nocheck": false,
+                    "checked": false,
+                    "open": true,
+                    "children": [{
+                        "name": "编辑",
+                        "id": 23,
+                        "nocheck": false,
+                        "checked": false
+                    },
+                        {
+                            "name": "添加",
+                            "id": 24,
+                            "nocheck": false,
+                            "checked": false
+                        },
+                        {
+                            "name": "删除",
+                            "id": 25,
+                            "nocheck": false,
+                            "checked": false
+                        }
+                    ]
+                },
+                    {
+                        "name": "广告资源",
+                        "id": 26,
+                        "nocheck": false,
+                        "checked": false,
+                        "open": true,
+                        "children": [{
+                            "name": "编辑",
+                            "id": 27,
+                            "nocheck": false,
+                            "checked": false
+                        },
+                            {
+                                "name": "上传",
+                                "id": 28,
+                                "nocheck": false,
+                                "checked": false
+                            },
+                            {
+                                "name": "删除",
+                                "id": 29,
+                                "nocheck": false,
+                                "checked": false
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "个人中心",
+                "open": true,
+                "nocheck": false,
+                "checked": false,
+                "children": [{
+                    "name": "资料修改",
+                    "id": 5,
+                    "nocheck": false,
+                    "checked": false,
+                    "open": true,
+                    "children": []
+                },
+                    {
+                        "name": "密码修改",
+                        "id": 6,
+                        "nocheck": false,
+                        "checked": false,
+                        "open": true,
+                        "children": []
+                    },
+                    {
+                        "name": "资金账户",
+                        "id": 41,
+                        "nocheck": false,
+                        "checked": false,
+                        "open": true,
+                        "children": [{
+                            "name": "资金账户绑定微信",
+                            "id": 39,
+                            "nocheck": false,
+                            "checked": false
+                        },
+                            {
+                                "name": "资金账户绑定支付宝",
+                                "id": 40,
+                                "nocheck": false,
+                                "checked": false
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "日志管理",
+                "open": true,
+                "nocheck": false,
+                "checked": false,
+                "children": [{
+                    "name": "错误日志",
+                    "id": 30,
+                    "nocheck": false,
+                    "checked": false,
+                    "open": true,
+                    "children": [{
+                        "name": "详情",
+                        "id": 31,
+                        "nocheck": false,
+                        "checked": false
+                    },
+                        {
+                            "name": "删除",
+                            "id": 32,
+                            "nocheck": false,
+                            "checked": false
+                        }
+                    ]
+                },
+                    {
+                        "name": "操作日志",
+                        "id": 33,
+                        "nocheck": false,
+                        "checked": false,
+                        "open": false,
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "name": "消息推送",
+                "open": false,
+                "nocheck": false,
+                "checked": false,
+                "children": [{
+                    "name": "普通消息",
+                    "id": 34,
+                    "nocheck": false,
+                    "checked": false,
+                    "open": true,
+                    "children": []
+                },
+
+                ]
+            }
+        ]
+    }];
+
+    var arrs = [1, 2, 3, 48, 5, 6, 7, 8, 9, 10]
+
+    /*
+    生成tree的位置 data为tree数据、arrs为选中的id可为空
+    arrs可填可不填 填写需为数组
+    data数据中的只有name、id、checked、open、children和cascade是可用的，其他为多余
+        其中open为是否展开
+        cascade为是否子父级联选中（cascade 必须在最高父级中写才生效）
+    */
+    $(".tree").tree(data, arrs);
+    //leg(".tree").tree(data,arrs);	//leg等同于$
+
+    $("#demo").on("click", () => {
+        alert($.getCheckedNodes())
+    })
+    console.log($.getCheckedNodes())
+    //console.log(leg.getCheckedNodes())
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,287 @@
+{% extends 'base.html' %}
+{% block title %}
+    主页
+{% endblock %}
+
+
+{% block style %}
+    <style>
+        .content_list {
+            display: flex;
+            display: -webkit-flex; /* Safari */
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .panel {
+            height: 400px;
+        }
+
+    </style>
+{% endblock %}
+
+{% block page_title %}
+    主页
+{% endblock %}
+{% block main %}
+    <div class="container-fluid">
+        <div class="jumbotron">
+            <h1>{{ tips1 }}</h1>
+            <p></p>
+            <p>Welcome to foreign trade development system！With the help of our foreign trade development system, you
+                can quickly discover foreign customers.</p>
+            <p> Let's start.</p>
+            {#            <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>#}
+        </div>
+
+
+        <div>
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab"
+                                                          data-toggle="tab"><h3>Data Mining</h3></a></li>
+                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"><h3>
+                    Email
+                    Management</h3></a></li>
+                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab"><h3>
+                    Translation</h3></a>
+                </li>
+            </ul>
+{#            <br>#}
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="home">
+                    <div class="content_list">
+                        <div class="col-md-4" style="padding: 20px">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><a href="/search/engine/"><i class="fa fa-search"
+                                                                                         aria-hidden="true"></i><span> Search Engine</span></a>
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <h4>搜索引擎搜索：基于国外搜索引擎（GOOGLE、ASK、BING等）搜索相关产品对应的海外采购商！</h4>
+                                    {#                                    <h4>Search engine search: search for overseas buyers corresponding to related#}
+                                    {#                                        products based on foreign search engines (GOOGLE, ASK, BING, etc.)!</h4>#}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4" style="padding: 20px">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><a href="/search/yellow/" class="">
+                                        <i class="fa fa-book" aria-hidden="true"></i>
+                                        Foreign Enterprise
+                                    </a>
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <h4>国外企业名录搜索：基于国外多个知名黄页网站、企业名录网站一键搜索相关产品对应的海外采购商！</h4>
+                                    {#                                    <h4>Search for foreign business directory: search for overseas buyers corresponding#}
+                                    {#                                        to related products with one click based on many well-known foreign yellow pages#}
+                                    {#                                        websites and business directory websites!</h4>#}
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-4" style="padding: 20px">
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <a href="/search/results/">
+                                            <i class="fa  fa-bullseye" aria-hidden="true"></i> Depth Extraction</a>
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <h4>数据提取：使用搜索引擎搜索或企业名录搜索后，可以在此查看搜索结果，并深度挖掘客户邮箱等社交信息。</h4>
+                                    {#                                    <h4>Data extraction: After using search engine search or business directory search,#}
+                                    {#                                        you can view the search results here and dig deep into social information such#}
+                                    {#                                        as customer mailboxes.</h4>#}
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="profile">
+                    <div class="content_list">
+
+
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><a href="/letter/"><i class="fa fa-envelope"
+                                                                                  aria-hidden="true"></i><span>Development Letter</span></a>
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <h4>开发信模板：您可以在此处编辑您的开发信模板（可以直接复制word内容到此处，格式会保留），后续发送邮箱时直接选择开发信模板即可。</h4>
+                                    {#                                    <h4>Opening letter template: you can edit your opening letter template here (you can#}
+                                    {#                                        directly copy the word content here, and the format will be preserved), and you#}
+                                    {#                                        can directly select the opening letter template when sending the mailbox#}
+                                    {#                                        later.</h4>#}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><a href="/mail/"><i class="fa fa-envelope"
+                                                                                aria-hidden="true"></i><span>Outbox</span></a>
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <h4>发件箱设置：您可以在此处添加您的发件邮箱。您可以通过手动添加或通过文件导入（按照模板格式填写）的方式批量添加。</h4>
+                                    {#                                    <h4>Outbox settings: you can add your outbox here. You can add them in batches by#}
+                                    {#                                        adding them manually or by importing files (filling them in the template#}
+                                    {#                                        format).</h4>#}
+
+                                </div>
+                            </div>
+                        </div>
+                        <style>
+                            .panel-title i {
+                                padding-right: 5px;
+                            }
+                        </style>
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><a href="/send_target/"><i class="fa fa-user-circle-o"
+                                                                                       aria-hidden="true"></i><span>Target Customer</span></a>
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <h4>目标客户管理：您可以手动填写并添加目标客户或直接从搜索结果导入目标客户。</h4>
+                                    {#                                    <h4>Target customer management: you can fill in and add target customers manually or#}
+                                    {#                                        import target customers directly from search results.</h4>#}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <a href="/send_mail/"><i class="fa fa-paper-plane"
+                                                                 aria-hidden="true"></i><span>Send Email</span></a></h3>
+                                </div>
+                                <div class="panel-body">
+                                    <h4>
+                                        发送邮箱：您可以在此通过多选开发信模板、发件箱和目标客户，实现一键发送邮件（系统后台会延时执行发送邮件任务，防止发送邮件过快导致发件箱被封，您可以通过刷新邮件记录页面查看）。</h4>
+                                    {#                                    <h4>Sending mailbox: you can send mail with one click by selecting multiple sending#}
+                                    {#                                        templates, outbox and target customers (the system background will delay the#}
+                                    {#                                        task of sending mail to prevent the outbox from being blocked due to sending#}
+                                    {#                                        mail too fast, which can be viewed by refreshing the mail record page).#}
+                                    {#                                    </h4>#}
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <a href="/email_record/"><i class="fa fa-history"
+                                                                    aria-hidden="true"></i><span>Email Record</span></a>
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <h4>邮件发送记录：您可以在此处查看所有发送过的历史邮件，并且可以将发送失败的客户一键添加到目标客户列表。</h4>
+                                    {#                                    <h4>Mail sending record: you can view all the sent historical mails here, and add#}
+                                    {#                                        the customers who failed to send to the target customer list with one#}
+                                    {#                                        click.</h4>#}
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="messages">
+                    <iframe width="100%" height="470px" src="https://translate.sogou.com/"></iframe>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <style>
+        h4 {
+            font-size: 16px;
+            text-indent: 16px;
+            line-height: 24px
+        }
+
+
+        .jumbotron {
+            background: linear-gradient(45deg, #665fee 0%, #27c2de 100%);
+        }
+
+        .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+            color: #ff8b02;
+        }
+
+        .panel-default > .panel-heading {
+            background-color: #4c93d3;
+        }
+
+        .panel-heading i {
+            padding-right: 5px;
+        }
+
+        .panel:hover{
+            color: #ff8b02;
+        }
+
+        .panel {
+            height: 400px;
+            box-shadow: 0 13px 23px #ccc;
+        }
+
+        .panel-title a span {
+            color: white;
+        }
+
+        .panel-title a {
+            color: white;
+        }
+
+        .panel-title i {
+            color: #fff
+        }
+
+        .panel-title:hover a span {
+            color: #ff8b02;
+        }
+
+        .panel-title:hover a {
+            color: #ff8b02;
+        }
+
+        .panel-title:hover i {
+            color: #ff8b02;
+        }
+
+        .jumbotron h1 {
+            color: #fff;
+        }
+
+        .jumbotron p {
+            color: #fff;
+        }
+    </style>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}
+

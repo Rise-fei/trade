@@ -1,0 +1,633 @@
+*** Starting uWSGI 2.0.19.1 (64bit) on [Thu Jan 21 17:33:15 2021] ***
+compiled with version: 4.8.5 20150623 (Red Hat 4.8.5-36) on 04 January 2021 07:16:33
+os: Linux-3.10.0-693.2.2.el7.x86_64 #1 SMP Tue Sep 12 22:26:13 UTC 2017
+nodename: izbp18eahm3lotyc74p4oyz
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /root/trade
+writing pidfile to uwsgi.pid
+detected binary path: /root/project_env/django_env/bin/uwsgi
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /root/trade
+your processes number limit is 15088
+your memory page size is 4096 bytes
+detected max file descriptor number: 65535
+- async cores set to 200 - fd table size: 65535
+lock engine: pthread robust mutexes
+thunder lock: enabled
+uWSGI http bound on 127.0.0.1:8888 fd 4
+uwsgi socket 0 bound to TCP address 127.0.0.1:42068 (port auto-assigned) fd 3
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+Python version: 3.7.4 (default, Sep  3 2019, 17:00:34)  [GCC 4.8.5 20150623 (Red Hat 4.8.5-36)]
+Set PythonHome to /root/project_env/django_env
+Python main interpreter initialized at 0x24ba0b0
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+python threads support enabled
+your server socket listen backlog is limited to 9999 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 1569168 bytes (1532 KB) for 48 cores
+*** Operational MODE: preforking+threaded ***
+1
+WSGI app 0 (mountpoint='') ready in 1 seconds on interpreter 0x24ba0b0 pid: 13275 (default app)
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 13275)
+spawned uWSGI worker 1 (pid: 13276, cores: 6)
+spawned uWSGI worker 2 (pid: 13277, cores: 6)
+spawned uWSGI worker 3 (pid: 13278, cores: 6)
+spawned uWSGI worker 4 (pid: 13279, cores: 6)
+spawned uWSGI worker 5 (pid: 13280, cores: 6)
+spawned uWSGI worker 6 (pid: 13281, cores: 6)
+*** running gevent loop engine [addr:0x60f500] ***
+spawned uWSGI worker 7 (pid: 13282, cores: 6)
+spawned uWSGI worker 8 (pid: 13283, cores: 6)
+spawned uWSGI http 1 (pid: 13284)
+SIGINT/SIGQUIT received...killing workers...
+Brutally killing worker 1 (pid: 13276)...
+Brutally killing worker 2 (pid: 13277)...
+Thu Jan 21 17:34:29 2021 - stopping gevent signals watchers for worker 1 (pid: 13276)...
+Thu Jan 21 17:34:29 2021 - stopping gevent sockets watchers for worker 1 (pid: 13276)...
+Thu Jan 21 17:34:29 2021 - main gevent watchers stopped for worker 1 (pid: 13276)...
+Thu Jan 21 17:34:29 2021 - stopping gevent signals watchers for worker 2 (pid: 13277)...
+Thu Jan 21 17:34:29 2021 - stopping gevent sockets watchers for worker 2 (pid: 13277)...
+Thu Jan 21 17:34:29 2021 - main gevent watchers stopped for worker 2 (pid: 13277)...
+goodbye to the gevent Hub on worker 2 (pid: 13277)
+goodbye to the gevent Hub on worker 1 (pid: 13276)
+Brutally killing worker 3 (pid: 13278)...
+Thu Jan 21 17:34:29 2021 - stopping gevent signals watchers for worker 3 (pid: 13278)...
+Thu Jan 21 17:34:29 2021 - stopping gevent sockets watchers for worker 3 (pid: 13278)...
+Thu Jan 21 17:34:29 2021 - main gevent watchers stopped for worker 3 (pid: 13278)...
+goodbye to the gevent Hub on worker 3 (pid: 13278)
+Brutally killing worker 4 (pid: 13279)...
+Thu Jan 21 17:34:29 2021 - stopping gevent signals watchers for worker 4 (pid: 13279)...
+Thu Jan 21 17:34:29 2021 - stopping gevent sockets watchers for worker 4 (pid: 13279)...
+Thu Jan 21 17:34:29 2021 - main gevent watchers stopped for worker 4 (pid: 13279)...
+Brutally killing worker 6 (pid: 13281)...
+Thu Jan 21 17:34:29 2021 - stopping gevent signals watchers for worker 6 (pid: 13281)...
+goodbye to the gevent Hub on worker 4 (pid: 13279)
+Thu Jan 21 17:34:29 2021 - stopping gevent sockets watchers for worker 6 (pid: 13281)...
+Thu Jan 21 17:34:29 2021 - main gevent watchers stopped for worker 6 (pid: 13281)...
+goodbye to the gevent Hub on worker 6 (pid: 13281)
+Brutally killing worker 5 (pid: 13280)...
+Thu Jan 21 17:34:29 2021 - stopping gevent signals watchers for worker 5 (pid: 13280)...
+Thu Jan 21 17:34:29 2021 - stopping gevent sockets watchers for worker 5 (pid: 13280)...
+Thu Jan 21 17:34:29 2021 - main gevent watchers stopped for worker 5 (pid: 13280)...
+goodbye to the gevent Hub on worker 5 (pid: 13280)
+Brutally killing worker 8 (pid: 13283)...
+Thu Jan 21 17:34:29 2021 - stopping gevent signals watchers for worker 8 (pid: 13283)...
+Thu Jan 21 17:34:29 2021 - stopping gevent sockets watchers for worker 8 (pid: 13283)...
+Thu Jan 21 17:34:29 2021 - main gevent watchers stopped for worker 8 (pid: 13283)...
+goodbye to the gevent Hub on worker 8 (pid: 13283)
+Brutally killing worker 7 (pid: 13282)...
+Thu Jan 21 17:34:29 2021 - stopping gevent signals watchers for worker 7 (pid: 13282)...
+Thu Jan 21 17:34:29 2021 - stopping gevent sockets watchers for worker 7 (pid: 13282)...
+Thu Jan 21 17:34:29 2021 - main gevent watchers stopped for worker 7 (pid: 13282)...
+goodbye to the gevent Hub on worker 7 (pid: 13282)
+gateway "uWSGI http 1" has been buried (pid: 13284)
+worker 8 buried after 0 seconds
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+worker 5 buried after 1 seconds
+worker 6 buried after 1 seconds
+worker 7 buried after 1 seconds
+goodbye to uWSGI.
+*** Starting uWSGI 2.0.19.1 (64bit) on [Thu Jan 21 17:34:51 2021] ***
+compiled with version: 4.8.5 20150623 (Red Hat 4.8.5-36) on 04 January 2021 07:16:33
+os: Linux-3.10.0-693.2.2.el7.x86_64 #1 SMP Tue Sep 12 22:26:13 UTC 2017
+nodename: izbp18eahm3lotyc74p4oyz
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /root/trade
+writing pidfile to uwsgi.pid
+detected binary path: /root/project_env/django_env/bin/uwsgi
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /root/trade
+your processes number limit is 15088
+your memory page size is 4096 bytes
+detected max file descriptor number: 65535
+- async cores set to 200 - fd table size: 65535
+lock engine: pthread robust mutexes
+thunder lock: enabled
+uWSGI http bound on 0.0.0.0:8888 fd 4
+uwsgi socket 0 bound to TCP address 127.0.0.1:38266 (port auto-assigned) fd 3
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+Python version: 3.7.4 (default, Sep  3 2019, 17:00:34)  [GCC 4.8.5 20150623 (Red Hat 4.8.5-36)]
+Set PythonHome to /root/project_env/django_env
+Python main interpreter initialized at 0x1a460b0
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+python threads support enabled
+your server socket listen backlog is limited to 9999 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 1569168 bytes (1532 KB) for 48 cores
+*** Operational MODE: preforking+threaded ***
+1
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x1a460b0 pid: 13397 (default app)
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 13397)
+spawned uWSGI worker 1 (pid: 13398, cores: 6)
+*** running gevent loop engine [addr:0x60f500] ***
+spawned uWSGI worker 2 (pid: 13399, cores: 6)
+spawned uWSGI worker 3 (pid: 13400, cores: 6)
+spawned uWSGI worker 4 (pid: 13401, cores: 6)
+spawned uWSGI worker 5 (pid: 13402, cores: 6)
+spawned uWSGI worker 6 (pid: 13403, cores: 6)
+spawned uWSGI worker 7 (pid: 13404, cores: 6)
+spawned uWSGI worker 8 (pid: 13405, cores: 6)
+spawned uWSGI http 1 (pid: 13406)
+True
+/
+1
+2
+当前浏览器中存储的用户cookie：session_key在服务器端有对应的记录，即该用户是登录状态！
+5mgcdhxaaegnic8qbglca7mabvxcaz7t
+119.166.232.45
+time.struct_time(tm_year=2021, tm_mon=1, tm_mday=21, tm_hour=17, tm_min=34, tm_sec=57, tm_wday=3, tm_yday=21, tm_isdst=0)
+[pid: 13401|app: 0|req: 1/1] 119.166.232.45 () {40 vars in 1074 bytes} [Thu Jan 21 17:34:57 2021] GET / => generated 8937 bytes in 342 msecs (HTTP/1.1 200) 4 headers in 124 bytes (3 switches on core 0)
+!!! uWSGI process 13398 got Segmentation Fault !!!
+*** backtrace of 13398 ***
+uwsgi(uwsgi_backtrace+0x2e) [0x5e92ee]
+uwsgi(uwsgi_segfault+0x21) [0x5e9681]
+/lib64/libc.so.6(+0x35270) [0x7f5ddf34d270]
+uwsgi(py_uwsgi_gevent_main+0x39) [0x60f019]
+uwsgi() [0x484de7]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(gevent_callback_io+0xa2) [0x7f5dd2483f02]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(ev_invoke_pending+0x53) [0x7f5dd245bb53]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(ev_run+0x518) [0x7f5dd2481818]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(+0x4427f) [0x7f5dd248227f]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(+0x1fe17) [0x7f5dd245de17]
+uwsgi(_PyObject_FastCallKeywords+0x8a) [0x485caa]
+uwsgi(_PyEval_EvalFrameDefault+0x52bd) [0x51e2bd]
+uwsgi() [0x484c5a]
+uwsgi(_PyObject_Call_Prepend+0x2b7) [0x487637]
+uwsgi(PyObject_Call+0xb9) [0x487209]
+/root/project_env/django_env/lib/python3.7/site-packages/greenlet/_greenlet.cpython-37m-x86_64-linux-gnu.so(+0x3601) [0x7f5dd2032601]
+/root/project_env/django_env/lib/python3.7/site-packages/greenlet/_greenlet.cpython-37m-x86_64-linux-gnu.so(+0x37af) [0x7f5dd20327af]
+/root/project_env/django_env/lib/python3.7/site-packages/greenlet/_greenlet.cpython-37m-x86_64-linux-gnu.so(+0x443c) [0x7f5dd203343c]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_c_greenlet_primitives.cpython-37m-x86_64-linux-gnu.so(+0xb603) [0x7f5dd194d603]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_c_greenlet_primitives.cpython-37m-x86_64-linux-gnu.so(+0xc50e) [0x7f5dd194e50e]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_c_greenlet_primitives.cpython-37m-x86_64-linux-gnu.so(+0xc167) [0x7f5dd194e167]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_cgreenlet.cpython-37m-x86_64-linux-gnu.so(+0x2b212) [0x7f5dd12ef212]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_cgreenlet.cpython-37m-x86_64-linux-gnu.so(+0x1476d) [0x7f5dd12d876d]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(+0x1fe17) [0x7f5dd245de17]
+uwsgi(_PyObject_Call_Prepend+0x137) [0x4874b7]
+uwsgi(_PyObject_FastCallDict+0xe7) [0x486b97]
+uwsgi(PyObject_CallMethod+0x27e) [0x48a01e]
+uwsgi() [0x60fa06]
+uwsgi(uwsgi_ignition+0x11b) [0x5e985b]
+uwsgi(uwsgi_worker_run+0x2ed) [0x5ee11d]
+uwsgi() [0x5ee6df]
+uwsgi() [0x47822e]
+/lib64/libc.so.6(__libc_start_main+0xf5) [0x7f5ddf339c05]
+uwsgi() [0x59d7ee]
+*** end of backtrace ***
+True
+/static/static/css/owl.carousel.min.css
+True
+/static/static/css/animate.css
+路径匹配成功
+路径匹配成功
+Not Found: /static/static/css/animate.css
+Not Found: /static/static/css/owl.carousel.min.css
+[pid: 13405|app: 0|req: 1/2] 119.166.232.45 () {38 vars in 1009 bytes} [Thu Jan 21 17:34:57 2021] GET /static/static/css/owl.carousel.min.css => generated 6083 bytes in 139 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+[pid: 13403|app: 0|req: 1/3] 119.166.232.45 () {38 vars in 991 bytes} [Thu Jan 21 17:34:57 2021] GET /static/static/css/animate.css => generated 6056 bytes in 127 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/static/css/bootstrap.min.css
+路径匹配成功
+Not Found: /static/static/css/bootstrap.min.css
+[pid: 13400|app: 0|req: 1/4] 119.166.232.45 () {38 vars in 1003 bytes} [Thu Jan 21 17:34:57 2021] GET /static/static/css/bootstrap.min.css => generated 6074 bytes in 170 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/static/css/slick-theme.css
+路径匹配成功
+Not Found: /static/static/css/slick-theme.css
+[pid: 13402|app: 0|req: 1/5] 119.166.232.45 () {38 vars in 999 bytes} [Thu Jan 21 17:34:57 2021] GET /static/static/css/slick-theme.css => generated 6068 bytes in 171 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/static/css/slick.css
+路径匹配成功
+Not Found: /static/static/css/slick.css
+[pid: 13404|app: 0|req: 1/6] 119.166.232.45 () {38 vars in 987 bytes} [Thu Jan 21 17:34:57 2021] GET /static/static/css/slick.css => generated 6050 bytes in 189 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/static/css/themify-icons.css
+路径匹配成功
+Not Found: /static/static/css/themify-icons.css
+[pid: 13399|app: 0|req: 1/7] 119.166.232.45 () {38 vars in 1003 bytes} [Thu Jan 21 17:34:57 2021] GET /static/static/css/themify-icons.css => generated 6074 bytes in 209 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/static/css/responsive.css
+路径匹配成功
+Not Found: /static/static/css/responsive.css
+[pid: 13403|app: 0|req: 2/8] 119.166.232.45 () {38 vars in 997 bytes} [Thu Jan 21 17:34:57 2021] GET /static/static/css/responsive.css => generated 6065 bytes in 47 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/static/css/style.css
+路径匹配成功
+True
+/static/static/css/magnific-popup.css
+路径匹配成功
+Not Found: /static/static/css/style.css
+[pid: 13400|app: 0|req: 2/9] 119.166.232.45 () {38 vars in 986 bytes} [Thu Jan 21 17:34:57 2021] GET /static/static/css/style.css => generated 6050 bytes in 80 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/static/js/jquery-3.2.1.min.js
+路径匹配成功
+Not Found: /static/static/js/jquery-3.2.1.min.js
+[pid: 13405|app: 0|req: 2/10] 119.166.232.45 () {38 vars in 990 bytes} [Thu Jan 21 17:34:57 2021] GET /static/static/js/jquery-3.2.1.min.js => generated 6077 bytes in 48 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+Not Found: /static/static/css/magnific-popup.css
+[pid: 13401|app: 0|req: 2/11] 119.166.232.45 () {38 vars in 1005 bytes} [Thu Jan 21 17:34:57 2021] GET /static/static/css/magnific-popup.css => generated 6077 bytes in 94 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/static/js/popper.min.js
+路径匹配成功
+Not Found: /static/static/js/popper.min.js
+[pid: 13402|app: 0|req: 2/12] 119.166.232.45 () {38 vars in 978 bytes} [Thu Jan 21 17:34:57 2021] GET /static/static/js/popper.min.js => generated 6059 bytes in 78 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/static/js/bootstrap.min.js
+路径匹配成功
+Not Found: /static/static/js/bootstrap.min.js
+[pid: 13399|app: 0|req: 2/13] 119.166.232.45 () {38 vars in 984 bytes} [Thu Jan 21 17:34:57 2021] GET /static/static/js/bootstrap.min.js => generated 6068 bytes in 62 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/static/js/jquery.stellar.js
+路径匹配成功
+Not Found: /static/static/js/jquery.stellar.js
+[pid: 13404|app: 0|req: 2/14] 119.166.232.45 () {38 vars in 985 bytes} [Thu Jan 21 17:34:57 2021] GET /static/static/js/jquery.stellar.js => generated 6071 bytes in 76 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/static/js/owl.carousel.min.js
+路径匹配成功
+Not Found: /static/static/js/owl.carousel.min.js
+[pid: 13400|app: 0|req: 3/15] 119.166.232.45 () {38 vars in 989 bytes} [Thu Jan 21 17:34:57 2021] GET /static/static/js/owl.carousel.min.js => generated 6077 bytes in 65 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/static/js/slick.min.js
+路径匹配成功
+Not Found: /static/static/js/slick.min.js
+[pid: 13401|app: 0|req: 3/16] 119.166.232.45 () {38 vars in 976 bytes} [Thu Jan 21 17:34:57 2021] GET /static/static/js/slick.min.js => generated 6056 bytes in 28 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/assets/images/blogo.png
+路径匹配成功
+True
+/static/static/picture/loader.gif
+路径匹配成功
+Not Found: /static/static/picture/loader.gif
+Not Found: /static/assets/images/blogo.png
+[pid: 13403|app: 0|req: 3/17] 119.166.232.45 () {38 vars in 1024 bytes} [Thu Jan 21 17:34:57 2021] GET /static/assets/images/blogo.png => generated 6059 bytes in 92 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+[pid: 13405|app: 0|req: 3/18] 119.166.232.45 () {38 vars in 1029 bytes} [Thu Jan 21 17:34:57 2021] GET /static/static/picture/loader.gif => generated 6065 bytes in 91 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/static/js/imagesloaded.pkgd.min.js
+路径匹配成功
+DAMN ! worker 1 (pid: 13398) died :( trying respawn ...
+Not Found: /static/static/js/imagesloaded.pkgd.min.js
+Respawned uWSGI worker 1 (new pid: 13410)
+[pid: 13399|app: 0|req: 3/19] 119.166.232.45 () {38 vars in 999 bytes} [Thu Jan 21 17:34:57 2021] GET /static/static/js/imagesloaded.pkgd.min.js => generated 6092 bytes in 71 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+*** running gevent loop engine [addr:0x60f500] ***
+True
+/static/static/js/isotope-min.js
+路径匹配成功
+True
+/static/static/js/jquery.counterup.min.js
+路径匹配成功
+Not Found: /static/static/js/jquery.counterup.min.js
+[pid: 13403|app: 0|req: 4/20] 119.166.232.45 () {38 vars in 997 bytes} [Thu Jan 21 17:34:57 2021] GET /static/static/js/jquery.counterup.min.js => generated 6089 bytes in 43 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+Not Found: /static/static/js/isotope-min.js
+[pid: 13402|app: 0|req: 3/21] 119.166.232.45 () {38 vars in 980 bytes} [Thu Jan 21 17:34:57 2021] GET /static/static/js/isotope-min.js => generated 6062 bytes in 56 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/static/js/jquery.waypoints.min.js
+路径匹配成功
+Not Found: /static/static/js/jquery.waypoints.min.js
+[pid: 13404|app: 0|req: 3/22] 119.166.232.45 () {38 vars in 998 bytes} [Thu Jan 21 17:34:57 2021] GET /static/static/js/jquery.waypoints.min.js => generated 6089 bytes in 51 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+!!! uWSGI process 13410 got Segmentation Fault !!!
+*** backtrace of 13410 ***
+uwsgi(uwsgi_backtrace+0x2e) [0x5e92ee]
+uwsgi(uwsgi_segfault+0x21) [0x5e9681]
+/lib64/libc.so.6(+0x35270) [0x7f5ddf34d270]
+uwsgi(py_uwsgi_gevent_main+0x39) [0x60f019]
+uwsgi() [0x484de7]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(gevent_callback_io+0xa2) [0x7f5dd2483f02]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(ev_invoke_pending+0x53) [0x7f5dd245bb53]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(ev_run+0x518) [0x7f5dd2481818]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(+0x4427f) [0x7f5dd248227f]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(+0x1fe17) [0x7f5dd245de17]
+uwsgi(_PyObject_FastCallKeywords+0x8a) [0x485caa]
+uwsgi(_PyEval_EvalFrameDefault+0x52bd) [0x51e2bd]
+uwsgi() [0x484c5a]
+uwsgi(_PyObject_Call_Prepend+0x2b7) [0x487637]
+uwsgi(PyObject_Call+0xb9) [0x487209]
+/root/project_env/django_env/lib/python3.7/site-packages/greenlet/_greenlet.cpython-37m-x86_64-linux-gnu.so(+0x3601) [0x7f5dd2032601]
+/root/project_env/django_env/lib/python3.7/site-packages/greenlet/_greenlet.cpython-37m-x86_64-linux-gnu.so(+0x37af) [0x7f5dd20327af]
+/root/project_env/django_env/lib/python3.7/site-packages/greenlet/_greenlet.cpython-37m-x86_64-linux-gnu.so(+0x443c) [0x7f5dd203343c]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_c_greenlet_primitives.cpython-37m-x86_64-linux-gnu.so(+0xb603) [0x7f5dd194d603]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_c_greenlet_primitives.cpython-37m-x86_64-linux-gnu.so(+0xc50e) [0x7f5dd194e50e]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_c_greenlet_primitives.cpython-37m-x86_64-linux-gnu.so(+0xc167) [0x7f5dd194e167]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_cgreenlet.cpython-37m-x86_64-linux-gnu.so(+0x2b212) [0x7f5dd12ef212]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_cgreenlet.cpython-37m-x86_64-linux-gnu.so(+0x1476d) [0x7f5dd12d876d]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(+0x1fe17) [0x7f5dd245de17]
+uwsgi(_PyObject_Call_Prepend+0x137) [0x4874b7]
+uwsgi(_PyObject_FastCallDict+0xe7) [0x486b97]
+uwsgi(PyObject_CallMethod+0x27e) [0x48a01e]
+uwsgi() [0x60fa06]
+uwsgi(uwsgi_ignition+0x11b) [0x5e985b]
+uwsgi(uwsgi_worker_run+0x2ed) [0x5ee11d]
+uwsgi() [0x5ee6df]
+uwsgi() [0x47822e]
+/lib64/libc.so.6(__libc_start_main+0xf5) [0x7f5ddf339c05]
+uwsgi() [0x59d7ee]
+*** end of backtrace ***
+True
+/static/static/js/jquery.magnific-popup.min.js
+路径匹配成功
+Not Found: /static/static/js/jquery.magnific-popup.min.js
+[pid: 13405|app: 0|req: 4/23] 119.166.232.45 () {38 vars in 1008 bytes} [Thu Jan 21 17:34:58 2021] GET /static/static/js/jquery.magnific-popup.min.js => generated 6104 bytes in 43 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/static/js/custom.js
+路径匹配成功
+Not Found: /static/static/js/custom.js
+[pid: 13403|app: 0|req: 5/24] 119.166.232.45 () {38 vars in 970 bytes} [Thu Jan 21 17:34:58 2021] GET /static/static/js/custom.js => generated 6047 bytes in 31 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/static/js/jquery.counterup.min.js
+路径匹配成功
+Not Found: /static/static/js/jquery.counterup.min.js
+[pid: 13399|app: 0|req: 4/25] 119.166.232.45 () {38 vars in 998 bytes} [Thu Jan 21 17:34:58 2021] GET /static/static/js/jquery.counterup.min.js => generated 6089 bytes in 41 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/static/js/jquery.hover3d.js
+路径匹配成功
+True
+/static/static/js/wow.min.js
+路径匹配成功
+Not Found: /static/static/js/jquery.hover3d.js
+[pid: 13400|app: 0|req: 4/26] 119.166.232.45 () {38 vars in 986 bytes} [Thu Jan 21 17:34:58 2021] GET /static/static/js/jquery.hover3d.js => generated 6071 bytes in 79 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+Not Found: /static/static/js/wow.min.js
+[pid: 13401|app: 0|req: 4/27] 119.166.232.45 () {38 vars in 971 bytes} [Thu Jan 21 17:34:58 2021] GET /static/static/js/wow.min.js => generated 6050 bytes in 83 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/static/js/jquery.waypoints.min.js
+路径匹配成功
+Not Found: /static/static/js/jquery.waypoints.min.js
+[pid: 13402|app: 0|req: 4/28] 119.166.232.45 () {38 vars in 998 bytes} [Thu Jan 21 17:34:58 2021] GET /static/static/js/jquery.waypoints.min.js => generated 6089 bytes in 40 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/static/js/jquery.magnific-popup.min.js
+路径匹配成功
+Not Found: /static/static/js/jquery.magnific-popup.min.js
+[pid: 13404|app: 0|req: 4/29] 119.166.232.45 () {38 vars in 1008 bytes} [Thu Jan 21 17:34:58 2021] GET /static/static/js/jquery.magnific-popup.min.js => generated 6104 bytes in 84 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/static/js/wow.min.js
+路径匹配成功
+Not Found: /static/static/js/wow.min.js
+[pid: 13405|app: 0|req: 5/30] 119.166.232.45 () {38 vars in 972 bytes} [Thu Jan 21 17:34:58 2021] GET /static/static/js/wow.min.js => generated 6050 bytes in 44 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/static/js/jquery.hover3d.js
+路径匹配成功
+Not Found: /static/static/js/jquery.hover3d.js
+[pid: 13401|app: 0|req: 5/31] 119.166.232.45 () {38 vars in 986 bytes} [Thu Jan 21 17:34:58 2021] GET /static/static/js/jquery.hover3d.js => generated 6071 bytes in 51 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/static/js/custom.js
+路径匹配成功
+Not Found: /static/static/js/custom.js
+[pid: 13399|app: 0|req: 5/32] 119.166.232.45 () {38 vars in 970 bytes} [Thu Jan 21 17:34:58 2021] GET /static/static/js/custom.js => generated 6047 bytes in 60 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/img/favicon.ico
+1
+2
+当前浏览器中存储的用户cookie：session_key在服务器端有对应的记录，即该用户是登录状态！
+5mgcdhxaaegnic8qbglca7mabvxcaz7t
+DAMN ! worker 1 (pid: 13410) died :( trying respawn ...
+Respawned uWSGI worker 1 (new pid: 13411)
+*** running gevent loop engine [addr:0x60f500] ***
+Not Found: /img/favicon.ico
+[pid: 13405|app: 0|req: 6/33] 119.166.232.45 () {42 vars in 1048 bytes} [Thu Jan 21 17:34:58 2021] GET /img/favicon.ico => generated 6014 bytes in 235 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+!!! uWSGI process 13411 got Segmentation Fault !!!
+*** backtrace of 13411 ***
+uwsgi(uwsgi_backtrace+0x2e) [0x5e92ee]
+uwsgi(uwsgi_segfault+0x21) [0x5e9681]
+/lib64/libc.so.6(+0x35270) [0x7f5ddf34d270]
+uwsgi(py_uwsgi_gevent_main+0x39) [0x60f019]
+uwsgi() [0x484de7]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(gevent_callback_io+0xa2) [0x7f5dd2483f02]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(ev_invoke_pending+0x53) [0x7f5dd245bb53]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(ev_run+0x518) [0x7f5dd2481818]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(+0x4427f) [0x7f5dd248227f]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(+0x1fe17) [0x7f5dd245de17]
+uwsgi(_PyObject_FastCallKeywords+0x8a) [0x485caa]
+uwsgi(_PyEval_EvalFrameDefault+0x52bd) [0x51e2bd]
+uwsgi() [0x484c5a]
+uwsgi(_PyObject_Call_Prepend+0x2b7) [0x487637]
+uwsgi(PyObject_Call+0xb9) [0x487209]
+/root/project_env/django_env/lib/python3.7/site-packages/greenlet/_greenlet.cpython-37m-x86_64-linux-gnu.so(+0x3601) [0x7f5dd2032601]
+/root/project_env/django_env/lib/python3.7/site-packages/greenlet/_greenlet.cpython-37m-x86_64-linux-gnu.so(+0x37af) [0x7f5dd20327af]
+/root/project_env/django_env/lib/python3.7/site-packages/greenlet/_greenlet.cpython-37m-x86_64-linux-gnu.so(+0x443c) [0x7f5dd203343c]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_c_greenlet_primitives.cpython-37m-x86_64-linux-gnu.so(+0xb603) [0x7f5dd194d603]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_c_greenlet_primitives.cpython-37m-x86_64-linux-gnu.so(+0xc50e) [0x7f5dd194e50e]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_c_greenlet_primitives.cpython-37m-x86_64-linux-gnu.so(+0xc167) [0x7f5dd194e167]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_cgreenlet.cpython-37m-x86_64-linux-gnu.so(+0x2b212) [0x7f5dd12ef212]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_cgreenlet.cpython-37m-x86_64-linux-gnu.so(+0x1476d) [0x7f5dd12d876d]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(+0x1fe17) [0x7f5dd245de17]
+uwsgi(_PyObject_Call_Prepend+0x137) [0x4874b7]
+uwsgi(_PyObject_FastCallDict+0xe7) [0x486b97]
+uwsgi(PyObject_CallMethod+0x27e) [0x48a01e]
+uwsgi() [0x60fa06]
+uwsgi(uwsgi_ignition+0x11b) [0x5e985b]
+uwsgi(uwsgi_worker_run+0x2ed) [0x5ee11d]
+uwsgi() [0x5ee6df]
+uwsgi() [0x47822e]
+/lib64/libc.so.6(__libc_start_main+0xf5) [0x7f5ddf339c05]
+uwsgi() [0x59d7ee]
+*** end of backtrace ***
+True
+/search/engine/
+1
+2
+当前浏览器中存储的用户cookie：session_key在服务器端有对应的记录，即该用户是登录状态！
+5mgcdhxaaegnic8qbglca7mabvxcaz7t
+[pid: 13400|app: 0|req: 5/34] 119.166.232.45 () {40 vars in 1113 bytes} [Thu Jan 21 17:35:11 2021] GET /search/engine/ => generated 53725 bytes in 105 msecs (HTTP/1.1 200) 5 headers in 279 bytes (3 switches on core 0)
+True
+/static/bootstrap-3.3.7-dist/css/bootstrap.min.css
+路径匹配成功
+Not Found: /static/bootstrap-3.3.7-dist/css/bootstrap.min.css
+[pid: 13401|app: 0|req: 6/35] 119.166.232.45 () {38 vars in 1045 bytes} [Thu Jan 21 17:35:11 2021] GET /static/bootstrap-3.3.7-dist/css/bootstrap.min.css => generated 6116 bytes in 22 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+DAMN ! worker 1 (pid: 13411) died :( trying respawn ...
+Respawned uWSGI worker 1 (new pid: 13434)
+*** running gevent loop engine [addr:0x60f500] ***
+True
+/static/css/load.css
+路径匹配成功
+True
+/static/css/style.css
+路径匹配成功
+True
+/static/font-awesome-4.7.0/css/font-awesome.min.css
+路径匹配成功
+True
+/static/js/jquery-3.5.1.min.js
+路径匹配成功
+Not Found: /static/js/jquery-3.5.1.min.js
+True
+/static/bootstrap-3.3.7-dist/js/bootstrap.min.js
+路径匹配成功
+Not Found: /static/font-awesome-4.7.0/css/font-awesome.min.css
+[pid: 13402|app: 0|req: 5/36] 119.166.232.45 () {38 vars in 1047 bytes} [Thu Jan 21 17:35:11 2021] GET /static/font-awesome-4.7.0/css/font-awesome.min.css => generated 6119 bytes in 39 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+Not Found: /static/css/load.css
+[pid: 13401|app: 0|req: 7/37] 119.166.232.45 () {38 vars in 985 bytes} [Thu Jan 21 17:35:11 2021] GET /static/css/load.css => generated 6026 bytes in 42 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+Not Found: /static/css/style.css
+[pid: 13403|app: 0|req: 6/38] 119.166.232.45 () {38 vars in 987 bytes} [Thu Jan 21 17:35:11 2021] GET /static/css/style.css => generated 6029 bytes in 43 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+Not Found: /static/bootstrap-3.3.7-dist/js/bootstrap.min.js
+[pid: 13400|app: 0|req: 6/39] 119.166.232.45 () {38 vars in 1025 bytes} [Thu Jan 21 17:35:11 2021] GET /static/bootstrap-3.3.7-dist/js/bootstrap.min.js => generated 6110 bytes in 40 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+[pid: 13399|app: 0|req: 6/40] 119.166.232.45 () {38 vars in 990 bytes} [Thu Jan 21 17:35:11 2021] GET /static/js/jquery-3.5.1.min.js => generated 6056 bytes in 42 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/tree_checkbox/jquery.min.js
+路径匹配成功
+Not Found: /static/tree_checkbox/jquery.min.js
+[pid: 13404|app: 0|req: 5/41] 119.166.232.45 () {38 vars in 1000 bytes} [Thu Jan 21 17:35:12 2021] GET /static/tree_checkbox/jquery.min.js => generated 6071 bytes in 23 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+!!! uWSGI process 13434 got Segmentation Fault !!!
+*** backtrace of 13434 ***
+uwsgi(uwsgi_backtrace+0x2e) [0x5e92ee]
+uwsgi(uwsgi_segfault+0x21) [0x5e9681]
+/lib64/libc.so.6(+0x35270) [0x7f5ddf34d270]
+uwsgi(py_uwsgi_gevent_main+0x39) [0x60f019]
+uwsgi() [0x484de7]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(gevent_callback_io+0xa2) [0x7f5dd2483f02]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(ev_invoke_pending+0x53) [0x7f5dd245bb53]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(ev_run+0x518) [0x7f5dd2481818]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(+0x4427f) [0x7f5dd248227f]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(+0x1fe17) [0x7f5dd245de17]
+uwsgi(_PyObject_FastCallKeywords+0x8a) [0x485caa]
+uwsgi(_PyEval_EvalFrameDefault+0x52bd) [0x51e2bd]
+uwsgi() [0x484c5a]
+uwsgi(_PyObject_Call_Prepend+0x2b7) [0x487637]
+uwsgi(PyObject_Call+0xb9) [0x487209]
+/root/project_env/django_env/lib/python3.7/site-packages/greenlet/_greenlet.cpython-37m-x86_64-linux-gnu.so(+0x3601) [0x7f5dd2032601]
+/root/project_env/django_env/lib/python3.7/site-packages/greenlet/_greenlet.cpython-37m-x86_64-linux-gnu.so(+0x37af) [0x7f5dd20327af]
+/root/project_env/django_env/lib/python3.7/site-packages/greenlet/_greenlet.cpython-37m-x86_64-linux-gnu.so(+0x443c) [0x7f5dd203343c]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_c_greenlet_primitives.cpython-37m-x86_64-linux-gnu.so(+0xb603) [0x7f5dd194d603]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_c_greenlet_primitives.cpython-37m-x86_64-linux-gnu.so(+0xc50e) [0x7f5dd194e50e]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_c_greenlet_primitives.cpython-37m-x86_64-linux-gnu.so(+0xc167) [0x7f5dd194e167]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_cgreenlet.cpython-37m-x86_64-linux-gnu.so(+0x2b212) [0x7f5dd12ef212]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_cgreenlet.cpython-37m-x86_64-linux-gnu.so(+0x1476d) [0x7f5dd12d876d]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(+0x1fe17) [0x7f5dd245de17]
+uwsgi(_PyObject_Call_Prepend+0x137) [0x4874b7]
+uwsgi(_PyObject_FastCallDict+0xe7) [0x486b97]
+uwsgi(PyObject_CallMethod+0x27e) [0x48a01e]
+uwsgi() [0x60fa06]
+uwsgi(uwsgi_ignition+0x11b) [0x5e985b]
+uwsgi(uwsgi_worker_run+0x2ed) [0x5ee11d]
+uwsgi() [0x5ee6df]
+uwsgi() [0x47822e]
+/lib64/libc.so.6(__libc_start_main+0xf5) [0x7f5ddf339c05]
+uwsgi() [0x59d7ee]
+*** end of backtrace ***
+True
+/static/tree_checkbox/leg-tree.js
+路径匹配成功
+Not Found: /static/tree_checkbox/leg-tree.js
+[pid: 13401|app: 0|req: 8/42] 119.166.232.45 () {38 vars in 995 bytes} [Thu Jan 21 17:35:12 2021] GET /static/tree_checkbox/leg-tree.js => generated 6065 bytes in 24 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/img/favicon.ico
+路径匹配成功
+True
+/static/img/LOGO.png
+路径匹配成功
+Not Found: /static/img/favicon.ico
+[pid: 13403|app: 0|req: 7/43] 119.166.232.45 () {38 vars in 1023 bytes} [Thu Jan 21 17:35:12 2021] GET /static/img/favicon.ico => generated 6035 bytes in 23 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+Not Found: /static/img/LOGO.png
+[pid: 13402|app: 0|req: 6/44] 119.166.232.45 () {38 vars in 1017 bytes} [Thu Jan 21 17:35:12 2021] GET /static/img/LOGO.png => generated 6026 bytes in 24 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+True
+/static/img/favicon.ico
+路径匹配成功
+Not Found: /static/img/favicon.ico
+[pid: 13400|app: 0|req: 7/45] 119.166.232.45 () {38 vars in 1023 bytes} [Thu Jan 21 17:35:12 2021] GET /static/img/favicon.ico => generated 6035 bytes in 25 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+DAMN ! worker 1 (pid: 13434) died :( trying respawn ...
+Respawned uWSGI worker 1 (new pid: 13437)
+*** running gevent loop engine [addr:0x60f500] ***
+!!! uWSGI process 13437 got Segmentation Fault !!!
+*** backtrace of 13437 ***
+uwsgi(uwsgi_backtrace+0x2e) [0x5e92ee]
+uwsgi(uwsgi_segfault+0x21) [0x5e9681]
+/lib64/libc.so.6(+0x35270) [0x7f5ddf34d270]
+uwsgi(py_uwsgi_gevent_main+0x39) [0x60f019]
+uwsgi() [0x484de7]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(gevent_callback_io+0xa2) [0x7f5dd2483f02]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(ev_invoke_pending+0x53) [0x7f5dd245bb53]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(ev_run+0x518) [0x7f5dd2481818]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(+0x4427f) [0x7f5dd248227f]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(+0x1fe17) [0x7f5dd245de17]
+uwsgi(_PyObject_FastCallKeywords+0x8a) [0x485caa]
+uwsgi(_PyEval_EvalFrameDefault+0x52bd) [0x51e2bd]
+uwsgi() [0x484c5a]
+uwsgi(_PyObject_Call_Prepend+0x2b7) [0x487637]
+uwsgi(PyObject_Call+0xb9) [0x487209]
+/root/project_env/django_env/lib/python3.7/site-packages/greenlet/_greenlet.cpython-37m-x86_64-linux-gnu.so(+0x3601) [0x7f5dd2032601]
+/root/project_env/django_env/lib/python3.7/site-packages/greenlet/_greenlet.cpython-37m-x86_64-linux-gnu.so(+0x37af) [0x7f5dd20327af]
+/root/project_env/django_env/lib/python3.7/site-packages/greenlet/_greenlet.cpython-37m-x86_64-linux-gnu.so(+0x443c) [0x7f5dd203343c]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_c_greenlet_primitives.cpython-37m-x86_64-linux-gnu.so(+0xb603) [0x7f5dd194d603]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_c_greenlet_primitives.cpython-37m-x86_64-linux-gnu.so(+0xc50e) [0x7f5dd194e50e]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_c_greenlet_primitives.cpython-37m-x86_64-linux-gnu.so(+0xc167) [0x7f5dd194e167]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_cgreenlet.cpython-37m-x86_64-linux-gnu.so(+0x2b212) [0x7f5dd12ef212]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/_gevent_cgreenlet.cpython-37m-x86_64-linux-gnu.so(+0x1476d) [0x7f5dd12d876d]
+/root/project_env/django_env/lib/python3.7/site-packages/gevent/libev/corecext.cpython-37m-x86_64-linux-gnu.so(+0x1fe17) [0x7f5dd245de17]
+uwsgi(_PyObject_Call_Prepend+0x137) [0x4874b7]
+uwsgi(_PyObject_FastCallDict+0xe7) [0x486b97]
+uwsgi(PyObject_CallMethod+0x27e) [0x48a01e]
+uwsgi() [0x60fa06]
+uwsgi(uwsgi_ignition+0x11b) [0x5e985b]
+uwsgi(uwsgi_worker_run+0x2ed) [0x5ee11d]
+uwsgi() [0x5ee6df]
+uwsgi() [0x47822e]
+/lib64/libc.so.6(__libc_start_main+0xf5) [0x7f5ddf339c05]
+uwsgi() [0x59d7ee]
+*** end of backtrace ***
+True
+/static/static/js/jquery.waypoints.min.js
+路径匹配成功
+Not Found: /static/static/js/jquery.waypoints.min.js
+[pid: 13400|app: 0|req: 8/46] 119.166.232.45 () {38 vars in 998 bytes} [Thu Jan 21 17:35:15 2021] GET /static/static/js/jquery.waypoints.min.js => generated 6089 bytes in 25 msecs (HTTP/1.1 404) 4 headers in 116 bytes (3 switches on core 0)
+DAMN ! worker 1 (pid: 13437) died :( trying respawn ...
+Respawned uWSGI worker 1 (new pid: 13438)
+*** running gevent loop engine [addr:0x60f500] ***
+SIGINT/SIGQUIT received...killing workers...
+Brutally killing worker 1 (pid: 13438)...
+Brutally killing worker 3 (pid: 13400)...
+Thu Jan 21 17:35:31 2021 - stopping gevent signals watchers for worker 3 (pid: 13400)...
+Thu Jan 21 17:35:31 2021 - stopping gevent sockets watchers for worker 3 (pid: 13400)...
+Thu Jan 21 17:35:31 2021 - main gevent watchers stopped for worker 3 (pid: 13400)...
+Thu Jan 21 17:35:31 2021 - stopping gevent signals watchers for worker 1 (pid: 13438)...
+Thu Jan 21 17:35:31 2021 - stopping gevent sockets watchers for worker 1 (pid: 13438)...
+Thu Jan 21 17:35:31 2021 - main gevent watchers stopped for worker 1 (pid: 13438)...
+goodbye to the gevent Hub on worker 1 (pid: 13438)
+goodbye to the gevent Hub on worker 3 (pid: 13400)
+Brutally killing worker 2 (pid: 13399)...
+Thu Jan 21 17:35:31 2021 - stopping gevent signals watchers for worker 2 (pid: 13399)...
+Thu Jan 21 17:35:31 2021 - stopping gevent sockets watchers for worker 2 (pid: 13399)...
+Thu Jan 21 17:35:31 2021 - main gevent watchers stopped for worker 2 (pid: 13399)...
+goodbye to the gevent Hub on worker 2 (pid: 13399)
+Brutally killing worker 5 (pid: 13402)...
+Thu Jan 21 17:35:31 2021 - stopping gevent signals watchers for worker 5 (pid: 13402)...
+Thu Jan 21 17:35:31 2021 - stopping gevent sockets watchers for worker 5 (pid: 13402)...
+Thu Jan 21 17:35:31 2021 - main gevent watchers stopped for worker 5 (pid: 13402)...
+goodbye to the gevent Hub on worker 5 (pid: 13402)
+Brutally killing worker 4 (pid: 13401)...
+Thu Jan 21 17:35:31 2021 - stopping gevent signals watchers for worker 4 (pid: 13401)...
+Thu Jan 21 17:35:31 2021 - stopping gevent sockets watchers for worker 4 (pid: 13401)...
+Thu Jan 21 17:35:31 2021 - main gevent watchers stopped for worker 4 (pid: 13401)...
+goodbye to the gevent Hub on worker 4 (pid: 13401)
+Brutally killing worker 6 (pid: 13403)...
+Thu Jan 21 17:35:31 2021 - stopping gevent signals watchers for worker 6 (pid: 13403)...
+Thu Jan 21 17:35:31 2021 - stopping gevent sockets watchers for worker 6 (pid: 13403)...
+Thu Jan 21 17:35:31 2021 - main gevent watchers stopped for worker 6 (pid: 13403)...
+goodbye to the gevent Hub on worker 6 (pid: 13403)
+Brutally killing worker 7 (pid: 13404)...
+Thu Jan 21 17:35:31 2021 - stopping gevent signals watchers for worker 7 (pid: 13404)...
+Thu Jan 21 17:35:31 2021 - stopping gevent sockets watchers for worker 7 (pid: 13404)...
+Thu Jan 21 17:35:31 2021 - main gevent watchers stopped for worker 7 (pid: 13404)...
+goodbye to the gevent Hub on worker 7 (pid: 13404)
+Brutally killing worker 8 (pid: 13405)...
+Thu Jan 21 17:35:31 2021 - stopping gevent signals watchers for worker 8 (pid: 13405)...
+Thu Jan 21 17:35:31 2021 - stopping gevent sockets watchers for worker 8 (pid: 13405)...
+Thu Jan 21 17:35:31 2021 - main gevent watchers stopped for worker 8 (pid: 13405)...
+goodbye to the gevent Hub on worker 8 (pid: 13405)
+gateway "uWSGI http 1" has been buried (pid: 13406)
+worker 3 buried after 0 seconds
+worker 5 buried after 0 seconds
+worker 6 buried after 0 seconds
+worker 2 buried after 1 seconds
+worker 4 buried after 1 seconds
+worker 7 buried after 1 seconds
+worker 8 buried after 1 seconds
+worker 1 buried after 1 seconds
+goodbye to uWSGI.

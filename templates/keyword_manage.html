@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% block title %}
+    Search Keyword Management
+{% endblock %}
+{% block style %}
+    <style>
+        #email_box {
+            overflow: hidden;
+
+            overflow-y: auto;
+             overflow-x: auto;
+            white-space: nowrap;
+        }
+    table  input[type=checkbox]{
+        vertical-align: middle;
+        margin: 0 0 0 0;
+    }
+
+    </style>
+{% endblock %}
+{% block page_title %}
+     Search Keyword Management
+{% endblock %}
+{% block next_url %}
+<li><a href="/send_target/"> Quick links : Target Customer</a></li>
+{% endblock %}
+{% block main %}
+    <div class="container-fluid">
+    <div>
+        <div class="">
+            {% csrf_token %}
+           <table class="table">
+               <thead>
+                    <th> <input  type="checkbox" id="select_all"><span style="vertical-align: middle;margin-left: 5px">All</span>
+                    <th>No</th>
+                    <th>Keyword</th>
+                    <th><button class="btn btn-danger" onclick="delete_keywords()">delete selected</button></th>
+               </thead>
+               <tbody>
+                    {% for keyword in keywords %}
+                        <tr>
+                            <td><input type="checkbox" class="check_keyword" id="{{ keyword.id }}"></td>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ keyword.keyword }}</td>
+                            <td><button class="btn btn-danger" onclick="delete_keyword({{ keyword.id }})">delete this one</button></td>
+                        </tr>
+                    {% endfor %}
+               </tbody>
+           </table>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block js %}
+   <script>
+   function delete_keyword(kid) {
+        $.ajax({
+            url:'/delete_keyword/',
+            type:'post',
+            data:{
+                'kid':kid,
+                'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+
+            },
+            success:function (ret) {
+                location.reload()
+            }
+        })
+   }
+
+    function delete_keywords() {
+        var check_list = $('.check_keyword');
+        var li = []
+        for (var i = 0; i < check_list.length; i++) {
+            if (check_list.eq(i).prop('checked')) {
+                var id = check_list.eq(i).attr("id")
+                li.push(id)
+            }
+        }
+        if (li.length > 0){
+            {#alert(JSON.stringify(li))#}
+            $.ajax({
+            url: '/delete_keywords/',
+            type: 'post',
+            data: {
+                'ids': JSON.stringify(li),
+                'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+            },
+            success: function (ret) {
+                location.reload();
+            }
+        })
+        }
+        else{
+            alert('You have not selected any entry ！')
+        }
+
+    }
+
+    $(function () {
+        $("#select_all").change(function () {
+            var flag = $('#select_all').prop('checked')
+            var check_list = $('.check_keyword')
+            if (flag) {
+                for (var i = 0; i < check_list.length; i++) {
+                    check_list.eq(i).prop('checked', true)
+                }
+            } else {
+                for (var i = 0; i < check_list.length; i++) {
+                    check_list.eq(i).prop('checked', false)
+                }
+            }
+        });
+
+    })
+</script>
+{% endblock %}
+

@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+{% block title %}
+    Outgoing Mailbox Management
+{% endblock %}
+{% block style %}
+    <style>
+        #email_box {
+            overflow: hidden;
+
+            overflow-y: scroll;
+             overflow-x: scroll;
+            white-space: nowrap;
+
+            height: 820px;
+
+            width: 100%;
+
+        }
+    table  input[type=checkbox]{
+        vertical-align: middle;
+        margin: 0 0 0 0;
+    }
+
+    </style>
+{% endblock %}
+{% block page_title %}
+     Outgoing Mailbox Management
+{% endblock %}
+{% block next_url %}
+<li><a href="/send_target/"> Quick links : Target Customer</a></li>
+{% endblock %}
+{% block main %}
+    <div class="container-fluid">
+    <div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Bulk add mailboxes</h3>
+                </div>
+                <div class="panel-body">
+                    <form action="/upload_email/" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <div style="text-align: right;float: right"><a href="/download_csv/?file=mails.csv">Download Template</a>
+                            </div>
+                            </h3>
+                            {% csrf_token %}
+                            <label for="upload_file">Import File</label>
+                            <input type="file" id="upload_file" name="upload_file" >
+                            <p class="help-block">Batch import finished CSV files</p>
+                            <button type="submit" onclick="show_loading()" class=" btn btn-block btn-warning">Import</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Add the outgoing mailbox manually</h3>
+                </div>
+                <div class="panel-body">
+                    <form action="/add_mail/" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="email">Mailbox</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                   placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="protocol">Email Protocol</label>
+                            <input type="text" class="form-control" id="protocol" readonly name="protocol" value="smtp">
+                        </div>
+                        <div class="form-group">
+                            <label for="server">Mailbox Server</label>
+                            <input type="text" class="form-control" id="server" name="server"
+                                   placeholder="" value="c3.icoremail.net">
+                        </div>
+                           <div class="form-group">
+                            <label for="auth_code" title='If mailbox server is not "c3.icoremail.net",please fill in the authorization code.'>
+                                Authorize Code [ Hover over to see help ]</label>
+                            <input type="text" class="form-control" id="auth_code" name="auth_code"
+                                   placeholder="You can skip it.">
+                        </div>
+                        <div class="form-group">
+                            <label for="port">Port(SSL：465)</label>
+                            <input type="text" class="form-control" id="port" name="port" value="465">
+                        </div>
+                        <div>
+                            <button id="test_sender" type="button" class="btn btn-primary" style="float: left">Verify
+                            </button>
+                            <button type="submit" onclick="show_loading()" class="btn btn-danger" style="float: right">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="col-md-8"  style="border-left: #444444 1px solid">
+           <div style="margin-bottom: 10px">
+
+                <button style="float: right;margin-right: 10px" class=" btn btn-danger" onclick="delete_email()">Delete Selected
+                </button>
+            </div><br>
+            <div id="email_box">
+                <table class="table table-bordered">
+                    <thead>
+                    <th> <input  type="checkbox" id="select_all"><span style="vertical-align: middle;margin-left: 5px">All</span>
+                    </th>
+                    <th>Sender Mailbox</th>
+                    <th>Mailbox Server</th>
+                    <th>Password</th>
+                    <th>Protocol</th>
+                    <th>Port</th>
+                    </thead>
+                    <tbody>
+                    {% for sender in sender_list %}
+                        <tr>
+                            <td><input type="checkbox" senderid="{{ sender.id }}"
+                                       class="email_num">&nbsp;{{ forloop.counter }}</td>
+                            <td>{{ sender.email }}</td>
+                            <td>{{ sender.server }}</td>
+                            <td>{{ sender.password }}</td>
+                            <td>{{ sender.protocol }}</td>
+                            <td>{{ sender.port }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
+
+{% block js %}
+   <script>
+   function show_loading() {
+            $(".load-container").show();
+   }
+    function delete_email() {
+        var check_list = $('.email_num');
+        var li = []
+        for (var i = 0; i < check_list.length; i++) {
+            if (check_list.eq(i).prop('checked')) {
+                var id = check_list.eq(i).attr("senderid")
+                li.push(id)
+            }
+        }
+        console.log(li)
+        {#alert(JSON.stringify(li))#}
+        $.ajax({
+            url: '/delete_email/',
+            type: 'post',
+            data: {
+                'senderid': JSON.stringify(li),
+                'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+            },
+            success: function (ret) {
+                location.href = '/mail/';
+            }
+        })
+    }
+
+    $(function () {
+        $("#select_all").change(function () {
+            var flag = $('#select_all').prop('checked')
+            var check_list = $('.email_num')
+            if (flag) {
+                for (var i = 0; i < check_list.length; i++) {
+                    check_list.eq(i).prop('checked', true)
+                }
+            } else {
+                for (var i = 0; i < check_list.length; i++) {
+                    check_list.eq(i).prop('checked', false)
+                }
+            }
+        });
+        $('#test_sender').click(function () {
+            var email = $('#email').val();
+            var password = $('#password').val();
+            var protocol = $('#protocol').val();
+            var server = $('#server').val();
+            var port = $('#port').val();
+            var auth_code = $('#auth_code').val();
+            var token = $('input[name="csrfmiddlewaretoken"]').val();
+            $(".load-container").show();
+            $.ajax({
+                url: '/test_email/',
+                type: 'post',
+                data: {
+                    'email': email,
+                    'password': password,
+                    'protocol': protocol,
+                    'server': server,
+                    'port': port,
+                    'auth_code': auth_code,
+                    'csrfmiddlewaretoken': token,
+                },
+                success: function (ret) {
+                    $(".load-container").hide();
+                    alert(ret.msg);
+                }
+            })
+        })
+    })
+</script>
+{% endblock %}
+

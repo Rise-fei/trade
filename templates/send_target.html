@@ -1,0 +1,287 @@
+{% extends 'base.html' %}
+{% block title %}
+    Target Customer Management
+{% endblock %}
+
+{% block style %}
+    <style>
+
+        #email_box {
+            overflow: hidden;
+
+            overflow-y: scroll;
+            overflow-x: auto;
+
+            white-space: nowrap;
+
+            height: 790px;
+            width: 100%;
+
+        }
+
+        h3 {
+            font-weight: bold,
+        }
+
+
+    </style>
+{% endblock %}
+{% block page_title %}
+    Target Customer Management
+{% endblock %}
+{% block next_url %}
+    <li><a href="/send_mail/"> Quick links : Send Email</a></li>
+{% endblock %}
+{% block main %}
+    <div class="container-fluid">
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Import Data By Keyword</h3>
+                </div>
+                <div class="panel-body">
+                    <form action="/import_customer/" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <select name="keyid" class="form-control">
+                                <option value="-1">
+                                    ---------------------------------------------
+                                </option>
+                                {% for keyword in keyword_list %}
+                                    <option value="{{ keyword.id }}">{{ keyword.keyword }}</option>
+                                {% endfor %}
+                            </select>
+                            {% csrf_token %}
+                            <hr>
+                            <button type="submit" class=" btn btn-block btn-warning">Import</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Bulk import of customers</h3>
+                </div>
+                <div class="panel-body">
+                    <form action="/upload_target/" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <div style="text-align: right;float: right"><a
+                                    href="/download_csv/?file=target.csv">Download Template</a></div>
+                            </h3>
+                            {% csrf_token %}
+                            <label for="upload_file">Import File</label>
+                            <input type="file" id="upload_file" name="upload_file">
+                            <p class="help-block">Batch import finished CSV files</p>
+                            <button type="submit" class=" btn btn-block btn-warning">Import</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Add customer manually</h3>
+                </div>
+                <div class="panel-body">
+                    <form action="/add_target/" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="company">Company</label>
+                            <input type="text" class="form-control" id="company" name="company"
+                                   placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="website">Website</label>
+                            <input type="text" class="form-control" id="website" name="website">
+                        </div>
+                        <div class="form-group">
+                            <label for="keyword">Keyword</label>
+                            <input type="text" class="form-control" id="keyword" name="keyword"
+                                   placeholder="">
+                        </div>
+                        <button type="submit" class=" btn btn-block btn-warning">Add</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-9 ">
+            <div class="col-md-12">
+                {#                <div style="margin-top: 10px">#}
+                <span style="font-size: 15px;font-weight: bold">Select Keyword:</span>
+                <select onchange="change_page_key()" class="form-control" style="width: 200px;display: inline-block"
+                        name="key" id="key">
+                    <option value="-1">All</option>
+                    {% for kw in keyword_list %}
+                        <option value="{{ kw.id }}">{{ kw.keyword }}</option>
+                    {% endfor %}
+                </select>
+                {#                 <a  href="/keyword_manage/" style="float: right;" class=" btn btn-default">Keyword Manage#}
+                {#                </a>#}
+
+
+                <button style="float: right;margin-right: 10px" class=" btn btn-danger" onclick="delete_target()">
+                    Delete Selected
+                </button>
+
+            </div>
+
+            <ul class="pagination" style="margin-right: 24px;float: right">
+                <li>
+                    <a href="#" onclick="change_page(1)"
+                       aria-label="Previous">
+                        <span aria-hidden="true">First</span>
+                    </a>
+                </li>
+                {% if waitcust_list.has_previous %}
+                    <li>
+                        <a href="#"
+                           onclick="change_page({{ waitcust_list.previous_page_number }})"
+                           aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+
+                <li><a href="#">{{ pagenum }}</a></li>
+
+                {% if waitcust_list.has_next %}
+
+                    <li>
+                        <a href="#"
+                           onclick="change_page({{ waitcust_list.next_page_number }})"
+                           aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+
+
+                {% endif %}
+                <li>
+                    <a href="#"
+                       onclick="change_page({{ waitcust_list.paginator.num_pages }})"
+                       aria-label="Next">
+                        <span aria-hidden="true">End</span>
+                    </a>
+                </li>
+
+
+            </ul>
+
+            {#            </div>#}
+            <br>
+            <div id="email_box">
+                <table class="table table-bordered">
+                    <thead>
+                    <th><input type="checkbox" id="select_all"></th>
+                    <th>Keyword</th>
+                    <th>Target Customer Email</th>
+                    <th>Target Customer Company</th>
+                    <th>Target Customer Website</th>
+                    <th>Add Time</th>
+                    </thead>
+                    <tbody>
+                    {% for cust in final_data %}
+                        <tr>
+                            <td><input type="checkbox" custid="{{ cust.0 }}"
+                                       class="target_num">&nbsp;{{ forloop.counter }}</td>
+                            <td>{{ cust.2 }}</td>
+                            <td>{{ cust.1 }}</td>
+                            <td>{{ cust.3 }}</td>
+                            <td>{{ cust.4 }}</td>
+                            <td>{{ cust.5 }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        $(function () {
+            var kid = "{{ kid }}";
+            var op_list = $("option");
+            for (var i = 0; i < op_list.length; i++) {
+                if (op_list.eq(i).attr("value") == kid) {
+                    op_list.eq(i).prop("selected", true)
+                }
+            }
+        })
+
+
+    </script>
+    <script>
+        function change_page(page) {
+            var current_href = location.href;
+            if (current_href.indexOf("pagenum") != -1) {
+                location.href = current_href.split("pagenum=")[0] + "pagenum=" + String(page);
+            }
+            else{
+                if (current_href.indexOf("?") != -1)
+                {location.href = current_href + "&pagenum=" + String(page);}
+                else
+                {
+                    location.href = current_href + "?pagenum=" + String(page)
+                }
+
+            }
+        }
+
+        function change_page_key() {
+            var kid = $('#key').val();
+            window.location.href = '/send_target/?kid=' + kid
+        }
+
+        function delete_target() {
+            $(".load-container").show();
+            var check_list = $('.target_num');
+            var li = []
+            for (var i = 0; i < check_list.length; i++) {
+                if (check_list.eq(i).prop('checked')) {
+                    var id = check_list.eq(i).attr("custid")
+                    li.push(id)
+                }
+            }
+            console.log(li)
+            {#alert(JSON.stringify(li))#}
+            $.ajax({
+                url: '/delete_target/',
+                type: 'post',
+                data: {
+                    'custid': JSON.stringify(li),
+                    'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+                },
+                success: function (ret) {
+                    location.href = '/send_target/';
+                }
+            })
+        }
+
+        $(function () {
+            $("#select_all").change(function () {
+                var flag = $('#select_all').prop('checked')
+                var check_list = $('.target_num')
+                if (flag) {
+                    for (var i = 0; i < check_list.length; i++) {
+                        check_list.eq(i).prop('checked', true)
+                    }
+                } else {
+                    for (var i = 0; i < check_list.length; i++) {
+                        check_list.eq(i).prop('checked', false)
+                    }
+                }
+            });
+        })
+    </script>
+{% endblock %}
+
+

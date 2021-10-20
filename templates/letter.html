@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% block title %}
+    Development letter template management
+{% endblock %}
+{% block topjs %}
+    <script src="/static/js/tiny_mce_src.js"></script>
+    <script>
+        tinyMCE.init({
+            'mode': 'textareas',
+            'theme': 'advanced',
+            'width': 1000,
+            'height': 700,
+
+        })</script>
+
+{% endblock %}
+
+{% block style %}
+    <style>
+        #letter_box {
+            overflow: hidden;
+
+            overflow-y: scroll;
+            overflow-x: scroll;
+
+            {#white-space: nowrap;#}
+
+            height: 715px;
+
+            width: 100%;
+
+        }
+    </style>
+{% endblock %}
+
+{% block page_title %}
+    Development letter template management
+{% endblock %}
+
+{% block next_url %}
+ <li><a href="/send_target/"> Quick links : Target Customer</a></li>
+{% endblock %}
+{% block main %}
+    <div class="container-fluid">
+            <div class="col-md-8" style="border-right: #444444 1px solid">
+                <form action="/letter/" method="post" class="form-inline">
+                    {% csrf_token %}
+                    <div class="form-group">
+                       <label for="letter_title" style="font-size: 20px;vertical-align:middle">Email Title:</label>
+                        <input type="text" class="form-control" name="title" placeholder="Please input email title" id="letter_title"
+                               value="{{ letter_obj.title }}">
+                    </div>
+                    <br>
+                    <br>
+
+                    {#                  <div class="form-group">#}
+                    {#                    <label for="letter_subject">邮件模板主题:</label>#}
+                    {#                   <input type="text" name="subject" class="form-control" placeholder="请输入邮件模板主题"  id="letter_subject" value="{{ letter_obj.subject }}">#}
+                    {#                  </div>#}
+
+                    <label>
+                        <textarea name="comment_content" id="letter_content">{{ letter_obj.content }}</textarea>
+                    </label>
+                    <br>
+                    <input type="submit" value="Save Template" class="btn btn-default">
+                </form>
+            </div>
+            <div class="col-md-4">
+                <h3>Saved Template</h3>
+            <br>
+                <div id="letter_box">
+                    <table class="table table-bordered">
+                        <thead>
+                        <th><input type="checkbox" id="select_all"></th>
+                        <th>No</th>
+                        <th>Title</th>
+                        <th>Content</th>
+                        </thead>
+                        <tbody>
+                        {% for letter in letter_list %}
+                            <tr>
+                                <td><input type="checkbox" letterid="{{ letter.id }}"
+                                           class="letter_num"></td>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ letter.title }}</td>
+                                <td><a href="/show_letter/{{ letter.id }}/">Click to view</a></td>
+                            </tr>
+                        {% endfor %}
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="margin-top: 10px">
+
+                    <button style="float: right;margin-right: 10px" class=" btn btn-danger" onclick="delete_letter()">
+                        Delete Selected
+                    </button>
+                </div>
+
+            </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        function delete_letter() {
+            var check_list = $('.letter_num');
+            var li = []
+            for (var i = 0; i < check_list.length; i++) {
+                if (check_list.eq(i).prop('checked')) {
+                    var id = check_list.eq(i).attr("letterid")
+                    li.push(id)
+                }
+            }
+            console.log(li)
+            {#alert(JSON.stringify(li))#}
+            $.ajax({
+                url: '/delete_letter/',
+                type: 'post',
+                data: {
+                    'letter_ids': JSON.stringify(li),
+                    'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+                },
+                success: function (ret) {
+                    location.href = '/letter/';
+                }
+            })
+        }
+
+        $(function () {
+            $("#select_all").change(function () {
+                var flag = $('#select_all').prop('checked')
+                var check_list = $('.letter_num')
+                if (flag) {
+                    for (var i = 0; i < check_list.length; i++) {
+                        check_list.eq(i).prop('checked', true)
+                    }
+                } else {
+                    for (var i = 0; i < check_list.length; i++) {
+                        check_list.eq(i).prop('checked', false)
+                    }
+                }
+            });
+
+        })
+    </script>
+{% endblock %}
+

@@ -1,0 +1,79 @@
+.tree {
+    border: 1px solid black;
+    width: 600px;
+    height: 100vh;
+    display: block;
+    margin: auto;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    position: relative;
+    padding-left: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: #2C8DFB;
+}
+
+ul li {
+    list-style-type: none;
+    margin-left: -10px;
+    position: relative;
+}
+
+.tree input {
+    cursor: pointer;
+}
+
+.tree span {
+    font-size: 13px;
+    cursor: pointer;
+    display: inline-block;
+    border: 1px solid #e2e2e2;
+    width: 10px;
+    line-height: 8px;
+    text-align: center;
+    height: 10px;
+    background-color: whitesmoke;
+    position: absolute;
+    left: 8px;
+    top: 4px;
+}
+
+.tree ul span {
+    left: -16px;
+}
+
+.tree ul {
+    width: 100%;
+    list-style-type: none;
+    margin-top: 0px;
+    position: relative;
+}
+
+.label {
+    width: 18px;
+    height: 18px;
+    position: inherit;
+    top: 4px;
+    background-image: url(../img/check.png);
+    background-size: 100% 100%;
+    display: inline-block;
+    margin: 1px 5px 0 0;
+}
+
+input:checked + label {
+    width: 19px;
+    height: 19px;
+    margin: 0 4px 0 0;
+    background-image: url(../img/checked.png);
+}
+
+input {
+    display: none;
+}
+
+.isShow {
+    width: 14px;
+    margin-right: 5px;
+}

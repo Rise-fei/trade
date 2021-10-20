@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <title>Shengshi foreign trade system Web version</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/static/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/static/css/themify-icons.css">
+    <link rel="stylesheet" href="/static/static/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/static/static/css/slick.css">
+    <link rel="stylesheet" href="/static/static/css/slick-theme.css">
+    <link rel="stylesheet" href="/static/static/css/animate.css">
+    <link rel="stylesheet" href="/static/static/css/magnific-popup.css">
+    <link rel="stylesheet" href="/static/static/css/style.css">
+    <link rel="stylesheet" href="/static/static/css/responsive.css">
+
+</head>
+
+<body>
+<div id="preloader">
+    <div id="ctn-preloader" class="ctn-preloader"><img src="/static/static/picture/loader.gif" alt=""></div>
+</div>
+<div class="body_wrapper">
+    <header class="header_area header_position" id="fixed_top">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container custom_container">
+                <a class="navbar-brand" href=""><img src="/static/assets/images/blogo.png" alt="logo">
+                    <img src="/static/assets/images/blogo.png" alt=""></a>
+                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+					<span class="menu_toggle">
+						<span class="hamburger">
+							<span></span>
+							<span></span>
+							<span></span>
+						</span>
+						<span class="hamburger-cross">
+							<span></span>
+							<span></span>
+						</span>
+					</span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto menu">
+
+                        <li class="nav-item"><a class="nav-link" href="/search/engine/">Search Engine</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/search/foreign_enterprise/">Foreign
+                            Enterprise</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/search/results/">Depth Extraction</a></li>
+
+
+                        <li class="nav-item dropdown submenu">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                Customer CRM
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item"><a href="/letter/" class="nav-link">Development Letter</a></li>
+                                <li class="nav-item"><a href="/mail/" class="nav-link">Outbox</a></li>
+                                <li class="nav-item"><a href="/send_target/" class="nav-link">Target Customer</a></li>
+                                <li class="nav-item"><a href="/send_mail/" class="nav-link">Send Email</a></li>
+                                <li class="nav-item"><a href="/email_record/" class="nav-link">Email Record</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown submenu">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                Translate
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item"><a href="https://translate.sogou.com/" target="_blank"
+                                                        class="nav-link">Sogou Translate</a></li>
+                                <li class="nav-item"><a href="http://fanyi.youdao.com/" target="_blank"
+                                                        class="nav-link">Youdao Translate</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" target="_blank" href="http://www.sstrade.net/">Official Website</a></li>
+                    </ul>
+                </div>
+                {% comment %}<ul class="list-unstyled social_icon ml_50">
+					<li><a href="#"><i class="ti-facebook"></i></a></li>
+					<li><a href="#"><i class="ti-twitter-alt"></i></a></li>
+					<li><a href="#"><i class="ti-vimeo-alt"></i></a></li>
+				</ul>{% endcomment %}
+            </div>
+        </nav>
+    </header>
+    <section class="business_slider">
+        <div class="main_slider">
+            <div class="slider_item">
+                <div class="overlay_bg one"></div>
+                <div class="container">
+                    <div class="slider_text">
+                        <h1 data-animation="fadeInUp" data-delay="0.5s">Search Engine <br></h1>
+                        <p data-animation="fadeInUp" data-delay="0.9s">
+                            Search for customers based on Google, Yahoo, Bing and other search engines
+                        </p>
+                        <a href="/search/engine/" class="st_btn" data-animation="fadeInLeft" data-delay="1s">Explore
+                            More</a>
+                        {#						<a href="#" class="st_btn w_btn" data-animation="fadeInRight" data-delay="1.1s">Learn More</a>#}
+                    </div>
+                </div>
+            </div>
+            <div class="slider_item">
+                <div class="overlay_bg two"></div>
+                <div class="container">
+                    <div class="slider_text">
+                        <h1 data-animation="fadeInUp" data-delay="0.5s">Foreign Enterprise <br></h1>
+                        <p data-animation="fadeInUp" data-delay="0.9s">Based on a large number of famous foreign
+                            enterprise directory websites, search overseas buyers corresponding to related products with
+                            one click!</p>
+                        <a href="/search/foreign_enterprise/" class="st_btn" data-animation="fadeInLeft"
+                           data-delay="1s">Explore More</a>
+                        {#						<a href="#" class="st_btn w_btn" data-animation="fadeInRight" data-delay="1.1s">Learn More</a>#}
+                    </div>
+                </div>
+            </div>
+            <div class="slider_item">
+                <div class="overlay_bg three"></div>
+                <div class="container">
+                    <div class="slider_text">
+                        <h1 data-animation="fadeInUp" data-delay="0.5s">Depth Extraction <br></h1>
+                        <p data-animation="fadeInUp" data-delay="0.9s">In-depth data extraction, you can conduct
+                            in-depth data mining on the search results and mine the detailed information of target
+                            customers.</p>
+                        <a href="/search/results/" class="st_btn" data-animation="fadeInLeft" data-delay="1s">Explore
+                            More</a>
+                        {#						<a href="#" class="st_btn w_btn" data-animation="fadeInRight" data-delay="1.1s">Learn More</a>#}
+                    </div>
+                </div>
+            </div>
+            <div class="slider_item">
+                <div class="overlay_bg four"></div>
+                <div class="container">
+                    <div class="slider_text">
+                        <h1 data-animation="fadeInUp" data-delay="0.5s">Customer CRM <br></h1>
+                        <p data-animation="fadeInUp" data-delay="0.9s">You can manage your customer resources here, edit
+                            your sending template and send emails in batches with one click.</p>
+                        <a href="/letter/" class="st_btn" data-animation="fadeInLeft" data-delay="1s">Explore More</a>
+                        {#						<a href="#" class="st_btn w_btn" data-animation="fadeInRight" data-delay="1.1s">Learn More</a>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slider_nav">
+            <i class="ti-arrow-left left_arrow"></i>
+            <i class="ti-arrow-right right_arrow"></i>
+        </div>
+    </section>
+
+
+{% comment %}    <section class="business_features_area sec_gap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="business_features_info">
+                        <h2 class="st_title">An exceptionally unique<br> experience tailored to you</h2>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="business_features_item wow fadeInUp" data-wow-delay="0.2s">
+                                    <i class="ti-folder"></i>
+                                    <h4>Stunning Layouts</h4>
+                                    <p>Nice one matie boy burke hanky panky A bit of how's your father blower boot
+                                        it's.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="business_features_item wow fadeInUp" data-wow-delay="0.4s">
+                                    <i class="ti-face-smile"></i>
+                                    <h4>Startup of the Year</h4>
+                                    <p>Nice one matie boy burke hanky panky A bit of how's your father blower boot
+                                        it's.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="business_features_item wow fadeInUp" data-wow-delay="0.6s">
+                                    <i class="ti-brush-alt"></i>
+                                    <h4>Elegant Design</h4>
+                                    <p>Nice one matie boy burke hanky panky A bit of how's your father blower boot
+                                        it's.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="business_features_item wow fadeInUp" data-wow-delay="0.8s">
+                                    <i class="ti-cup"></i>
+                                    <h4>Award Winning</h4>
+                                    <p>Nice one matie boy burke hanky panky A bit of how's your father blower boot
+                                        it's.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="ft_about_img">
+                        <div class="shap_top"></div>
+                        <img class="wow fadeInRight" data-wow-delay="0.8s" src="/static/static/picture/about.jpg"
+                             alt="men">
+                        <div class="shap_left"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="business_service_area sec_gap">
+        <div class="container custom_container">
+            <div class="st_section_title text-center">
+                <h2 class="st_title">Beautiful and easy to use UI, professional animations<br> and drag & drop feature
+                </h2>
+                <p>Oxford tickety-boo show off show off pick your nose and blow off my lady, wind<br> up cup of tea the
+                    wireless easy peasy zonked.!</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="business_service_item wow fadeInUp" data-wow-delay="0.2s">
+                        <i class="ti-ruler-pencil"></i>
+                        <h4 class="b_title">Pixel Perfect Design</h4>
+                        <p class="b_p">Oxford are you taking the piss. My good sir arse knackered up the duff bum bag
+                            bamboozled excuse my french.</p>
+                        <a href="#" class="read_btn">Read More</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="business_service_item wow fadeInUp" data-wow-delay="0.4s">
+                        <i class="ti-pencil-alt"></i>
+                        <h4 class="b_title">Full Documentation</h4>
+                        <p class="b_p">Oxford are you taking the piss. My good sir arse knackered up the duff bum bag
+                            bamboozled excuse my french.</p>
+                        <a href="#" class="read_btn">Read More</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="business_service_item wow fadeInUp" data-wow-delay="0.6s">
+                        <i class="ti-unlock"></i>
+                        <h4 class="b_title">User-friendly Admin</h4>
+                        <p class="b_p">Oxford are you taking the piss. My good sir arse knackered up the duff bum bag
+                            bamboozled excuse my french.</p>
+                        <a href="#" class="read_btn">Read More</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="business_service_item wow fadeInUp" data-wow-delay="0.8s">
+                        <i class="ti-cut"></i>
+                        <h4 class="b_title">Reasonable Pricing</h4>
+                        <p class="b_p">Oxford are you taking the piss. My good sir arse knackered up the duff bum bag
+                            bamboozled excuse my french.</p>
+                        <a href="#" class="read_btn">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="business_team_area sec_gap">
+        <div class="container custom_container">
+            <div class="st_section_title text-center">
+                <h2 class="st_title">We are the industry experts</h2>
+                <p>Oxford tickety-boo show off show off pick your nose and blow off my lady, wind<br> up cup of tea the
+                    wireless easy peasy zonked.!</p>
+            </div>
+            <div class="row business_team_info">
+                <div class="col-lg-3 col-md-6">
+                    <div class="business_team_item wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="team_img">
+                            <img src="/static/static/picture/team_1.jpg" alt="">
+                            <div class="social_icon">
+                                <a href="#"><i class="ti-facebook"></i></a>
+                                <a href="#"><i class="ti-twitter-alt"></i></a>
+                            </div>
+                            <div class="hover_content">
+                                <p>Bloke are you taking the piss pardon me excuse my French well victoria sponge car
+                                    boot that owt to do with me, spiffing good time the bee's knees blatant
+                                    bleeder.!</p>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <a href="#"><h4>Parsley Montana</h4></a>
+                            <p>Web Designer</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="business_team_item wow fadeInUp" data-wow-delay="0.4s">
+                        <div class="team_img">
+                            <img src="/static/static/picture/team_2.jpg" alt="">
+                            <div class="social_icon">
+                                <a href="#"><i class="ti-facebook"></i></a>
+                                <a href="#"><i class="ti-twitter-alt"></i></a>
+                            </div>
+                            <div class="hover_content">
+                                <p>Bloke are you taking the piss pardon me excuse my French well victoria sponge car
+                                    boot that owt to do with me, spiffing good time the bee's knees blatant
+                                    bleeder.!</p>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <a href="#"><h4>Wisteria Ravenclaw</h4></a>
+                            <p>Product designer</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="business_team_item wow fadeInUp" data-wow-delay="0.6s">
+                        <div class="team_img">
+                            <img src="/static/static/picture/team_3.jpg" alt="">
+                            <div class="social_icon">
+                                <a href="#"><i class="ti-facebook"></i></a>
+                                <a href="#"><i class="ti-twitter-alt"></i></a>
+                            </div>
+                            <div class="hover_content">
+                                <p>Bloke are you taking the piss pardon me excuse my French well victoria sponge car
+                                    boot that owt to do with me, spiffing good time the bee's knees blatant
+                                    bleeder.!</p>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <a href="#"><h4>Rodney Artichoke</h4></a>
+                            <p>Graphic designer</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="business_team_item wow fadeInUp" data-wow-delay="0.8s">
+                        <div class="team_img">
+                            <img src="/static/static/picture/team_4.jpg" alt="">
+                            <div class="social_icon">
+                                <a href="#"><i class="ti-facebook"></i></a>
+                                <a href="#"><i class="ti-twitter-alt"></i></a>
+                            </div>
+                            <div class="hover_content">
+                                <p>Bloke are you taking the piss pardon me excuse my French well victoria sponge car
+                                    boot that owt to do with me, spiffing good time the bee's knees blatant
+                                    bleeder.!</p>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <a href="#"><h4>Benjamin Evalent</h4></a>
+                            <p>UI/UX Designer</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 text-center wow fadeInUp" data-wow-delay="1s">
+                    <a href="#" class="st_btn">Meet The Team</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="agency_portfolio_area business_portfolio_area sec_gap">
+        <div class="container custom_container">
+            <div class="st_section_title text-center">
+                <h2 class="st_title">Our recent Work</h2>
+                <p>Oxford burke smashing blower me old mucker plastered <br>spiffing good time hotpot chip shop squiffy.
+                </p>
+            </div>
+            <div id="portfolio_filter" class="portfolio_filter">
+                <div data-filter="*" class="work_portfolio_item active">See All</div>
+                <div data-filter=".br" class="work_portfolio_item">Branding</div>
+                <div data-filter=".web" class="work_portfolio_item">Web Design</div>
+                <div data-filter=".fashion" class="work_portfolio_item">Fashion</div>
+                <div data-filter=".ux" class="work_portfolio_item">UI/UX</div>
+                <div data-filter=".product" class="work_portfolio_item">Product</div>
+            </div>
+            <div class="row portfolio_gallery" id="work-portfolio">
+                <div class="w_20 grid-sizer"></div>
+                <div class="w_30 portfolio_item fashion br product">
+                    <div class="portfolio_img">
+                        <img src="/static/static/picture/portfolio_1.jpg" alt="">
+                        <div class="hover_bg">
+                            <a href="img/agency/portfolio_1.jpg" class="img_popup"><i class="ti-plus"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="w_35 portfolio_item ux web">
+                    <div class="portfolio_img">
+                        <img src="/static/static/picture/portfolio_2.jpg" alt="">
+                        <div class="hover_bg">
+                            <a href="img/agency/portfolio_2.jpg" class="img_popup"><i class="ti-plus"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="w_35 portfolio_item br fashion web">
+                    <div class="portfolio_img">
+                        <img src="/static/static/picture/portfolio_4.jpg" alt="">
+                        <div class="hover_bg">
+                            <a href="img/agency/portfolio_4.jpg" class="img_popup"><i class="ti-plus"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="w_35 portfolio_item product ux br">
+                    <div class="portfolio_img">
+                        <img src="/static/static/picture/portfolio_2.jpg" alt="">
+                        <div class="hover_bg">
+                            <a href="img/agency/portfolio_2.jpg" class="img_popup"><i class="ti-plus"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w_30 portfolio_item fashion web">
+                    <div class="portfolio_img">
+                        <img src="/static/static/picture/portfolio_5.jpg" alt="">
+                        <div class="hover_bg">
+                            <a href="img/agency/portfolio_5.jpg" class="img_popup"><i class="ti-plus"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="w_30 portfolio_item product web br">
+                    <div class="portfolio_img">
+                        <img src="/static/static/picture/portfolio_1.jpg" alt="">
+                        <div class="hover_bg">
+                            <a href="img/agency/portfolio_1.jpg" class="img_popup"><i class="ti-plus"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="w_30 portfolio_item ux fashion">
+                    <div class="portfolio_img">
+                        <img src="/static/static/picture/portfolio_5.jpg" alt="">
+                        <div class="hover_bg">
+                            <a href="img/agency/portfolio_5.jpg" class="img_popup"><i class="ti-plus"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <a href="#" class="st_btn stock_btn b_radious">See All Work</a>
+            </div>
+        </div>
+    </section>
+    <section class="st_fact_area business_fact_area sec_gap">
+        <div class="parallax-effect" style="background: url(/static/static/images/fact_bg.jpg) no-repeat;"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-6">
+                    <div class="st_fact_item wow fadeIn" data-wow-delay="0.2s">
+                        <h1><span class="counter">954</span></h1>
+                        <p>Satisfied Customers<br> Worldwide</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="st_fact_item wow fadeIn" data-wow-delay="0.4s">
+                        <h1><span class="counter">5107</span></h1>
+                        <p>New Accounts</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="st_fact_item wow fadeIn" data-wow-delay="0.6s">
+                        <h1><span class="counter">107</span></h1>
+                        <p>New Clients Added <br>Daily</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="st_fact_item wow fadeIn" data-wow-delay="0.8s">
+                        <h1><span class="counter">244</span></h1>
+                        <p>Satisfied Customers<br> Worldwide</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="business_testimonial_area bg_color sec_gap">
+        <div class="container custom_container">
+            <div class="st_section_title text-center">
+                <h2 class="st_title">What our clients say</h2>
+                <p>xford burke smashing blower me old mucker plastered spiffing<br> good time hotpot chip shop squiffy.
+                </p>
+            </div>
+            <div class="row">
+                <div id="t_slider_two" class="st_testimonial_slider owl-carousel">
+                    <div class="item">
+                        <div class="media clients_img">
+                            <div class="img">
+                                <img src="/static/static/picture/clients_img.jpg" alt="">
+                            </div>
+                            <div class="media-body">
+                                <h5>Lance Bogrol</h5>
+                                <p>ui/ux designer</p>
+                                <a href="#" class="ratting"></a>
+                            </div>
+                        </div>
+                        <p>Knees up quaint barney chancer vagabond starkers lurgy nice one cup of tea, Elizabeth wellies
+                            what a load of rubbish fantastic gormless chap have it chinwag, don't get shirty with me
+                            ruddy the bee's knees tosser faff about posh smashing.</p>
+                    </div>
+                    <div class="item">
+                        <div class="media clients_img">
+                            <div class="img">
+                                <img src="/static/static/picture/clients_img_2.jpg" alt="">
+                            </div>
+                            <div class="media-body">
+                                <h5>Bailey Wonger</h5>
+                                <p>Product designer</p>
+                                <a href="#" class="ratting"></a>
+                            </div>
+                        </div>
+                        <p>Knees up quaint barney chancer vagabond starkers lurgy nice one cup of tea, Elizabeth wellies
+                            what a load of rubbish fantastic gormless chap have it chinwag, don't get shirty with me
+                            ruddy the bee's knees tosser faff about posh smashing.</p>
+                    </div>
+                    <div class="item">
+                        <div class="media clients_img">
+                            <div class="img">
+                                <img src="/static/static/picture/clients_img_3.jpg" alt="">
+                            </div>
+                            <div class="media-body">
+                                <h5>Bodrum Salvador</h5>
+                                <p>web designer</p>
+                                <a href="#" class="ratting"></a>
+                            </div>
+                        </div>
+                        <p>Knees up quaint barney chancer vagabond starkers lurgy nice one cup of tea, Elizabeth wellies
+                            what a load of rubbish fantastic gormless chap have it chinwag, don't get shirty with me
+                            ruddy the bee's knees tosser faff about posh smashing.</p>
+                    </div>
+                    <div class="item">
+                        <div class="media clients_img">
+                            <div class="img">
+                                <img src="/static/static/picture/clients_img.jpg" alt="">
+                            </div>
+                            <div class="media-body">
+                                <h5>Gordon Norman</h5>
+                                <p>ui/ux designer</p>
+                                <a href="#" class="ratting"></a>
+                            </div>
+                        </div>
+                        <p>Knees up quaint barney chancer vagabond starkers lurgy nice one cup of tea, Elizabeth wellies
+                            what a load of rubbish fantastic gormless chap have it chinwag, don't get shirty with me
+                            ruddy the bee's knees tosser faff about posh smashing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="business_blog_area sec_gap">
+        <div class="container custom_container">
+            <div class="st_section_title text-center">
+                <h2 class="st_title">Latest blog</h2>
+                <p>xford burke smashing blower me old mucker plastered spiffing<br> good time hotpot chip shop squiffy.
+                </p>
+            </div>
+            <div class="row b_blog_info">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="business_blog_item wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="business_blog_img">
+                            <img src="/static/static/picture/blog1.jpg" alt="">
+                            <div class="b_hover_overlay"></div>
+                            <a href="#" class="arrow"><i class="ti-arrow-right"></i></a>
+                        </div>
+                        <a href="#"><h3>Apartamento at ten: a decade of celebrating the everyday home</h3></a>
+                        <div class="post_date">January 16, 2019</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="business_blog_item wow fadeInUp" data-wow-delay="0.4s">
+                        <div class="business_blog_img">
+                            <img src="/static/static/picture/blog2.jpg" alt="">
+                            <div class="b_hover_overlay"></div>
+                            <a href="#" class="arrow"><i class="ti-arrow-right"></i></a>
+                        </div>
+                        <a href="#"><h3>Sexbots and cybersex: Kate Davis explores “relationship replacements”</h3></a>
+                        <div class="post_date">August 20, 2020</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="business_blog_item wow fadeInUp" data-wow-delay="0.6s">
+                        <div class="business_blog_img">
+                            <img src="/static/static/picture/blog3.jpg" alt="">
+                            <div class="b_hover_overlay"></div>
+                            <a href="#" class="arrow"><i class="ti-arrow-right"></i></a>
+                        </div>
+                        <a href="#"><h3>Aron Klein’s captivating images of the Bulgarian demon chasers</h3></a>
+                        <div class="post_date">May 16, 2019</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="business_blog_item wow fadeInUp" data-wow-delay="0.8s">
+                        <div class="business_blog_img">
+                            <img src="/static/static/picture/blog4.jpg" alt="">
+                            <div class="b_hover_overlay"></div>
+                            <a href="#" class="arrow"><i class="ti-arrow-right"></i></a>
+                        </div>
+                        <a href="#"><h3>David Brandon Geeting’s latest series looks “cool when you’re high”</h3></a>
+                        <div class="post_date">January 14, 2018</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="st_footer_area">
+        <div class="business_footer_top">
+            <div class="container custom_container">
+                <div class="row">
+                    <div class="col-lg-3 col-sm-12">
+                        <div class="f_widget about_widget wow fadeInLeft" data-wow-delay="0.2s">
+                            <a href="#" class="f_logo"><img src="/static/static/picture/f_logo.png" alt=""></a>
+                            <p>He nicked it wind up bugger quaint say brilliant arse over tit what a plonker pear
+                                shapedmush cheeky tickety knackered me.</p>
+                            <ul class="list-unstyled">
+                                <li><a href="#"><i class="ti-facebook"></i></a></li>
+                                <li><a href="#"><i class="ti-twitter-alt"></i></a></li>
+                                <li><a href="#"><i class="ti-pinterest"></i></a></li>
+                                <li><a href="#"><i class="ti-google"></i></a></li>
+                                <li><a href="#"><i class="ti-vimeo-alt"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-6">
+                        <div class="f_widget link_widget wow fadeInLeft" data-wow-delay="0.4s">
+                            <h2 class="f_title">Information</h2>
+                            <ul class="list-unstyled">
+                                <li><a href="#">About Us</a></li>
+                                <li><a href="#">Journal</a></li>
+                                <li><a href="#">Case Studies</a></li>
+                                <li><a href="#">FAQ & Help</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-6">
+                        <div class="f_widget link_widget wow fadeInLeft" data-wow-delay="0.6s">
+                            <h2 class="f_title">Discover</h2>
+                            <ul class="list-unstyled">
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">About Us</a></li>
+                                <li><a href="#">News</a></li>
+                                <li><a href="#">The Team</a></li>
+                                <li><a href="#">Services</a></li>
+                                <li><a href="#">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-6">
+                        <div class="f_widget link_widget wow fadeInLeft" data-wow-delay="0.8s">
+                            <h2 class="f_title">Categories</h2>
+                            <ul class="list-unstyled">
+                                <li><a href="#">Fashion</a></li>
+                                <li><a href="#">Musice</a></li>
+                                <li><a href="#">Web Design</a></li>
+                                <li><a href="#">Creative</a></li>
+                                <li><a href="#">UI/UX</a></li>
+                                <li><a href="#">Template</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="f_widget flicker_widget">
+                            <h2 class="f_title">Instagram</h2>
+                            <ul class="list-unstyled">
+                                <li><a href="#"><img src="/static/static/picture/flicker_1.jpg" alt=""></a></li>
+                                <li><a href="#"><img src="/static/static/picture/flicker_2.jpg" alt=""></a></li>
+                                <li><a href="#"><img src="/static/static/picture/flicker_3.jpg" alt=""></a></li>
+                                <li><a href="#"><img src="/static/static/picture/flicker_4.jpg" alt=""></a></li>
+                                <li><a href="#"><img src="/static/static/picture/flicker_5.jpg" alt=""></a></li>
+                                <li><a href="#"><img src="/static/static/picture/flicker_6.jpg" alt=""></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer_bottom">
+            <div class="container custom_container">
+                <div class="border-line"></div>
+                <p>Copyright &copy; 2021.Company name All rights reserved.</p>
+            </div>
+        </div>
+    </footer>{% endcomment %}
+
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="/static/static/js/jquery-3.2.1.min.js"></script>
+<script src="/static/static/js/popper.min.js"></script>
+<script src="/static/static/js/bootstrap.min.js"></script>
+<script src="/static/static/js/jquery.stellar.js"></script>
+<script src="/static/static/js/owl.carousel.min.js"></script>
+<script src="/static/static/js/slick.min.js"></script>
+<script src="/static/static/js/imagesloaded.pkgd.min.js"></script>
+<script src="/static/static/js/isotope-min.js"></script>
+<script src="/static/static/js/jquery.counterup.min.js"></script>
+<script src="/static/static/js/jquery.waypoints.min.js"></script>
+<script src="/static/static/js/jquery.magnific-popup.min.js"></script>
+<script src="/static/static/js/wow.min.js"></script>
+<script src="/static/static/js/jquery.hover3d.js"></script>
+<script src="/static/static/js/custom.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,900 @@
+{% extends 'base.html' %}
+{% block title %}
+    General search engine
+{% endblock %}
+{% block topjs %}
+{% endblock %}
+{% block style %}
+    <style>
+        table {
+            table-layout: fixed;
+        }
+
+        td {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        th {
+            min-width: 100px;
+            vertical-align: middle !important;
+            text-align: center;
+        }
+
+        td {
+            min-width: 100px;
+            vertical-align: middle !important;
+        {#  overflow:hidden;#}{#width:100%;#}{#text-overflow:ellipsis;#}
+        }
+
+
+        .right_content {
+            border-left: #2b2b2c 1px solid;
+        }
+
+        .engine {
+        {#border: 1px solid black;#}
+        }
+
+        .engine div {
+
+        {#border: 1px solid black;#} width: 150px;
+            margin: auto 70px;
+
+        }
+
+        .engine div label {
+            margin: 5px;
+        }
+
+        .engine div input {
+            vertical-align: inherit;
+        }
+
+        .tree {
+            padding: 10px;
+        {#border: 1px solid black;#}{#width: 250px;#} height: 535px;
+            overflow-y: scroll;
+            overflow-x: scroll;
+            position: relative;
+        }
+
+        .tree a {
+            text-decoration: none;
+            color: #2C8DFB;
+        }
+
+        .tree ul li {
+            list-style-type: none;
+            margin-left: 30px;
+            position: relative;
+        }
+
+        .tree > ul > li {
+            list-style-type: none;
+            margin-left: 0px;
+            position: relative;
+        }
+
+        .tree img {
+            vertical-align: inherit;
+        }
+
+        .tree input {
+            margin-right: 2px;
+        }
+
+        .tree .isShow {
+            height: 14px;
+            margin-right: 5px;
+        }
+
+        #email_box {
+            overflow: hidden;
+            overflow-y: scroll;
+            overflow-x: scroll;
+
+            white-space: nowrap;
+
+            height: 800px;
+            width: 100%;
+
+        }
+
+
+    </style>
+{% endblock %}
+
+{% block next_url %}
+    <li><a href="/search/results/"> Quick links : Depth Extraction</a></li>
+{% endblock %}
+
+{% block page_title %}
+    General search engine
+{% endblock %}
+
+{% block search %}
+    {#    <div class="top-nav-search">#}
+    {#        <form>#}
+    {#            <input type="text" class="form-control" placeholder="输入关键词">#}
+    {#            <button class="btn" type="submit"><i class="fa fa-search"></i></button>#}
+    {#        </form>#}
+    {#    </div>#}
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid">
+        <div class="col-md-2">
+            <div class="engine">
+                <div>
+                    <input eid="1" type="checkbox" disabled checked><label><h5>Google</h5></label>
+                </div>
+                <div>
+                    <input eid="2" type="checkbox" disabled checked><label><h5>Yahoo</h5></label>
+                </div>
+                <div>
+                    <input eid="3" type="checkbox" disabled checked><label><h5>Bing</h5></label>
+                </div>
+                <div>
+                    <input eid="4" type="checkbox" disabled checked><label><h5>Ask</h5></label>
+                </div>
+                <div>
+                    <input eid="5" type="checkbox"><label><h5>Yandex</h5></label>
+                </div>
+                <div>
+                    <input eid="6" type="checkbox"><label><h5>Ceek</h5></label>
+                </div>
+                <div>
+                    <input eid="7" type="checkbox"><label><h5>Infoo</h5></label>
+                </div>
+                <div>
+                    <input eid="8" type="checkbox"><label><h5>Naver</h5></label>
+                </div>
+            </div>
+            <hr>
+            <div class="tree">
+
+            </div>
+        </div>
+        <div class="col-md-10 right_content">
+            <div class="col-md-12">
+                <div class="col-md-8">
+                    <form class="form-inline">
+                        {% csrf_token %}
+                        <div class="form-group top-nav-search">
+                            <label for="num">Depth ：</label>
+                            {#                        <select id="num" class="form-control">#}
+                            {#                            {% for i in li %}#}
+                            {#                                <option value="{{ i }}">{{ i }}</option>#}
+                            {#                            {% endfor %}#}
+                            {#                        </select>#}
+                            <input type="text" id="num" class="form-control" placeholder="Please Input Depth">
+                        </div>
+
+                        <div class="form-group top-nav-search">
+                            <label for="keyword">Keyword ：</label>
+                            <input type="text" id="keyword" class="form-control" placeholder="Please Input Keyword">
+                        </div>
+
+                        <div class="form-group top-nav-search">
+                            <button id="search_btn" onclick="click_search_btn()" flag="0" class="btn btn-default"
+                                    type="button"><i class="fa fa-search fa-lg"></i>搜索
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+                <div class="col-md-4">
+                    <div id="pro_bar"
+                         style="display:none;width: 100%;z-index: 10;">
+                        <div class="progress" style="margin-bottom: 0;height: 36px">
+                            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                                 style="width: 0%;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                {#            <div style="margin-top: 10px">#}
+                {#                <input type="checkbox" id="check_all">全选/全不选#}
+                {#                <button style="float: right;margin-right: 10px" class=" btn btn-danger" onclick="delete_target()">删除选中#}
+                {#                </button>#}
+                {#            </div>#}
+                <br>
+                <div id="email_box" class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <th style="width: 55px">No</th>
+                        <th>Company</th>
+                        <th>Website</th>
+                        {#                        <th>Description</th>#}
+                        {#                        <th>Email</th>#}
+                        </thead>
+                        <tbody id="search_content">
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="/static/tree_checkbox/jquery.min.js"></script>
+
+    <script src="/static/tree_checkbox/leg-tree.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var data = [
+            {
+                'name': 'All',
+                'open': true,
+                'nocheck': false,
+                'cascade': true,
+                'checked': true,
+                'children':
+                    [
+                        {
+                            'name': '一带一路国家', 'open': false, 'nocheck': false, 'checked': true,
+                            'children': [{'name': '印度尼西亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 0},
+                                {'name': '新加坡', 'nocheck': false, 'checked': true, 'open': true, 'id': 1},
+                                {'name': '马来西亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 2},
+                                {'name': '泰国', 'nocheck': false, 'checked': true, 'open': true, 'id': 3},
+                                {'name': '老挝', 'nocheck': false, 'checked': true, 'open': true, 'id': 4},
+                                {'name': '柬埔寨', 'nocheck': false, 'checked': true, 'open': true, 'id': 5},
+                                {'name': '越南', 'nocheck': false, 'checked': true, 'open': true, 'id': 6},
+                                {'name': '文莱', 'nocheck': false, 'checked': true, 'open': true, 'id': 7},
+                                {'name': '菲律宾', 'nocheck': false, 'checked': true, 'open': true, 'id': 8},
+                                {'name': '土耳其', 'nocheck': false, 'checked': true, 'open': true, 'id': 9},
+                                {'name': '约旦', 'nocheck': false, 'checked': true, 'open': true, 'id': 10},
+                                {'name': '黎巴嫩', 'nocheck': false, 'checked': true, 'open': true, 'id': 11},
+                                {'name': '以色列', 'nocheck': false, 'checked': true, 'open': true, 'id': 12},
+                                {'name': '沙特阿拉伯', 'nocheck': false, 'checked': true, 'open': true, 'id': 13},
+                                {'name': '阿曼', 'nocheck': false, 'checked': true, 'open': true, 'id': 14},
+                                {'name': '阿联酋', 'nocheck': false, 'checked': true, 'open': true, 'id': 15},
+                                {'name': '科威特', 'nocheck': false, 'checked': true, 'open': true, 'id': 16},
+                                {'name': '巴林', 'nocheck': false, 'checked': true, 'open': true, 'id': 17},
+                                {'name': '希腊', 'nocheck': false, 'checked': true, 'open': true, 'id': 18},
+                                {'name': '埃及', 'nocheck': false, 'checked': true, 'open': true, 'id': 19},
+                                {'name': '印度', 'nocheck': false, 'checked': true, 'open': true, 'id': 20},
+                                {'name': '巴基斯坦', 'nocheck': false, 'checked': true, 'open': true, 'id': 21},
+                                {'name': '孟加拉国', 'nocheck': false, 'checked': true, 'open': true, 'id': 22},
+                                {'name': '阿富汗', 'nocheck': false, 'checked': true, 'open': true, 'id': 23},
+                                {'name': '马尔代夫', 'nocheck': false, 'checked': true, 'open': true, 'id': 24},
+                                {'name': '斯里兰卡', 'nocheck': false, 'checked': true, 'open': true, 'id': 25},
+                                {'name': '尼泊尔', 'nocheck': false, 'checked': true, 'open': true, 'id': 26},
+                                {'name': '哈萨克斯坦', 'nocheck': false, 'checked': true, 'open': true, 'id': 27},
+                                {'name': '吉尔吉斯斯坦', 'nocheck': false, 'checked': true, 'open': true, 'id': 28},
+                                {'name': '俄罗斯', 'nocheck': false, 'checked': true, 'open': true, 'id': 29},
+                                {'name': '白俄罗斯', 'nocheck': false, 'checked': true, 'open': true, 'id': 30},
+                                {'name': '乌克兰', 'nocheck': false, 'checked': true, 'open': true, 'id': 31},
+                                {'name': '阿塞拜疆', 'nocheck': false, 'checked': true, 'open': true, 'id': 32},
+                                {'name': '亚美尼亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 33},
+                                {'name': '摩尔多瓦', 'nocheck': false, 'checked': true, 'open': true, 'id': 34},
+                                {'name': '波兰', 'nocheck': false, 'checked': true, 'open': true, 'id': 35},
+                                {'name': '爱沙尼亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 36},
+                                {'name': '立陶宛', 'nocheck': false, 'checked': true, 'open': true, 'id': 37},
+                                {'name': '拉脱维亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 38},
+                                {'name': '捷克', 'nocheck': false, 'checked': true, 'open': true, 'id': 39},
+                                {'name': '斯洛伐克', 'nocheck': false, 'checked': true, 'open': true, 'id': 40},
+                                {'name': '匈牙利', 'nocheck': false, 'checked': true, 'open': true, 'id': 41},
+                                {'name': '斯洛文尼亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 42},
+                                {'name': '克罗地亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 43},
+                                {'name': '波黑', 'nocheck': false, 'checked': true, 'open': true, 'id': 44},
+                                {'name': '黑山', 'nocheck': false, 'checked': true, 'open': true, 'id': 45},
+                                {'name': '塞尔维亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 46},
+                                {'name': '罗马尼亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 47},
+                                {'name': '马其顿', 'nocheck': false, 'checked': true, 'open': true, 'id': 48},
+                                {'name': '保加利亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 49}]
+                        },
+                        {
+                            'name': '亚洲', 'open': false, 'nocheck': false, 'checked': true,
+                            'children': [{'name': '中国香港', 'nocheck': false, 'checked': true, 'open': true, 'id': 50},
+                                {'name': '中国台湾', 'nocheck': false, 'checked': true, 'open': true, 'id': 51},
+                                {'name': '蒙古', 'nocheck': false, 'checked': true, 'open': true, 'id': 52},
+                                {'name': '韩国', 'nocheck': false, 'checked': true, 'open': true, 'id': 53},
+                                {'name': '日本', 'nocheck': false, 'checked': true, 'open': true, 'id': 54},
+                                {'name': '越南', 'nocheck': false, 'checked': true, 'open': true, 'id': 55},
+                                {'name': '老挝', 'nocheck': false, 'checked': true, 'open': true, 'id': 56},
+                                {'name': '柬埔寨', 'nocheck': false, 'checked': true, 'open': true, 'id': 57},
+                                {'name': '泰国', 'nocheck': false, 'checked': true, 'open': true, 'id': 58},
+                                {'name': '马来西亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 59},
+                                {'name': '新加坡', 'nocheck': false, 'checked': true, 'open': true, 'id': 60},
+                                {'name': '文莱', 'nocheck': false, 'checked': true, 'open': true, 'id': 61},
+                                {'name': '菲律宾', 'nocheck': false, 'checked': true, 'open': true, 'id': 62},
+                                {'name': '印度尼西亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 63},
+                                {'name': '东帝汶', 'nocheck': false, 'checked': true, 'open': true, 'id': 64},
+                                {'name': '哈萨克斯坦', 'nocheck': false, 'checked': true, 'open': true, 'id': 65},
+                                {'name': '吉尔吉斯斯坦', 'nocheck': false, 'checked': true, 'open': true, 'id': 66},
+                                {'name': '塔吉克斯坦', 'nocheck': false, 'checked': true, 'open': true, 'id': 67},
+                                {'name': '乌兹别克斯坦', 'nocheck': false, 'checked': true, 'open': true, 'id': 68},
+                                {'name': '土库曼斯坦', 'nocheck': false, 'checked': true, 'open': true, 'id': 69},
+                                {'name': '阿富汗', 'nocheck': false, 'checked': true, 'open': true, 'id': 70},
+                                {'name': '巴基斯坦', 'nocheck': false, 'checked': true, 'open': true, 'id': 71},
+                                {'name': '尼泊尔', 'nocheck': false, 'checked': true, 'open': true, 'id': 72},
+                                {'name': '印度', 'nocheck': false, 'checked': true, 'open': true, 'id': 73},
+                                {'name': '孟加拉国', 'nocheck': false, 'checked': true, 'open': true, 'id': 74},
+                                {'name': '斯里兰卡', 'nocheck': false, 'checked': true, 'open': true, 'id': 75},
+                                {'name': '马尔代夫', 'nocheck': false, 'checked': true, 'open': true, 'id': 76},
+                                {'name': '科威特', 'nocheck': false, 'checked': true, 'open': true, 'id': 77},
+                                {'name': '沙特阿拉伯', 'nocheck': false, 'checked': true, 'open': true, 'id': 78},
+                                {'name': '巴林', 'nocheck': false, 'checked': true, 'open': true, 'id': 79},
+                                {'name': '阿联酋', 'nocheck': false, 'checked': true, 'open': true, 'id': 80},
+                                {'name': '阿曼', 'nocheck': false, 'checked': true, 'open': true, 'id': 81},
+                                {'name': '约旦', 'nocheck': false, 'checked': true, 'open': true, 'id': 82},
+                                {'name': '以色列', 'nocheck': false, 'checked': true, 'open': true, 'id': 83},
+                                {'name': '黎巴嫩', 'nocheck': false, 'checked': true, 'open': true, 'id': 84},
+                                {'name': '土耳其', 'nocheck': false, 'checked': true, 'open': true, 'id': 85},
+                                {'name': '阿塞拜疆', 'nocheck': false, 'checked': true, 'open': true, 'id': 86},
+                                {'name': '亚美尼亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 87}]
+                        },
+                        {
+                            'name': '欧洲', 'open': false, 'nocheck': false, 'checked': true,
+                            'children': [{'name': '冰岛', 'nocheck': false, 'checked': true, 'open': true, 'id': 88},
+                                {'name': '丹麦', 'nocheck': false, 'checked': true, 'open': true, 'id': 89},
+                                {'name': '挪威', 'nocheck': false, 'checked': true, 'open': true, 'id': 90},
+                                {'name': '瑞典', 'nocheck': false, 'checked': true, 'open': true, 'id': 91},
+                                {'name': '芬兰', 'nocheck': false, 'checked': true, 'open': true, 'id': 92},
+                                {'name': '爱沙尼亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 93},
+                                {'name': '拉脱维亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 94},
+                                {'name': '立陶宛', 'nocheck': false, 'checked': true, 'open': true, 'id': 95},
+                                {'name': '爱尔兰', 'nocheck': false, 'checked': true, 'open': true, 'id': 96},
+                                {'name': '英国', 'nocheck': false, 'checked': true, 'open': true, 'id': 97},
+                                {'name': '泽西', 'nocheck': false, 'checked': true, 'open': true, 'id': 98},
+                                {'name': '马恩', 'nocheck': false, 'checked': true, 'open': true, 'id': 99},
+                                {'name': '法国', 'nocheck': false, 'checked': true, 'open': true, 'id': 100},
+                                {'name': '荷兰', 'nocheck': false, 'checked': true, 'open': true, 'id': 101},
+                                {'name': '比利时', 'nocheck': false, 'checked': true, 'open': true, 'id': 102},
+                                {'name': '卢森堡', 'nocheck': false, 'checked': true, 'open': true, 'id': 103},
+                                {'name': '德国', 'nocheck': false, 'checked': true, 'open': true, 'id': 104},
+                                {'name': '奥地利', 'nocheck': false, 'checked': true, 'open': true, 'id': 105},
+                                {'name': '瑞士', 'nocheck': false, 'checked': true, 'open': true, 'id': 106},
+                                {'name': '列支敦士登', 'nocheck': false, 'checked': true, 'open': true, 'id': 107},
+                                {'name': '葡萄牙', 'nocheck': false, 'checked': true, 'open': true, 'id': 108},
+                                {'name': '西班牙', 'nocheck': false, 'checked': true, 'open': true, 'id': 109},
+                                {'name': '直布罗陀', 'nocheck': false, 'checked': true, 'open': true, 'id': 110},
+                                {'name': '安道尔', 'nocheck': false, 'checked': true, 'open': true, 'id': 111},
+                                {'name': '意大利', 'nocheck': false, 'checked': true, 'open': true, 'id': 112},
+                                {'name': '马其他', 'nocheck': false, 'checked': true, 'open': true, 'id': 113},
+                                {'name': '圣马力诺', 'nocheck': false, 'checked': true, 'open': true, 'id': 114},
+                                {'name': '希腊', 'nocheck': false, 'checked': true, 'open': true, 'id': 115},
+                                {'name': '俄罗斯', 'nocheck': false, 'checked': true, 'open': true, 'id': 116},
+                                {'name': '白俄罗斯', 'nocheck': false, 'checked': true, 'open': true, 'id': 117},
+                                {'name': '乌克兰', 'nocheck': false, 'checked': true, 'open': true, 'id': 118},
+                                {'name': '波兰', 'nocheck': false, 'checked': true, 'open': true, 'id': 119},
+                                {'name': '捷克', 'nocheck': false, 'checked': true, 'open': true, 'id': 120},
+                                {'name': '斯洛伐克', 'nocheck': false, 'checked': true, 'open': true, 'id': 121},
+                                {'name': '匈牙利', 'nocheck': false, 'checked': true, 'open': true, 'id': 122},
+                                {'name': '斯洛文尼亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 123},
+                                {'name': '克罗地亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 124},
+                                {'name': '波黑', 'nocheck': false, 'checked': true, 'open': true, 'id': 125},
+                                {'name': '黑山', 'nocheck': false, 'checked': true, 'open': true, 'id': 126},
+                                {'name': '塞尔维亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 127},
+                                {'name': '马其顿', 'nocheck': false, 'checked': true, 'open': true, 'id': 128},
+                                {'name': '保加利亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 129},
+                                {'name': '罗马尼亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 130},
+                                {'name': '摩尔多瓦', 'nocheck': false, 'checked': true, 'open': true, 'id': 131}]
+                        },
+                        {
+                            'name': '南美洲', 'open': false, 'nocheck': false, 'checked': true,
+                            'children': [{'name': '多米尼亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 132},
+                                {'name': '特立尼达和多巴哥', 'nocheck': false, 'checked': true, 'open': true, 'id': 133},
+                                {'name': '哥伦比亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 134},
+                                {'name': '厄瓜多尔', 'nocheck': false, 'checked': true, 'open': true, 'id': 135},
+                                {'name': '委内瑞拉', 'nocheck': false, 'checked': true, 'open': true, 'id': 136},
+                                {'name': '圭亚那', 'nocheck': false, 'checked': true, 'open': true, 'id': 137},
+                                {'name': '秘鲁', 'nocheck': false, 'checked': true, 'open': true, 'id': 138},
+                                {'name': '玻利维亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 139},
+                                {'name': '巴拉圭', 'nocheck': false, 'checked': true, 'open': true, 'id': 140},
+                                {'name': '巴西', 'nocheck': false, 'checked': true, 'open': true, 'id': 141},
+                                {'name': '乌拉圭', 'nocheck': false, 'checked': true, 'open': true, 'id': 142},
+                                {'name': '阿根廷', 'nocheck': false, 'checked': true, 'open': true, 'id': 143},
+                                {'name': '智利', 'nocheck': false, 'checked': true, 'open': true, 'id': 144},
+                                {'name': '危地马拉', 'nocheck': false, 'checked': true, 'open': true, 'id': 145},
+                                {'name': '伯利兹', 'nocheck': false, 'checked': true, 'open': true, 'id': 146},
+                                {'name': '萨尔瓦多', 'nocheck': false, 'checked': true, 'open': true, 'id': 147},
+                                {'name': '洪都拉斯', 'nocheck': false, 'checked': true, 'open': true, 'id': 148},
+                                {'name': '尼加拉瓜', 'nocheck': false, 'checked': true, 'open': true, 'id': 149},
+                                {'name': '哥斯达黎加', 'nocheck': false, 'checked': true, 'open': true, 'id': 150},
+                                {'name': '巴拿马', 'nocheck': false, 'checked': true, 'open': true, 'id': 151},
+                                {'name': '巴哈马', 'nocheck': false, 'checked': true, 'open': true, 'id': 152},
+                                {'name': '古巴', 'nocheck': false, 'checked': true, 'open': true, 'id': 153},
+                                {'name': '牙买加', 'nocheck': false, 'checked': true, 'open': true, 'id': 154},
+                                {'name': '海地', 'nocheck': false, 'checked': true, 'open': true, 'id': 155}]
+                        },
+                        {
+                            'name': '北美洲', 'open': false, 'nocheck': false, 'checked': true,
+                            'children': [{'name': '格陵兰', 'nocheck': false, 'checked': true, 'open': true, 'id': 156},
+                                {'name': '加拿大', 'nocheck': false, 'checked': true, 'open': true, 'id': 157},
+                                {'name': '美国', 'nocheck': false, 'checked': true, 'open': true, 'id': 158},
+                                {'name': '墨西哥', 'nocheck': false, 'checked': true, 'open': true, 'id': 159}]
+                        },
+                        {
+                            'name': '大洋洲', 'open': false, 'nocheck': false, 'checked': true,
+                            'children': [{'name': '澳大利亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 160},
+                                {'name': '诺福克岛', 'nocheck': false, 'checked': true, 'open': true, 'id': 161},
+                                {'name': '新西兰', 'nocheck': false, 'checked': true, 'open': true, 'id': 162},
+                                {'name': '所罗门群岛', 'nocheck': false, 'checked': true, 'open': true, 'id': 163},
+                                {'name': '斐济', 'nocheck': false, 'checked': true, 'open': true, 'id': 164},
+                                {'name': '密克罗尼西亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 165},
+                                {'name': '基里巴斯', 'nocheck': false, 'checked': true, 'open': true, 'id': 166},
+                                {'name': '瑙鲁', 'nocheck': false, 'checked': true, 'open': true, 'id': 167},
+                                {'name': '托克劳', 'nocheck': false, 'checked': true, 'open': true, 'id': 168},
+                                {'name': '萨摩亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 169},
+                                {'name': '东萨摩亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 170},
+                                {'name': '汤加', 'nocheck': false, 'checked': true, 'open': true, 'id': 171},
+                                {'name': '纽埃', 'nocheck': false, 'checked': true, 'open': true, 'id': 172},
+                                {'name': '库克群岛', 'nocheck': false, 'checked': true, 'open': true, 'id': 173}]
+                        },
+                        {
+                            'name': '非洲', 'open': false, 'nocheck': false, 'checked': true,
+                            'children': [{'name': '莱索托', 'nocheck': false, 'checked': true, 'open': true, 'id': 174},
+                                {'name': '埃及', 'nocheck': false, 'checked': true, 'open': true, 'id': 175},
+                                {'name': '利比亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 176},
+                                {'name': '阿尔及利亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 177},
+                                {'name': '摩洛哥', 'nocheck': false, 'checked': true, 'open': true, 'id': 178},
+                                {'name': '塞内加尔', 'nocheck': false, 'checked': true, 'open': true, 'id': 179},
+                                {'name': '冈比亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 180},
+                                {'name': '马里', 'nocheck': false, 'checked': true, 'open': true, 'id': 181},
+                                {'name': '布基纳法索', 'nocheck': false, 'checked': true, 'open': true, 'id': 182},
+                                {'name': '塞拉利昂', 'nocheck': false, 'checked': true, 'open': true, 'id': 183},
+                                {'name': '科特迪瓦', 'nocheck': false, 'checked': true, 'open': true, 'id': 184},
+                                {'name': '加纳', 'nocheck': false, 'checked': true, 'open': true, 'id': 185},
+                                {'name': '多哥', 'nocheck': false, 'checked': true, 'open': true, 'id': 186},
+                                {'name': '贝宁', 'nocheck': false, 'checked': true, 'open': true, 'id': 187},
+                                {'name': '尼泊尔', 'nocheck': false, 'checked': true, 'open': true, 'id': 188},
+                                {'name': '尼日利亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 189},
+                                {'name': '圣赫勒拿', 'nocheck': false, 'checked': true, 'open': true, 'id': 190},
+                                {'name': '客麦隆', 'nocheck': false, 'checked': true, 'open': true, 'id': 191},
+                                {'name': '中非', 'nocheck': false, 'checked': true, 'open': true, 'id': 192},
+                                {'name': '加蓬', 'nocheck': false, 'checked': true, 'open': true, 'id': 193},
+                                {'name': '刚果', 'nocheck': false, 'checked': true, 'open': true, 'id': 194},
+                                {'name': '安哥拉', 'nocheck': false, 'checked': true, 'open': true, 'id': 195},
+                                {'name': '埃塞俄比亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 196},
+                                {'name': '吉布提', 'nocheck': false, 'checked': true, 'open': true, 'id': 197},
+                                {'name': '肯尼亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 198},
+                                {'name': '乌干达', 'nocheck': false, 'checked': true, 'open': true, 'id': 199},
+                                {'name': '坦桑尼亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 200},
+                                {'name': '卢旺达', 'nocheck': false, 'checked': true, 'open': true, 'id': 201},
+                                {'name': '布隆迪', 'nocheck': false, 'checked': true, 'open': true, 'id': 202},
+                                {'name': '马拉维', 'nocheck': false, 'checked': true, 'open': true, 'id': 203},
+                                {'name': '莫桑比克', 'nocheck': false, 'checked': true, 'open': true, 'id': 204},
+                                {'name': '马达加斯加', 'nocheck': false, 'checked': true, 'open': true, 'id': 205},
+                                {'name': '塞舌尔', 'nocheck': false, 'checked': true, 'open': true, 'id': 206},
+                                {'name': '毛里求斯', 'nocheck': false, 'checked': true, 'open': true, 'id': 207},
+                                {'name': '赞比亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 208},
+                                {'name': '津巴布韦', 'nocheck': false, 'checked': true, 'open': true, 'id': 209},
+                                {'name': '博茨瓦纳', 'nocheck': false, 'checked': true, 'open': true, 'id': 210},
+                                {'name': '纳米比亚', 'nocheck': false, 'checked': true, 'open': true, 'id': 211},
+                                {'name': '南非', 'nocheck': false, 'checked': true, 'open': true, 'id': 212}]
+                        }]
+            }];
+
+        var arrs = []
+
+        /*
+        生成tree的位置 data为tree数据、arrs为选中的id可为空
+        arrs可填可不填 填写需为数组
+        data数据中的只有name、id、checked、open、children和cascade是可用的，其他为多余
+            其中open为是否展开
+            cascade为是否子父级联选中（cascade 必须在最高父级中写才生效）
+        */
+        $(".tree").tree(data, arrs);
+        //leg(".tree").tree(data,arrs);	//leg等同于$
+
+
+    </script>
+    <script>
+        current_page_num = 0;
+        query_page_num = 0;
+        count = 0;
+        t_search = null;
+        t_flash = null;
+        num0_data = null;
+        num0_length = 0
+        num0_index = 0
+        t_db_data_interval = null
+        num0_status = 0
+        function listen_flash() {
+            t_flash = setInterval(function () {
+                if (query_page_num > num && num0_status==0) {
+                    //查询结束，将动画效果停止
+                    end_search_flash();
+
+                    clearInterval(t_flash);
+                } else {
+                    var width = query_page_num * 100 / num;
+                    s = String(width) + '%'
+                    console.log(s)
+                    $('.progress-bar').css('width', s)
+                }
+
+            }, 1000)
+        }
+
+
+        function start_search_flash() {
+            $('.progress-bar').css('width', '0')
+            $('#pro_bar').css('display', 'inline-block')
+            $(".load-container").show();
+        }
+
+        function end_search_flash() {
+            $('.progress-bar').css('width', '100%');
+            setTimeout(function () {
+                $(".load-container").hide();
+                $('#pro_bar').css('display', 'none');
+                $("#search_btn").html('<i class="fa fa-search fa-lg"></i>Search');
+                $("#search_btn").attr('flag', '0');
+                $("#keyword").removeAttr('disabled');
+            }, 5000);
+
+        }
+
+
+        function send_search_ajax_and_display_onpage(num, cp, keyword, engine, search_engine_str, search_tree_str) {
+            if (cp==0){
+                num0_status = 1
+                $.ajax({
+                url: '/search/engine/',
+                type: 'post',
+                data: {
+                    'keyword': keyword,
+                    'num': 0,
+                    'engine': engine,
+                    'search_engine_str': search_engine_str,
+                    'search_tree_str': search_tree_str,
+                    'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+                },
+                error: function () {
+                    query_page_num++;
+                    num0_status = 0;
+                },
+                success: function (ret) {
+                    query_page_num++;
+                    if (ret.code == 1) {
+                        console.log(ret.data)
+                        num0_data = ret.data.data
+                        num0_length = num0_data.length
+                        num0_index = 0
+
+                        t_db_data_interval = setInterval(function () {
+                            if(num0_index < num0_length){
+                                 var title = num0_data[num0_index].title;
+                                var website = num0_data[num0_index].website
+                                //var description = data[j].description
+                                count++;
+                                num0_index++;
+                                var html = "<tr><td>" + count + "</td> <td>" + title + "</td> " +
+                                    "<td>" + website + "</td></tr>";
+                                $('#search_content').prepend(html);
+                                if(count>1000){
+                                    $("#search_content").find("tr").last().remove();
+                                }
+                            }
+                            else{
+                                num0_status = 0;
+                                clearInterval(t_db_data_interval)
+                            }
+
+                        },10)
+                    }
+                }
+            })
+            }
+            else {
+                $.ajax({
+                url: '/search/engine/',
+                type: 'post',
+                data: {
+                    'keyword': keyword,
+                    'num': cp,
+                    'engine': engine,
+                    'search_engine_str': search_engine_str,
+                    'search_tree_str': search_tree_str,
+                    'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+                },
+                error: function () {
+                    query_page_num++;
+                },
+                success: function (ret) {
+                    query_page_num++;
+                    if (ret.code == 1) {
+                        console.log(ret.data)
+                        var data = ret.data.data
+                        for (var j = 0; j < data.length; j++) {
+                            setTimeout(function (j) {
+                                var title = data[j].title;
+                                /* var mail = data[j].mail;
+                                if (!mail) {
+                                    mail = ""
+                                } */
+                                var website = data[j].website
+                                //var description = data[j].description
+                                count++;
+                                var html = "<tr><td>" + count + "</td> <td>" + title + "</td> " +
+                                    "<td>" + website + "</td></tr>";
+                                $('#search_content').prepend(html);
+                                if(count>1000){
+                                    $("#search_content").find("tr").last().remove();
+                                }
+                            }, 0.1*j, j)
+                        }
+                    }
+                }
+            })
+            }
+        }
+
+        function start_search() {
+
+
+            current_page_num = 0;
+            query_page_num = 0;
+            count = 0;
+            t_search = null;
+            t_flash = null;
+           num0_data = null;
+           num0_length = 0
+          num0_index = 0
+           t_db_data_interval = null;
+           num0_status = 0;
+            // 获取勾中的搜索引擎
+            var search_engine = $('.engine').find(":checked")
+            search_engine_str = ""
+            for (var k = 0; k < search_engine.length; k++) {
+
+                search_engine_str += search_engine.eq(k).attr("eid") + ","
+            }
+            search_engine_str = search_engine_str.slice(0, -1)
+
+            //获取勾中的国家
+            var search_tree = $('.tree').find(":checked")
+            search_tree_str = ""
+            for (var k = 0; k < search_tree.length; k++) {
+                var ret = search_tree.eq(k).attr("id");
+                if (ret == "undefined") {
+                    continue
+                }
+                search_tree_str += ret + ","
+            }
+            search_tree_str = search_tree_str.slice(0, -1)
+
+
+            $("#search_btn").text("Pause");//
+            $("#search_btn").attr('flag', '1');//
+
+            //$("#search_btn").attr('disabled',"true");//添加disabled属性
+
+
+            //清空表格的内容
+            $('#search_content').html("")
+
+            // 展示搜索的动画效果
+            start_search_flash();
+
+            //开始监听是否搜索完毕  --动画效果
+            listen_flash();
+
+            //将输入框设置为不可输入状态！
+            $("#keyword").attr("disabled", "true")
+
+
+            current_page_num = 0;
+            count = 0;
+
+
+            //设置定时器  每隔5秒发一次ajax请求
+            t_search = setInterval(function () {
+                // 如果还有任务没执行完，继续执行
+                if (current_page_num <= num) {
+                    send_search_ajax_and_display_onpage(num, current_page_num, keyword, engine, search_engine_str, search_tree_str)
+                    current_page_num++;
+                }
+                // 任务执行完毕，清除定时器！！！
+                else {
+                    clearInterval(t_search);
+                }
+
+            }, 5000)
+        }
+
+        function begin_search() {
+
+            hide_left_slide();
+            keyword = $('#keyword').val();
+
+
+            var pattern = new RegExp("[\u4E00-\u9FA5]+");
+            if (pattern.test(keyword)) {
+
+                alert('Please don’t input Chinese keyword！')
+                $('#keyword').val("");
+            } else {
+                num = parseInt($('#num').val());
+                if (num > 100) {
+                    num = 100;
+                }
+                if (num <= 0) {
+                    num = 0;
+                }
+                $('#num').val(num);
+                engine = "google"
+                if (num && num > 0 && keyword) {
+                    $(".load-container").show();
+                    $.ajax({
+                        url: '/search/issensitive/',
+                        type: 'post',
+                        data: {
+                            'keyword': keyword,
+                            'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+                        }, success: function (ret) {
+                            if (ret.code == 1) {
+                                start_search();
+                            } else {
+                                $(".load-container").hide();
+                                alert("Current input contains sensitive words！")
+                            }
+                        }
+                    });
+
+
+                } else {
+                    alert("Please fill in complete and valid data and submit！！！")
+                    if (num) {
+                        $('#keyword').val("");
+                    } else {
+                        $('#num').val(0);
+                    }
+                }
+            }
+
+
+        }
+
+        function stop_search() {
+            /*
+            * 点击暂停按钮
+            * 1.将正在搜索的定时器  清除
+            * 2. 将搜查动画  定格在百分之多少
+            * 3. 将 按钮中文字设置为   继续
+            * */
+            try {
+                //如果定时器存在，那么清除它！
+                clearInterval(t_search);
+            } catch (e) {
+
+            }
+            try {
+                //如果定时器存在，那么清除它！
+                clearInterval(t_db_data_interval);
+            } catch (e) {
+
+            }
+
+            // 清除进度条动画的监听器
+            try {
+                //如果定时器存在，那么清除它！
+                clearInterval(t_flash)
+            } catch (e) {
+                console.log()
+            }
+
+
+            $("#search_btn").text("Pausing search.........")
+            $("#search_btn").attr('disabled', 'true')
+            setTimeout(function () {
+                $(".load-container").hide();
+
+                //将 按钮中文字设置为   继续
+                $("#search_btn").text("Continue")
+                $("#search_btn").attr('flag', '2')
+                $("#search_btn").removeAttr('disabled')
+            }, 15000)
+
+
+        }
+
+        function continue_search() {
+            //点击继续，即接着查询！！重新开启定时器接着查询
+            //设置定时器  每隔3秒发一次ajax请求
+
+
+          t_db_data_interval = setInterval(function () {
+                        if(num0_index < num0_length){
+                             var title = num0_data[num0_index].title;
+                            var website = num0_data[num0_index].website
+                            //var description = data[j].description
+                            count++;
+                            num0_index++;
+                            var html = "<tr><td>" + count + "</td> <td>" + title + "</td> " +
+                                "<td>" + website + "</td></tr>";
+                            $('#search_content').prepend(html);
+                            if(count>1000){
+                                $("#search_content").find("tr").last().remove();
+                            }
+                        }
+                        else{
+                            num0_status = 0
+                            clearInterval(t_db_data_interval)
+                        }
+
+                    },10)
+
+
+
+            t_search = setInterval(function () {
+                // 如果还有任务没执行完，继续执行
+                if (current_page_num <= num) {
+                    send_search_ajax_and_display_onpage(num, current_page_num, keyword, engine, search_engine_str, search_tree_str)
+                    current_page_num++;
+                }
+                // 任务执行完毕，清除定时器！！！
+                else {
+                    clearInterval(t_search);
+                }
+
+            }, 3000)
+
+            //继续动画效果！
+            listen_flash();
+            $(".load-container").show();
+
+            // 将搜索按钮样式改变
+            $("#search_btn").text("Pause");
+            $("#search_btn").attr('flag', '1');
+        }
+
+        function click_search_btn() {
+
+            var flag = $("#search_btn").attr("flag");
+            /**
+             * flag = '0' : 搜索
+             * flag = '1' : 暂停
+             * flag = '2' : 继续
+             * */
+            if (flag == "0") {
+                //说明是第一次从0搜索  即点击搜索
+                begin_search();
+            } else if (flag == "1") {
+                //点击暂停
+                stop_search();
+            } else if (flag == '2') {
+                //点击继续
+                continue_search()
+            }
+
+
+        }
+
+        $(function () {
+            $("#check_all").change(function () {
+                var flag = $('#check_all').prop('checked')
+                var check_list = $('.target_num')
+                if (flag) {
+                    for (var i = 0; i < check_list.length; i++) {
+                        check_list.eq(i).prop('checked', true)
+                    }
+                } else {
+                    for (var i = 0; i < check_list.length; i++) {
+                        check_list.eq(i).prop('checked', false)
+                    }
+                }
+            });
+        })
+    </script>
+
+{% endblock %}
+
+

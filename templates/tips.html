@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}
+    主页
+{% endblock %}
+
+
+{% block style %}
+    <style>
+
+    </style>
+{% endblock %}
+
+{% block page_title %}
+    主页
+{% endblock %}
+{% block main %}
+    <div class="container-fluid">
+          <div class="jumbotron">
+              <h1>{{ tips }}</h1>
+              <hr>
+              <p>请根据提示进行相应的操作！</p>
+              <br>
+
+              <p><a class="btn btn-primary btn-lg"  onclick="javascript:window.location.href = document.referrer;
+window.history.back(-1);"  role="button">返回上一页</a></p>
+            </div>
+    </div>
+{% endblock %}
+
+
+
