@@ -491,7 +491,7 @@ def engine(request):
         num = int(num)
 
 
-        if hour >= 18 or hour < 9:
+        if hour >= 22 or hour < 8:
         # if hour >= 8 or hour < 1                                                              8:
             print('系统维护时间段，搜索数据库！')
             print('当前页码：%s' % num)
