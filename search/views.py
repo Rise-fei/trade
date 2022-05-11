@@ -390,6 +390,7 @@ def test(request):
     return HttpResponse(1)
 
 def save_db(count=0):
+    return
     try:
         conn = connections['beijingdb']
         print(conn)
@@ -416,6 +417,7 @@ def save_db(count=0):
 
 
 def save_db2(cname,count):
+    return
     try:
         cust_name = cname
         month = datetime.now().month
@@ -472,6 +474,7 @@ def add_user_resultdata(user_obj,data_set):
 
 def engine(request):
     userid = request.session.get('userid')
+    userid = 1
     if request.method == 'GET':
         # li = [i*5 for i in range(1,21)]
         sen_words = user_models.SensitiveWord.objects.all()
@@ -491,7 +494,7 @@ def engine(request):
         num = int(num)
 
 
-        if hour >= 22 or hour < 8:
+        if hour >= 24:
         # if hour >= 8 or hour < 1                                                              8:
             print('系统维护时间段，搜索数据库！')
             print('当前页码：%s' % num)
@@ -632,13 +635,9 @@ def engine(request):
             return JsonResponse(data)
     
         else:
-            # data = {
-            #     'code': 0,
-            #     "data": []
-            # }
-            # return JsonResponse(data)
-            save_db(1)
-            save_db2(request.session['username'],1)
+
+            # save_db(1)
+            # save_db2(request.session['username'],1)
 
             # 1.直接从原爬虫数据库中查询数据
             if int(num) == -1:

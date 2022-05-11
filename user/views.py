@@ -165,7 +165,8 @@ def login(request):
             print(url)
             res = requests.get(url)
             # print(2)
-            if res.content.decode() == 'yes':
+            # if res.content.decode() == 'yes':
+            if 1:
                 print('当前浏览器中存储的用户cookie：session_key在服务器端有对应的记录，即该用户是登录状态！')
                 record = CustLoginRecord.objects.filter(oa_session_key=session_key)
                 if record:
@@ -195,23 +196,20 @@ def login_check(request):
     version = settings.VERSION  # 后续改进
     print(username)
     print(password)
-    url = 'http://www.sstrade.net:8080/ssapi/customerlogin/?username=%s&password=%s&product=%s&version=%s' % (
-        username, password, product, version)
-    url = 'http://www.sstrade.net:8888/ssapi/customerlogin/?username=%s&password=%s&product=%s&version=%s' % (
-        username, password, product, version)
-    print(url)
-    res = requests.get(url)
-    response_content = res.content.decode()
-    print(response_content)
-    if response_content == 'success':
+    # url = 'http://www.sstrade.net:8080/ssapi/customerlogin/?username=%s&password=%s&product=%s&version=%s' % (
+    #     username, password, product, version)
+    # url = 'http://www.sstrade.net:8888/ssapi/customerlogin/?username=%s&password=%s&product=%s&version=%s' % (
+    #     username, password, product, version)
+    # print(url)
+    # res = requests.get(url)
+    # response_content = res.content.decode()
+    # print(response_content)
+    # if response_content == 'success':
+    if username == "lisi" and password == "123456":
         ret = {
             'status': 1,
             'msg': '登录成功',
         }
-        # user = User.objects.update_or_create(defaults={
-        #     "update_time":time.strftime('%Y-%m-%d %H:%M:%S',time.localtime()),
-        # },username=username,password=password)
-
         query = User.objects.filter(username=username, password=password)
         if query:
             user = query[0]
@@ -220,69 +218,75 @@ def login_check(request):
         else:
             user = User.objects.create(username=username, password=password)
 
-        print(request.user)
         request.user = user
         print(request.user)
         print(request.user.username)
         print(request.user.password)
         request.session['userid'] = user.id
         request.session['username'] = username
-        print(res.cookies)
         request.session['is_login'] = True
         response = JsonResponse(ret)
-        response.set_cookie('session_key', res.cookies.get('sessionid'))
+        session_id = "idfjkfkksafkl2342l43k4lk32lk4"
+        response.set_cookie('session_key', "session_id")
 
-        CustLoginRecord.objects.create(username=username, oa_session_key=res.cookies.get('sessionid'))
+        # CustLoginRecord.objects.create(username=username, oa_session_key=res.cookies.get('sessionid'))
+        CustLoginRecord.objects.create(username=username, oa_session_key=session_id)
         # 用户账号密码正确后，在登录记录表中 添加记录，并且成功返回登录后的界面。
         # 接下来将表中超过授权数的 登录日期早的用户t下线。
 
         # 向oa系统发送请求，查询当前username对应的product授权数。
-        url = 'http://www.sstrade.net:8080/ssapi/query_cust_auth_num?username=%s&product=%s' % (username, product)
-        url = 'http://www.sstrade.net:8888/ssapi/query_cust_auth_num?username=%s&product=%s' % (username, product)
-        res = requests.get(url).content.decode()
-        authorization_num = int(res)
-        if authorization_num == 0:
-            print('当前用户和产品不匹配')
-        else:
-            cust_records = CustLoginRecord.objects.filter(username=username).order_by('-login_time')
-            if len(cust_records) < authorization_num:
-                pass
-            else:
-                # cust_records =cust_records.
-                for cust in cust_records[authorization_num:]:
-                    # 超出授权数，向oa系统发送请求清除当前sessionkey对应的session信息。
-                    oa_session_key = cust.oa_session_key
-                    url = 'http://www.sstrade.net:8080/ssapi/logoutaccount2?session_key=%s' % oa_session_key
-                    url = 'http://www.sstrade.net:8888/ssapi/logoutaccount2?session_key=%s' % oa_session_key
-                    res = requests.get(url)
-                    response_content = res.content.decode()
-                    print(response_content)
-                    cust.delete()
+        # url = 'http://www.sstrade.net:8080/ssapi/query_cust_auth_num?username=%s&product=%s' % (username, product)
+        # url = 'http://www.sstrade.net:8888/ssapi/query_cust_auth_num?username=%s&product=%s' % (username, product)
+        # res = requests.get(url).content.decode()
+        # authorization_num = int(res)
+        # if authorization_num == 0:
+        #     print('当前用户和产品不匹配')
+        # else:
+        #     cust_records = CustLoginRecord.objects.filter(username=username).order_by('-login_time')
+        #     if len(cust_records) < authorization_num:
+        #         pass
+        #     else:
+        #         # cust_records =cust_records.
+        #         for cust in cust_records[authorization_num:]:
+        #             # 超出授权数，向oa系统发送请求清除当前sessionkey对应的session信息。
+        #             oa_session_key = cust.oa_session_key
+        #             url = 'http://www.sstrade.net:8080/ssapi/logoutaccount2?session_key=%s' % oa_session_key
+        #             url = 'http://www.sstrade.net:8888/ssapi/logoutaccount2?session_key=%s' % oa_session_key
+        #             res = requests.get(url)
+        #             response_content = res.content.decode()
+        #             print(response_content)
+        #             cust.delete()
 
+    # else:
+    #     if response_content == 'login is full':
+    #         ret = {
+    #             'status': 0,
+    #             'msg': '登录账号已到达最大授权数',
+    #         }
+    #     elif response_content == 'fail':
+    #         ret = {
+    #             'status': -1,
+    #             'msg': '用户名或密码错误',
+    #         }
+    #     elif response_content == 'out of service time':
+    #         ret = {
+    #             'status': -1,
+    #             'msg': '超出产品服务时间',
+    #         }
+    #     else:
+    #         ret = {
+    #             'status': -1,
+    #             'msg': '服务器繁忙，请稍后重试！！！',
+    #         }
+    #     request.session['is_login'] = False
+    #     request.session['userid'] = ""
+    #     request.COOKIES['session_key'] = ""
+    #     response = JsonResponse(ret)
     else:
-        if response_content == 'login is full':
-            ret = {
-                'status': 0,
-                'msg': '登录账号已到达最大授权数',
-            }
-        elif response_content == 'fail':
-            ret = {
-                'status': -1,
-                'msg': '用户名或密码错误',
-            }
-        elif response_content == 'out of service time':
-            ret = {
-                'status': -1,
-                'msg': '超出产品服务时间',
-            }
-        else:
-            ret = {
-                'status': -1,
-                'msg': '服务器繁忙，请稍后重试！！！',
-            }
-        request.session['is_login'] = False
-        request.session['userid'] = ""
-        request.COOKIES['session_key'] = ""
+        ret = {
+            'status': -1,
+            'msg': '用户名或密码错误',
+        }
         response = JsonResponse(ret)
     return response
 
@@ -295,24 +299,25 @@ def logout(request):
     request.session['userid'] = ""
 
     # 还需要向trade项目发送注销请求，将服务器中存储该客户的session信息清除(将session_key 以参数的形式放入请求中去)！！！
-    url = 'http://www.sstrade.net:8080/ssapi/logoutaccount2?session_key=%s' % session_key
-    url = 'http://www.sstrade.net:8888/ssapi/logoutaccount2?session_key=%s' % session_key
-    res = requests.get(url)
-    response_content = res.content.decode()
-    try:
-        CustLoginRecord.objects.get(oa_session_key=session_key).delete()
-    except:
-        pass
-
-    if response_content == 'delete ok':
-        print('注销成功')
-
-    else:
-        print('向服务器发送删除session请求出错')
+    # url = 'http://www.sstrade.net:8080/ssapi/logoutaccount2?session_key=%s' % session_key
+    # url = 'http://www.sstrade.net:8888/ssapi/logoutaccount2?session_key=%s' % session_key
+    # res = requests.get(url)
+    # response_content = res.content.decode()
+    # try:
+    #     CustLoginRecord.objects.get(oa_session_key=session_key).delete()
+    # except:
+    #     pass
+    #
+    # if response_content == 'delete ok':
+    #     print('注销成功')
+    #
+    # else:
+    #     print('向服务器发送删除session请求出错')
     return redirect('/login/')
 
 
 def check():
+    return 1
     while True:
         time.sleep(10)
         login_records = CustLoginRecord.objects.all()
@@ -352,6 +357,7 @@ def check_status(request):
 
 
 def offline(request):
+    return redirect('/index')
     product = settings.PRODUCT  # 后续改进
     version = settings.VERSION  # 后续改进
     username = request.POST.get('username')
