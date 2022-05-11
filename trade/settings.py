@@ -97,30 +97,30 @@ DATABASES = {
         'HOST': 'rm-2vc5xhi77ulz46a8nuo.mysql.cn-chengdu.rds.aliyuncs.com',
         'PORT': '3306',
     },
-    'newtrade': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'new_tradeinfo',
-        'USER': 'root',
-        'PASSWORD': 'Shengshikeji.1',
-        'HOST': '47.98.164.255',
-        'PORT': '3306',
-    },
+    # 'newtrade': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'new_tradeinfo',
+    #     'USER': 'root',
+    #     'PASSWORD': 'Shengshikeji.1',
+    #     'HOST': '47.98.164.255',
+    #     'PORT': '3306',
+    # },
     'beijingdb': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ApiRecord',
         'USER': 'root',
-        'PASSWORD': 'Shengshikeji.1',
-        'HOST': '101.201.83.128',
+        'PASSWORD': 'Shengshikeji@1',
+        'HOST': 'rm-2vc5xhi77ulz46a8nuo.mysql.cn-chengdu.rds.aliyuncs.com',
         'PORT': '3306',
     },
-    'oa_db': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sstrade_pro',
-        'USER': 'root',
-        'PASSWORD': 'Shengshikeji.1',
-        'HOST': '47.98.164.255',
-        'PORT': '3306',
-    }
+    # 'oa_db': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'sstrade_pro',
+    #     'USER': 'root',
+    #     'PASSWORD': 'Shengshikeji.1',
+    #     'HOST': '47.98.164.255',
+    #     'PORT': '3306',
+    # }
 }
 
 

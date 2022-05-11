@@ -100,15 +100,12 @@ class WaitSendCustomer(models.Model):
         db_table = 'wait_send_customer'
 
     keyword = models.CharField(max_length=256)
-    email = models.CharField(max_length=1024)
-    company = models.CharField(max_length=1024)
-    website = models.CharField(max_length=1024)
+    email = models.CharField(max_length=256)
+    company = models.CharField(max_length=256)
+    website = models.CharField(max_length=256)
     update_time = models.DateTimeField(auto_now_add=True)
     sort_id = models.IntegerField(default=0)
     user = models.ForeignKey(to='User')
-
-
-
 
 
 class SearchResult(models.Model):
@@ -116,7 +113,7 @@ class SearchResult(models.Model):
     class Meta:
         db_table = 'search_result'
 
-    keyword = models.CharField(max_length=512,db_index=True)
+    keyword = models.CharField(max_length=128,db_index=True)
     company = models.CharField(max_length=512,default="")
     website = models.CharField(max_length=512,default="")
     description = models.CharField(max_length=512,default="")
