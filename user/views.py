@@ -534,8 +534,9 @@ def local_send_mail(email, password, protocol, server, port, send_content):
         ret = False
     index = 0
     url_list = [
-        'http://47.111.189.77:8081/send_mail_extend/',
-        'http://8.212.21.205:8080/send_mail_extend/'
+        'http:ftd.sstrade.net/send_mail_extend/',
+        # 'http://8.212.21.205:8080/send_mail_extend/'
+        # 'http://8.212.21.205:8080/send_mail_extend/'
     ]
     while index < len(url_list):
         # url = 'http://47.111.189.77:8081/send_mail_extend/'
@@ -616,23 +617,23 @@ def test_email(request):
         server = request.POST.get('server')
         port = request.POST.get('port')
 
-        conn = connections['oa_db']
-        cursor = conn.cursor()
-        if server != "c3.icoremail.net":
-            auth_code = request.POST.get('auth_code')
-
-            sql = "select * from ss_authorizemail where code=%s and mail='' "
-            cursor.execute(sql, [auth_code])
-            ret = cursor.fetchall()
-            if ret:
-                flag = 1
-            else:
-                tips = "授权码无效！！！"
-                return JsonResponse({
-                    'msg': tips
-                })
-        else:
-            flag = 0
+        # conn = connections['oa_db']
+        # cursor = conn.cursor()
+        # if server != "c3.icoremail.net":
+        #     auth_code = request.POST.get('auth_code')
+        #
+        #     sql = "select * from ss_authorizemail where code=%s and mail='' "
+        #     cursor.execute(sql, [auth_code])
+        #     ret = cursor.fetchall()
+        #     if ret:
+        #         flag = 1
+        #     else:
+        #         tips = "授权码无效！！！"
+        #         return JsonResponse({
+        #             'msg': tips
+        #         })
+        # else:
+        #     flag = 0
 
         subject = "测试主题"
         message = "测试"
@@ -641,7 +642,6 @@ def test_email(request):
         send_content = (subject, message, dest_mail_list, html_message)
 
         res = local_send_mail(email, password, protocol, server, port, send_content)
-        print(res)
         if res:
             # 发送成功
             ret = {
@@ -658,8 +658,8 @@ def test_email(request):
 
 def add_mail(request):
     if request.method == 'POST':
-        conn = connections['oa_db']
-        cursor = conn.cursor()
+        # conn = connections['oa_db']
+        # cursor = conn.cursor()
 
         userid = request.session.get('userid')
         email = request.POST.get('email')
@@ -672,19 +672,20 @@ def add_mail(request):
             tips = "请填写完整后提交！！！"
             return render(request, 'tips.html', {'tips': tips})
 
-        if server != "c3.icoremail.net":
-            auth_code = request.POST.get('auth_code')
-
-            sql = "select * from ss_authorizemail where code=%s and mail='' "
-            cursor.execute(sql, [auth_code])
-            ret = cursor.fetchall()
-            if ret:
-                flag = 1
-            else:
-                tips = "授权码无效！！！"
-                return render(request, 'tips.html', {'tips': tips})
-        else:
-            flag = 0
+        # if server != "c3.icoremail.net":
+        #     auth_code = request.POST.get('auth_code')
+        #
+        #     sql = "select * from ss_authorizemail where code=%s and mail='' "
+        #     cursor.execute(sql, [auth_code])
+        #     ret = cursor.fetchall()
+        #     if ret:
+        #         flag = 1
+        #     else:
+        #         tips = "授权码无效！！！"
+        #         return render(request, 'tips.html', {'tips': tips})
+        # else:
+        #     flag = 0
+        flag = 1
 
         subject = "测试主题"
         message = "测试"
@@ -695,10 +696,10 @@ def add_mail(request):
         ret = local_send_mail(email, password, protocol, server, port, send_content)
         print(ret)
         if ret:
-            if flag == 1:
-                customer = request.session.get('username')
-                sql = "update ss_authorizemail set mail=%s,customer=%s where code=%s"
-                cursor.execute(sql, [email, customer, auth_code])
+            # if flag == 1:
+                # customer = request.session.get('username')
+                # sql = "update ss_authorizemail set mail=%s,customer=%s where code=%s"
+                # cursor.execute(sql, [email, customer, auth_code])
 
             Sender.objects.update_or_create(defaults=
             {
