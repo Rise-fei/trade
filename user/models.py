@@ -27,7 +27,7 @@ class User(models.Model):
     class Meta:
         db_table = 'user'
 
-    username = models.CharField(max_length=64)
+    username = models.CharField(max_length=64, unique=True)
     password = models.CharField(max_length=64)
     update_time = models.DateTimeField(auto_now_add=True)
 

@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^index/', user_views.index),
     url(r'^remote_ip/', user_views.remote_ip),
     url(r'^fanyi/', user_views.fanyi),
+    url(r'^accounts/', user_views.accounts),
     url(r'^login/', user_views.login),
     url(r'^logout/', user_views.logout),
     url(r'^login_check/', user_views.login_check),

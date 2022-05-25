@@ -152,6 +152,33 @@ def index(request):
     return render(request, 'APP.html')
 
 import datetime
+
+def accounts(request):
+    if request.method == "GET":
+        if request.session['username'] != "admin":
+            return HttpResponse("仅管理才有权限！")
+        users = User.objects.all()
+        return render(request, "accounts.html", locals())
+    else:
+        if request.session['username'] != "admin":
+            ret = {
+                "msg": "仅管理员可添加用户"
+            }
+            return JsonResponse(ret)
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        if User.objects.filter(username=username):
+            ret = {
+                'msg': "用户已存在"
+            }
+        else:
+            user = User.objects.create(username=username, password=password)
+            ret = {
+                "msg": "用户添加成功"
+            }
+        return JsonResponse(ret)
+
+
 def login(request):
     if request.session.get('is_login'):
         session_key = request.COOKIES.get('session_key')
@@ -160,10 +187,10 @@ def login(request):
             # 但是此方法不好，该每次发送请求，都要向主服务器查询，最好改成：
             # ****（主服务器执行一键下线后，给当前web项目发送请求，告知当前项目哪一个客户下线了，在此web项目中加以判断，后续优化！！）
             # print(1)
-            url = 'http://www.sstrade.net:8080/ssapi/query_is_login?session_key=%s' % session_key
-            url = 'http://www.sstrade.net:8888/ssapi/query_is_login?session_key=%s' % session_key
-            print(url)
-            res = requests.get(url)
+            # url = 'http://www.sstrade.net:8080/ssapi/query_is_login?session_key=%s' % session_key
+            # url = 'http://www.sstrade.net:8888/ssapi/query_is_login?session_key=%s' % session_key
+            # print(url)
+            # res = requests.get(url)
             # print(2)
             # if res.content.decode() == 'yes':
             if 1:
@@ -205,7 +232,8 @@ def login_check(request):
     # response_content = res.content.decode()
     # print(response_content)
     # if response_content == 'success':
-    if username == "lisi" and password == "123456":
+    if User.objects.filter(username=username, password=password):
+    # if username == "lisi" and password == "123456":
         ret = {
             'status': 1,
             'msg': '登录成功',

@@ -12,7 +12,8 @@ class LoginCheckMiddleware(MiddlewareMixin):
         print(request.path_info)
         print(request.path)
         # 如果请求url在白名单内，说明该请求不必登录就可用！
-        white_url = ['/logout_all_cuser/','/search/yellow/','/send_mail_extend/','/check_status/','/login/','/login_check/','/admin/','/static/','/logout/','/offline/','^$']
+        white_url = ['/logout_all_cuser/',
+                     '/search/yellow/','/send_mail_extend/','/check_status/','/login/','/login_check/','/admin/','/static/','/logout/','/offline/','^$']
         for re_url in white_url:
             if re.match(re_url,request.path):
                 print('路径匹配成功')
