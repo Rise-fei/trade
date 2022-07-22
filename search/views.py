@@ -474,7 +474,6 @@ def add_user_resultdata(user_obj,data_set):
 
 def engine(request):
     userid = request.session.get('userid')
-    userid = 1
     if request.method == 'GET':
         # li = [i*5 for i in range(1,21)]
         sen_words = user_models.SensitiveWord.objects.all()
